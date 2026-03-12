@@ -1,5 +1,5 @@
 import AdminDashboardPage from './AdminDashboardPage'
-import AdminLayout from './AdminLayout'
+import AdminLayout from './components/AdminLayout'
 
 function Admin() {
   return (
