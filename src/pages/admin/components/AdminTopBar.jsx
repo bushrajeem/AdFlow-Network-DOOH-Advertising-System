@@ -22,7 +22,7 @@ function AdminTopBar({ onToggleSidebar }) {
 
         {/* Logo */}
         <div className="leading-tight">
-          <img className="w-30 h-17.5" src="./logo.png" alt="Logo" />
+          <img className="w-30 h-17.5" src="/logo.png" alt="Logo" />
         </div>
       </div>
 

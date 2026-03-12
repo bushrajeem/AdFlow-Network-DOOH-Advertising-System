@@ -1,6 +1,6 @@
 import React from 'react'
 
-function AdsPge() {
+function AdsPage() {
   return (
     <div>
       ads
@@ -8,4 +8,4 @@ function AdsPge() {
   )
 }
 
-export default AdsPge
+export default AdsPage

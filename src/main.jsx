@@ -20,9 +20,19 @@
 
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import "./index.css";
+import AdminDashboardPage from "./pages/admin/AdminDashboardPage.jsx";
+import AdsPage from "./pages/admin/AdsPage.jsx";
 import Admin from "./pages/admin/index.jsx";
+import LocationPage from "./pages/admin/LocationPage.jsx";
+import PlaylistsPage from "./pages/admin/PlaylistsPage.jsx";
+import ScreenPage from "./pages/admin/ScreenPage.jsx";
+import UsersPage from "./pages/admin/UsersPage.jsx";
 import Home from "./pages/home/Home.jsx";
 
 const router = createBrowserRouter([
@@ -31,9 +41,21 @@ const router = createBrowserRouter([
 
   /* example for landing page team: Admin Routes — all admin routes are handled separately */
   /* See: src/pages/admin/index.jsx */
+  
+  
+  // admin side
   {
     path: "/admin",
     element: <Admin />,
+    children: [
+      { index: true, element: <Navigate to="dashboard" replace /> },
+      { path: "dashboard", element: <AdminDashboardPage /> },
+      { path: "location", element: <LocationPage /> },
+      { path: "screen", element: <ScreenPage /> },
+      { path: "ads", element: <AdsPage /> },
+      { path: "playlists", element: <PlaylistsPage /> },
+      { path: "users", element: <UsersPage /> },
+    ],
   },
 ]);
 

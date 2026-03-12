@@ -3,9 +3,7 @@ import AdminLayout from './components/AdminLayout'
 
 function Admin() {
   return (
-    <AdminLayout>
-      <AdminDashboardPage />
-    </AdminLayout>
+    <AdminLayout />
   )
 }
 
