@@ -1,5 +1,8 @@
 import React from 'react'
 import useSidebarToggle from '../../hooks/useSidebarToggle';
+import AdminSidebar from '../../components/admin/AdminSidebar';
+import AdminTopBar from '../../components/admin/AdminTopBar';
+import { Outlet } from 'react-router-dom';
 
 function AdminLayout() {
     const { isSidebarOpen, toggleSidebar, closeSidebar } = useSidebarToggle();
