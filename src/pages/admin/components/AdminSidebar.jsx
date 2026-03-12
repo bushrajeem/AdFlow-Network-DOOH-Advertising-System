@@ -30,15 +30,11 @@ const NAV_ITEMS = [
 function AdminSidebar({ isOpen }) {
   return (
     <aside
-      style={{ backgroundColor: "#002B6B" }}
-      className={`
-        fixed top-0 left-0 h-full z-30 w-52 flex flex-col
-        transition-transform duration-300
-        ${isOpen ? "translate-x-0" : "-translate-x-full"}
-        lg:static lg:translate-x-0
-      `}
+      style={{ backgroundColor: "#002B6B", width: isOpen ? "208px" : "0px" }}
+      className="h-full flex flex-col transition-all duration-300 overflow-hidden shrink-0"
     >
-      <nav className="flex-1 pt-20 px-3 space-y-1">
+      {/* min-w keeps content from wrapping during animation */}
+      <nav className="pt-20 px-3 space-y-1" style={{ minWidth: "208px" }}>
         {NAV_ITEMS.map((item) => (
           <NavLink
             key={item.path}

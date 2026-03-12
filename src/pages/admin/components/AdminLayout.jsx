@@ -9,34 +9,22 @@ import useSidebarToggle from "../../../hooks/useSidebarToggle";
 import AdminTopBar from "./AdminTopBar";
 
 function AdminLayout() {
-  const { isSidebarOpen, toggleSidebar, closeSidebar } = useSidebarToggle();
+  const { isSidebarOpen, toggleSidebar } = useSidebarToggle();
 
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden">
+    <div className="flex h-screen overflow-hidden bg-gray-100">
 
-      {/* Sidebar */}
-      <AdminSidebar isOpen={isSidebarOpen} onClose={closeSidebar} />
+      {/* Sidebar — shrinks to w-0 when closed, expands to w-52 when open */}
+      <AdminSidebar isOpen={isSidebarOpen} />
 
-      {/* Mobile overlay */}
-      {isSidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/40 z-20 "
-          onClick={closeSidebar}
-        />
-      )}
-
-      {/* Right side */}
+      {/* Right side: topbar + page content */}
       <div className="flex flex-col flex-1 overflow-hidden">
-
-        {/* Topbar */}
         <AdminTopBar onToggleSidebar={toggleSidebar} />
-
-        {/* Page content */}
         <main className="flex-1 overflow-y-auto p-6">
           <Outlet />
         </main>
-
       </div>
+
     </div>
   );
 }

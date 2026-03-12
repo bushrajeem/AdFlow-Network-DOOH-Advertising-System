@@ -8,8 +8,8 @@ import { Menu } from "lucide-react";
 
 function AdminTopBar({ onToggleSidebar }) {
   return (
-    <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-10 py-10">
-      {/* ── Left: Logo + Sidebar Toggle ───*/}
+    <header className="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-10 py-10">
+      {/*Left: Logo + Sidebar Toggle*/}
       <div className="flex items-center gap-3">
         {/* Sidebar toggle button */}
         <button
@@ -22,11 +22,11 @@ function AdminTopBar({ onToggleSidebar }) {
 
         {/* Logo */}
         <div className="leading-tight">
-          <img className="w-30 h-20" src="./logo.png" alt="Logo" />
+          <img className="w-30 h-17.5" src="./logo.png" alt="Logo" />
         </div>
       </div>
 
-      {/* ── Right: User Profile ─────────────────────────────────── */}
+      {/*Right: User Profile  */}
       {/* BACKEND: Replace avatar src and "Jeem" with auth context user */}
       <div className="flex items-center gap-2 bg-blue-600 text-white pl-1 pr-4 py-1 rounded-lg cursor-pointer hover:bg-blue-700 transition-colors">
         {/* Avatar */}
