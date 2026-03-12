@@ -1,10 +1,11 @@
-import React from 'react'
+import AdminDashboardPage from './AdminDashboardPage'
+import AdminLayout from './AdminLayout'
 
 function Admin() {
   return (
-    <div>
-      admin
-    </div>
+    <AdminLayout>
+      <AdminDashboardPage />
+    </AdminLayout>
   )
 }
 
