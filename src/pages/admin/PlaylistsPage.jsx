@@ -2,28 +2,25 @@ import { ArrowLeft, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// TODO: replace with API call GET /api/admin/ads
-const MOCK_Ads = [
+// TODO: replace with API call GET /api/admin/playlists
+const MOCK_Playlists = [
   {
     id: 1,
-    name: "Walton Ad",
-    playlist: "Playlist - 01",
-    Play_Count: "12118",
-    impressions: "24306",
+    name: "Playlist - 01",
+    totalAds: 1,
+    locations: 3,
   },
   {
     id: 2,
-    name: "Glow & Lovely",
-    playlist: "Playlist - 02",
-    Play_Count: "4528",
-    impressions: "12459",
+    name: "Playlist - 02",
+    totalAds: 2,
+    locations: 2,
   },
   {
     id: 3,
-    name: "Clear Men",
-    playlist: "Playlist - 03",
-    Play_Count: "22171",
-    impressions: "15552",
+    name: "Playlist - 03",
+    totalAds: 3,
+    locations: 1,
   },
 ];
 
@@ -32,18 +29,18 @@ function PlaylistsPage() {
   const [search, setSearch] = useState("");
 
   // Filter table by search input
-  const filtered = MOCK_Ads.filter((s) =>
+  const filtered = MOCK_Playlists.filter((s) =>
     s.name.toLowerCase().includes(search.toLowerCase()),
   );
 
-  // TODO: open modal or navigate to add Ads form
-  const handleAdd = () => console.log("Add Ads — POST /api/admin/ads");
+  // TODO: open modal or navigate to add Playlists form
+  const handleAdd = () => console.log("Add Playlist — POST /api/admin/playlists");
 
-  // TODO: connect to DELETE /api/admin/ads/:id
-  const handleDelete = (id) => console.log("Delete Ads:", id);
+  // TODO: connect to DELETE /api/admin/playlists/:id
+  const handleDelete = (id) => console.log("Delete Playlist:", id);
 
-  // TODO: connect to PATCH /api/admin/ads/:id
-  const handleEdit = (id) => console.log("Edit Ads:", id);
+  // TODO: connect to PATCH /api/admin/playlists/:id
+  const handleEdit = (id) => console.log("Edit Playlist:", id);
 
   return (
     <div>
@@ -104,7 +101,7 @@ function PlaylistsPage() {
             <tr style={{ backgroundColor: "#002B6B" }} className="text-white">
               <th className="w-12 px-4 py-3" />
               <th className="px-4 py-3 text-left font-medium">Playlist Name</th>
-              <th className="px-4 py-3 text-center font-medium">Total Ad</th>
+              <th className="px-4 py-3 text-center font-medium">Total Ads</th>
               <th className="px-4 py-3 text-center font-medium">Locations</th>
               <th className="px-4 py-3 text-center font-medium">Action</th>
             </tr>
