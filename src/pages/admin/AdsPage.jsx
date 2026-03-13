@@ -147,13 +147,13 @@ function AdsPage() {
                   <td className="px-4 py-4">
                     <div className="flex items-center justify-center gap-3">
                       <button
-                        onClick={() => handleDelete(screen.id)}
+                        onClick={() => handleDelete(ads.id)}
                         className="hover:text-red-500 transition-colors"
                       >
                         <Trash2 size={16} />
                       </button>
                       <button
-                        onClick={() => handleEdit(screen.id)}
+                        onClick={() => handleEdit(ads.id)}
                         className="hover:text-blue-600 transition-colors"
                       >
                         <Pencil size={16} />
