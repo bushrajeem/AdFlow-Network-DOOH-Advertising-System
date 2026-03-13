@@ -34,6 +34,7 @@ import PlaylistsPage from "./pages/admin/PlaylistsPage.jsx";
 import ScreenPage from "./pages/admin/ScreenPage.jsx";
 import UsersPage from "./pages/admin/UsersPage.jsx";
 import Home from "./pages/home/Home.jsx";
+import CreateAdPage from "./pages/admin/CreateAdPage.jsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -53,6 +54,7 @@ const router = createBrowserRouter([
       { path: "location", element: <LocationPage /> },
       { path: "screen", element: <ScreenPage /> },
       { path: "ads", element: <AdsPage /> },
+      { path: "ads/create", element: <CreateAdPage /> },
       { path: "playlists", element: <PlaylistsPage /> },
       { path: "users", element: <UsersPage /> },
     ],

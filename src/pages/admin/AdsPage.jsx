@@ -37,7 +37,7 @@ function AdsPage() {
   );
 
   // TODO: open modal or navigate to add Ads form
-  const handleAdd = () => console.log("Add Ads — POST /api/admin/ads");
+  const handleAdd = () => navigate("/admin/ads/create");
 
   // TODO: connect to DELETE /api/admin/ads/:id
   const handleDelete = (id) => console.log("Delete Ads:", id);
