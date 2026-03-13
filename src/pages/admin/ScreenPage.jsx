@@ -9,15 +9,33 @@
  *   PATCH  /api/admin/screens/:id    → handleEdit
  */
 
+import { ArrowLeft, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { ArrowLeft, Trash2, Pencil } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 // TODO: replace with API call GET /api/admin/screens
 const MOCK_SCREENS = [
-  { id: 1, name: "Private Screen - 01", status: "Online",  location: "Allah r daan HQ", playlist: "Playlist - 01" },
-  { id: 2, name: "Private Screen - 02", status: "Online",  location: "Mayer dua HQ", playlist: "Playlist - 01" },
-  { id: 3, name: "Private Screen - 03", status: "Offline", location: "Bhaat er hotel", playlist: "Playlist - 01" },
+  {
+    id: 1,
+    name: "Private Screen - 01",
+    status: "Online",
+    location: "Allah r daan HQ",
+    playlist: "Playlist - 01",
+  },
+  {
+    id: 2,
+    name: "Private Screen - 02",
+    status: "Online",
+    location: "Mayer dua HQ",
+    playlist: "Playlist - 01",
+  },
+  {
+    id: 3,
+    name: "Private Screen - 03",
+    status: "Offline",
+    location: "Bhaat er hotel",
+    playlist: "Playlist - 01",
+  },
 ];
 
 function ScreenPage() {
@@ -26,7 +44,7 @@ function ScreenPage() {
 
   // Filter table by search input
   const filtered = MOCK_SCREENS.filter((s) =>
-    s.name.toLowerCase().includes(search.toLowerCase())
+    s.name.toLowerCase().includes(search.toLowerCase()),
   );
 
   // TODO: open modal or navigate to add screen form
@@ -40,7 +58,6 @@ function ScreenPage() {
 
   return (
     <div>
-
       {/* Page Header*/}
       <div className="flex items-center gap-3 mb-6">
         <button
@@ -62,16 +79,15 @@ function ScreenPage() {
         </button>
 
         {/* TODO: connect to pagination logic */}
-        <select className="text-[14px] border border-gray-200 rounded-lg px-2 py-1.5 outline-none">
+        <select className="text-[14px] border bg-white border-gray-200 rounded-lg px-2 py-2 outline-none">
           <option>10</option>
           <option>25</option>
           <option>50</option>
         </select>
       </div>
 
-      {/* ── Table Card ────────────────────────────────────────────────────── */}
+      {/* Table Card*/}
       <div className="bg-white rounded-xl border border-gray-200">
-
         {/* Search */}
         <div className="p-4 border-b border-gray-100">
           <input
@@ -104,54 +120,62 @@ function ScreenPage() {
               </tr>
             ) : (
               filtered.map((screen) => (
-                <tr key={screen.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-
+                <tr
+                  key={screen.id}
+                  className="border-b border-gray-200 hover:bg-gray-50 transition-colors"
+                >
                   {/* Screen color indicator */}
                   <td className="px-4 py-4">
                     <div className="w-6 h-6 rounded-sm bg-[#002B6B]" />
                   </td>
 
-                  <td className="px-4 py-4 font-medium text-gray-800">{screen.name}</td>
+                  <td className="px-4 py-4 font-medium text-gray-800">
+                    {screen.name}
+                  </td>
 
                   {/* Status with dot indicator */}
                   <td className="px-4 py-4 text-center">
-                    <span className={`flex items-center justify-center gap-1.5 font-medium
+                    <span
+                      className={`flex items-center justify-center gap-1.5 font-medium
                       ${screen.status === "Online" ? "text-green-500" : "text-red-500"}`}
                     >
-                      <span className={`w-2.5 h-2.5 rounded-full
+                      <span
+                        className={`w-2.5 h-2.5 rounded-full
                         ${screen.status === "Online" ? "bg-green-500" : "bg-red-500"}`}
                       />
                       {screen.status}
                     </span>
                   </td>
 
-                  <td className="px-4 py-4 text-center text-gray-700">{screen.location}</td>
-                  <td className="px-4 py-4 text-center text-gray-700">{screen.playlist}</td>
+                  <td className="px-4 py-4 text-center text-gray-700">
+                    {screen.location}
+                  </td>
+                  <td className="px-4 py-4 text-center text-gray-700">
+                    {screen.playlist}
+                  </td>
 
                   {/* Actions */}
                   <td className="px-4 py-4">
                     <div className="flex items-center justify-center gap-3">
                       <button
                         onClick={() => handleDelete(screen.id)}
-                        className="text-gray-400 hover:text-red-500 transition-colors"
+                        className="hover:text-red-500 transition-colors"
                       >
                         <Trash2 size={16} />
                       </button>
                       <button
                         onClick={() => handleEdit(screen.id)}
-                        className="text-gray-400 hover:text-blue-600 transition-colors"
+                        className="hover:text-blue-600 transition-colors"
                       >
                         <Pencil size={16} />
                       </button>
                     </div>
                   </td>
-
                 </tr>
               ))
             )}
           </tbody>
         </table>
-
       </div>
     </div>
   );
