@@ -60,7 +60,7 @@ function LocationPage() {
       <div className="flex items-center gap-3 mb-6">
         <button
           onClick={() => navigate("/admin/dashboard")}
-          className="text-gray-500 hover:text-gray-800 transition-colors"
+          className="text-gray-500 hover:text-gray-800 transition-colors cursor-pointer"
         >
           <ArrowLeft size={20} />
         </button>
