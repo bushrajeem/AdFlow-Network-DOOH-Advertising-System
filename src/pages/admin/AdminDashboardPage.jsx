@@ -3,10 +3,12 @@
  * BACKEND: fetch('/api/admin/stats') to replace placeholder stats.
  */
 
+import { Navigate } from "react-router-dom";
+
 function DashboardPage() {
   // BACKEND: replace these with real values from API response
   const stats = [
-    { label: "Locations", value: 1,  color: "bg-blue-500"   },
+    { label: "Locations", value: 1,  color: "bg-blue-500" , Navigate: "/admin/location" },
     { label: "Screens",   value: 3,  color: "bg-green-500"  },
     { label: "Ads",       value: 3,  color: "bg-yellow-500" },
     { label: "Users",     value: 3,  color: "bg-red-500"    },
