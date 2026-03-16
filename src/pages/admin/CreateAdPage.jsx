@@ -15,12 +15,9 @@ function CreateAdPage() {
 
   const [adName, setAdName] = useState("");
   const [video, setVideo] = useState(null);
-  const [poster, setPoster] = useState(null);
   const [videoPreview, setVideoPreview] = useState(null);
-  const [posterPreview, setPosterPreview] = useState(null);
 
   const videoRef = useRef(null);
-  const posterRef = useRef(null);
 
   // Handle video file selection — validates MP4 only
   const handleVideo = (e) => {
@@ -32,14 +29,6 @@ function CreateAdPage() {
     setVideoPreview(URL.createObjectURL(file));
   };
 
-  // Handle poster image selection
-  const handlePoster = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    setPoster(file);
-    setPosterPreview(URL.createObjectURL(file));
-  };
-
   // TODO: connect to POST /api/admin/ads with FormData
   const handleSave = () => {
     if (!adName) return alert("Please enter an ad name.");
@@ -48,18 +37,13 @@ function CreateAdPage() {
     const formData = new FormData();
     formData.append("name", adName);
     formData.append("video", video);
-    if (poster) formData.append("poster", poster);
 
-    console.log("Save ad — POST /api/admin/ads", { adName, video, poster });
+    console.log("Save ad — POST /api/admin/ads", { adName, video });
     // After successful save: navigate("/admin/ads");
   };
   const clearVideo = () => {
     setVideo(null);
     setVideoPreview(null);
-  };
-  const clearPoster = () => {
-    setPoster(null);
-    setPosterPreview(null);
   };
 
   return (
@@ -90,28 +74,6 @@ function CreateAdPage() {
           />
         </div>
 
-        {/*Video Requirements Notice*/}
-        <div className="flex flex-col gap-1.5">
-          <label className="text-[20px] font-bold text-gray-700 mt-3">
-            Upload your video ad
-          </label>
-          <p className="text-sm text-gray-500 leading-relaxed">
-            The video you upload must be of{" "}
-            <span className="font-semibold text-gray-700">MP4 format</span> of{" "}
-            <span className="font-semibold text-gray-700">
-              15-second duration
-            </span>{" "}
-            with{" "}
-            <span className="font-semibold text-gray-700">
-              1080 (width) by 1920 (height)
-            </span>{" "}
-            resolution for optimal viewing. Note that{" "}
-            <span className="font-semibold text-gray-700">
-              no audio will be played.
-            </span>
-          </p>
-        </div>
-
         {/* Ad Creation — Selected Template */}
         <div className="flex flex-col gap-2">
           <p className="text-sm font-medium text-gray-700">Ad Creation</p>
@@ -125,97 +87,53 @@ function CreateAdPage() {
           </div>
         </div>
 
-        {/* Upload Video + Poster*/}
+        {/* Upload Video */}
         <div className="flex flex-col gap-3">
-          <p className="text-sm font-bold text-gray-700 py-2">
-            Upload your video and poster image
+          <p className="text-[20px] font-bold text-gray-700 py-2">
+            Upload your video Ad
           </p>
 
-          <div className="flex gap-4">
-            <div className="relative flex">
-              {/* Video Upload */}
-              <button
-                onClick={() => videoRef.current.click()}
-                className="flex-1 border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center gap-2 hover:border-red-300 hover:bg-red-50 transition-colors"
-              >
-                {videoPreview ? (
-                  // Show video preview if uploaded
-                  <video
-                    src={videoPreview}
-                    className="w-52 h-58 object-cover rounded-lg"
-                    muted
-                  />
-                ) : (
-                  <div className="flex flex-col items-center px-8 py-10">
-                    <div className="w-10 h-10 rounded-full border-2 border-red-400 flex items-center justify-center">
-                      <Plus size={20} className="text-red-400" />
-                    </div>
-                    <p className="text-sm font-semibold text-red-400 py-2">
-                      Add Video
-                    </p>
-                    <p className="text-xs text-gray-400 text-center leading-relaxed">
-                      Drag and drop your video
-                      <br />
-                      file or click to browse
-                    </p>
-                    <p className="text-xs text-gray-400 py-2">
-                      Supports MP4 up to 100MB
-                    </p>
+          <div className="relative flex">
+            {/* Video Upload */}
+            <button
+              onClick={() => videoRef.current.click()}
+              className="flex-1 border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center gap-2 hover:border-red-300 hover:bg-red-50 transition-colors"
+            >
+              {videoPreview ? (
+                // Show video preview if uploaded
+                <video
+                  src={videoPreview}
+                  className="w-52 h-58 object-cover rounded-lg"
+                  muted
+                />
+              ) : (
+                <div className="flex flex-col items-center px-8 py-10">
+                  <div className="w-10 h-10 rounded-full border-2 border-red-400 flex items-center justify-center">
+                    <Plus size={20} className="text-red-400" />
                   </div>
-                )}
-              </button>
-              {/* Delete button — only visible when a video is selected */}
-              {videoPreview && (
-                <button
-                  onClick={clearVideo}
-                  className="absolute top-2 right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors"
-                >
-                  <X size={12} />
-                </button>
+                  <p className="text-sm font-semibold text-red-400 py-2">
+                    Add Video
+                  </p>
+                  <p className="text-xs text-gray-400 text-center leading-relaxed">
+                    Drag and drop your video
+                    <br />
+                    file or click to browse
+                  </p>
+                  <p className="text-xs text-gray-400 py-2">
+                    Supports MP4 up to 100MB
+                  </p>
+                </div>
               )}
-            </div>
-
-            <div className="relative flex">
-              {/* Poster Image Upload */}
+            </button>
+            {/* Delete button — only visible when a video is selected */}
+            {videoPreview && (
               <button
-                onClick={() => posterRef.current.click()}
-                className="flex-1 border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center gap-2 hover:border-red-300 hover:bg-red-50 transition-colors"
+                onClick={clearVideo}
+                className="absolute top-2 right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors"
               >
-                {posterPreview ? (
-                  <img
-                    src={posterPreview}
-                    alt="Poster preview"
-                    className="w-52 h-58 object-cover rounded-lg"
-                  />
-                ) : (
-                  <div className="flex flex-col items-center px-8 py-10">
-                    <div className="w-10 h-10 rounded-full border-2 border-red-400 flex items-center justify-center">
-                      <Plus size={20} className="text-red-400" />
-                    </div>
-                    <p className="text-sm font-semibold text-red-400 py-2">
-                      Add Poster
-                    </p>
-                    <p className="text-xs text-gray-400 text-center leading-relaxed">
-                      Drag and drop your image
-                      <br />
-                      file or click to browse
-                    </p>
-                    <p className="text-xs text-gray-400 py-2">
-                      Supports JPG, PNG
-                    </p>
-                  </div>
-                )}
+                <X size={12} />
               </button>
-              {/* Delete button — only visible when a poster is selected */}
-              {posterPreview && (
-                <button
-                  onClick={clearPoster}
-                  className="absolute top-2 right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors"
-                >
-                  <X size={12} />
-                </button>
-              )}
-            </div>
+            )}
           </div>
 
           {/* Size recommendation note */}
@@ -233,13 +151,6 @@ function CreateAdPage() {
             type="file"
             accept="video/mp4"
             onChange={handleVideo}
-            className="hidden"
-          />
-          <input
-            ref={posterRef}
-            type="file"
-            accept="image/*"
-            onChange={handlePoster}
             className="hidden"
           />
         </div>
