@@ -408,14 +408,14 @@ function LocationPage() {
               {/* TODO: navigate to Countries tab */}
               <button
                 onClick={() => setActiveTab("Countries")}
-                className="text-xs border border-gray-200 px-3 py-1.5 rounded-lg hover:bg-gray-50 transition-colors"
+                className="text-xs border border-gray-200 px-3 py-1.5 rounded-lg hover:bg-[#002B6B] hover:text-white transition-colors"
               >
                 + Go to Countries
               </button>
               {/* TODO: navigate to Cities tab */}
               <button
                 onClick={() => setActiveTab("Cities")}
-                className="text-xs border border-gray-200 px-3 py-1.5 rounded-lg hover:bg-gray-50 transition-colors"
+                className="text-xs border border-gray-200 px-3 py-1.5 rounded-lg hover:bg-[#002B6B] hover:text-white transition-colors"
               >
                 + Go to Cities
               </button>
@@ -462,7 +462,7 @@ function LocationPage() {
                 setShowModal(true);
                 setStep(1);
               }}
-              className="bg-red-500 hover:bg-red-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg tracking-wide transition-colors"
+              className="bg-[#002B6B] hover:bg-[#003A88] text-white text-sm font-semibold px-5 py-2.5 rounded-lg tracking-wide transition-colors"
             >
               + ADD NEW LOCATION
             </button>
@@ -487,7 +487,7 @@ function LocationPage() {
           {/* TODO: replace MOCK_LOCATIONS with GET /api/admin/locations */}
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-[#e8dfc8] text-gray-700">
+              <tr className="bg-[#002B6B] text-white">
                 <th className="px-4 py-3 text-left font-medium">Locations</th>
                 <th className="px-4 py-3 text-left font-medium">City Name</th>
               </tr>
