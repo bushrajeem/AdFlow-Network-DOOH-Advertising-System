@@ -56,7 +56,7 @@ const router = createBrowserRouter([
       { path: "screen", element: <ScreenPage /> },
       { path: "ads", element: <AdsPage /> },
       { path: "ads/create", element: <CreateAdPage /> },
-      { path: "screens/create", element: <CreateScreenPage /> },
+      { path: "screen/create", element: <CreateScreenPage /> },
       { path: "playlists", element: <PlaylistsPage /> },
       { path: "users", element: <UsersPage /> },
     ],

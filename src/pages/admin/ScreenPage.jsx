@@ -48,7 +48,7 @@ function ScreenPage() {
   );
 
   // TODO: open modal or navigate to add screen form
-  const handleAdd = () => navigate("/admin/screens/create");
+  const handleAdd = () => navigate("/admin/screen/create");
 
   // TODO: connect to DELETE /api/admin/screens/:id
   const handleDelete = (id) => console.log("Delete screen:", id);

@@ -6,45 +6,28 @@
  *   POST /api/admin/screens — submit form with FormData
  */
 
-import { ArrowLeft, Plus, X } from "lucide-react";
-import { useRef, useState } from "react";
+import { ArrowLeft } from "lucide-react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function CreateScreenPage() {
   const navigate = useNavigate();
 
   const [screenName, setScreenName] = useState("");
-  const [video, setVideo] = useState(null);
-  const [videoPreview, setVideoPreview] = useState(null);
 
-  const videoRef = useRef(null);
 
-  // Handle video file selection — validates MP4 only
-  const handleVideo = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    // TODO: add size and duration validation before upload
-    if (file.type !== "video/mp4") return alert("Only MP4 files are allowed.");
-    setVideo(file);
-    setVideoPreview(URL.createObjectURL(file));
-  };
 
   // TODO: connect to POST /api/admin/screens with FormData
   const handleSave = () => {
     if (!screenName) return alert("Please enter a screen name.");
-    if (!video) return alert("Please upload a video.");
 
     const formData = new FormData();
     formData.append("name", screenName);
-    formData.append("video", video);
 
-    console.log("Save screen — POST /api/admin/screens", { screenName, video });
+    console.log("Save screen — POST /api/admin/screens", { screenName });
     // After successful save: navigate("/admin/screens");
   };
-  const clearVideo = () => {
-    setVideo(null);
-    setVideoPreview(null);
-  };
+ 
 
   return (
     <div className="max-w-2xl">
@@ -58,7 +41,8 @@ function CreateScreenPage() {
         </button>
         <h1 className="text-2xl font-bold text-gray-800">Create Screen</h1>
       </div>
-
+        
+        {/* screen name */}
       <div className="flex flex-col gap-7 px-5">
         {/*Screen Name*/}
         <div className="flex flex-col gap-1.5">
@@ -74,86 +58,34 @@ function CreateScreenPage() {
           />
         </div>
 
-        {/* Screen Creation — Selected Template */}
-        <div className="flex flex-col gap-2">
-          <p className="text-sm font-medium text-gray-700">Screen Creation</p>
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-500">Selected template:</span>
-
-            {/* TODO: replace "No template selected" with actual selected template name */}
-            <span className="text-sm text-gray-400 italic">
-              No template selected
-            </span>
-          </div>
-        </div>
-
-        {/* Upload Video */}
-        <div className="flex flex-col gap-3">
-          <p className="text-[20px] font-bold text-gray-700 py-2">
-            Upload your video Ad
-          </p>
-
-          <div className="relative flex">
-            {/* Video Upload */}
-            <button
-              onClick={() => videoRef.current.click()}
-              className="flex-1 border-2 border-dashed border-gray-300 rounded-xl flex flex-col items-center gap-2 hover:border-red-300 hover:bg-red-50 transition-colors"
-            >
-              {videoPreview ? (
-                // Show video preview if uploaded
-                <video
-                  src={videoPreview}
-                  className="w-52 h-58 object-cover rounded-lg"
-                  muted
-                />
-              ) : (
-                <div className="flex flex-col items-center px-8 py-10">
-                  <div className="w-10 h-10 rounded-full border-2 border-red-400 flex items-center justify-center">
-                    <Plus size={20} className="text-red-400" />
-                  </div>
-                  <p className="text-sm font-semibold text-red-400 py-2">
-                    Add Video
-                  </p>
-                  <p className="text-xs text-gray-400 text-center leading-relaxed">
-                    Drag and drop your video
-                    <br />
-                    file or click to browse
-                  </p>
-                  <p className="text-xs text-gray-400 py-2">
-                    Supports MP4 up to 100MB
-                  </p>
-                </div>
-              )}
-            </button>
-            {/* Delete button — only visible when a video is selected */}
-            {videoPreview && (
-              <button
-                onClick={clearVideo}
-                className="absolute top-2 right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center transition-colors"
-              >
-                <X size={12} />
-              </button>
-            )}
-          </div>
-
-          {/* Size recommendation note */}
-          <div className="text-sm text-gray-500 py-2">
-            <span className="font-semibold text-gray-700">
-              Expected video size: 9:16 aspect ratio
-            </span>
-            <br />
-            Recommended: e.g. 1080 × 1920
-          </div>
-
-          {/* Hidden file inputs */}
+{/*Screen playlist*/}
+        <div className="flex flex-col gap-1.5">
+          <label className="text-sm font-medium text-gray-700 py-3">
+            Playlist Name
+          </label>
           <input
-            ref={videoRef}
-            type="file"
-            accept="video/mp4"
-            onChange={handleVideo}
-            className="hidden"
+            type="text"
+            placeholder="Enter screen name"
+            value={screenName}
+            onChange={(e) => setScreenName(e.target.value)}
+            className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-300"
           />
         </div>
+
+        {/*Screen Name*/}
+        <div className="flex flex-col gap-1.5">
+          <label className="text-sm font-medium text-gray-700 py-3">
+            Screen Name
+          </label>
+          <input
+            type="text"
+            placeholder="Enter screen name"
+            value={screenName}
+            onChange={(e) => setScreenName(e.target.value)}
+            className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-300"
+          />
+        </div>
+        
 
         {/* Save Button */}
         <button
