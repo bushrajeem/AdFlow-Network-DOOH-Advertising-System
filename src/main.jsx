@@ -35,6 +35,7 @@ import ScreenPage from "./pages/admin/ScreenPage.jsx";
 import UsersPage from "./pages/admin/UsersPage.jsx";
 import Home from "./pages/home/Home.jsx";
 import CreateAdPage from "./pages/admin/CreateAdPage.jsx";
+import CreateScreenPage from "./pages/admin/CreateScreenPage.jsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -55,6 +56,7 @@ const router = createBrowserRouter([
       { path: "screen", element: <ScreenPage /> },
       { path: "ads", element: <AdsPage /> },
       { path: "ads/create", element: <CreateAdPage /> },
+      { path: "screens/create", element: <CreateScreenPage /> },
       { path: "playlists", element: <PlaylistsPage /> },
       { path: "users", element: <UsersPage /> },
     ],
