@@ -36,6 +36,7 @@ import UsersPage from "./pages/admin/UsersPage.jsx";
 import Home from "./pages/home/Home.jsx";
 import CreateAdPage from "./pages/admin/CreateAdPage.jsx";
 import CreateScreenPage from "./pages/admin/CreateScreenPage.jsx";
+import CreatePlaylistPage from "./pages/admin/CreatePlaylistPage.jsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -43,8 +44,8 @@ const router = createBrowserRouter([
 
   /* example for landing page team: Admin Routes — all admin routes are handled separately */
   /* See: src/pages/admin/index.jsx */
-  
-  
+
+
   // admin side
   {
     path: "/admin",
@@ -57,6 +58,7 @@ const router = createBrowserRouter([
       { path: "ads", element: <AdsPage /> },
       { path: "ads/create", element: <CreateAdPage /> },
       { path: "screen/create", element: <CreateScreenPage /> },
+      { path: "playlists/create", element: <CreatePlaylistPage /> },
       { path: "playlists", element: <PlaylistsPage /> },
       { path: "users", element: <UsersPage /> },
     ],

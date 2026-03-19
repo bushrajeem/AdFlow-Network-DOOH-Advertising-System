@@ -33,8 +33,7 @@ function PlaylistsPage() {
     s.name.toLowerCase().includes(search.toLowerCase()),
   );
 
-  // TODO: open modal or navigate to add Playlists form
-  const handleAdd = () => console.log("Add Playlist — POST /api/admin/playlists");
+  const handleAdd = () => navigate("/admin/playlists/create");
 
   // TODO: connect to DELETE /api/admin/playlists/:id
   const handleDelete = (id) => console.log("Delete Playlist:", id);
