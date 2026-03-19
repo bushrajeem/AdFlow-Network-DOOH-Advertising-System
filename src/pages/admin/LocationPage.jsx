@@ -575,7 +575,7 @@ function LocationPage() {
                       </select>
                       <button
                         onClick={() => setActiveTab("Countries")}
-                        className="flex items-center gap-1.5 bg-red-500 hover:bg-red-600 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
+                        className="flex items-center gap-1.5 bg-[#002B6B] hover:bg-[#003A88] text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
                       >
                         <PlusCircle size={15} />
                         ADD NEW
@@ -610,7 +610,7 @@ function LocationPage() {
                         </select>
                         <button
                           onClick={() => setActiveTab("Cities")}
-                          className="flex items-center gap-1.5 bg-red-500 hover:bg-red-600 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
+                          className="flex items-center gap-1.5 bg-[#002B6B] hover:bg-[#003A88] text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
                         >
                           <PlusCircle size={15} />
                           ADD NEW
@@ -653,7 +653,7 @@ function LocationPage() {
                         setSelectedCity("");
                         setLocationName("");
                       }}
-                      className="bg-[#002B6B] hover:bg-blue-900 text-white text-sm font-semibold py-2.5 rounded-lg tracking-wide transition-colors"
+                      className="bg-[#002B6B] hover:bg-[#003A88] text-white text-sm font-semibold py-2.5 rounded-lg tracking-wide transition-colors"
                     >
                       SAVE LOCATION
                     </button>
