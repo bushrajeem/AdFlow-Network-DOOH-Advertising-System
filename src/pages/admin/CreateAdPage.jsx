@@ -9,6 +9,7 @@
 import { ArrowLeft, Plus, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { createAd } from "../../services/api";
 
 function CreateAdPage() {
   const navigate = useNavigate();
@@ -30,10 +31,16 @@ function CreateAdPage() {
   };
 
   // TODO: connect to POST /api/admin/ads with FormData
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!adName) return alert("Please enter an ad name.");
     if (!video) return alert("Please upload a video.");
 
+    try {
+      await createAd({ name: adName, duration: 15 });
+      navigate("/admin/ads");
+    } catch (err) {
+      alert(err.message);
+    }
     const formData = new FormData();
     formData.append("name", adName);
     formData.append("video", video);

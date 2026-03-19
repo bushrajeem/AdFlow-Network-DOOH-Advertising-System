@@ -1,46 +1,45 @@
 import { ArrowLeft, Pencil, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { deleteAd, getAds } from "../../services/api";
 
-// TODO: replace with API call GET /api/admin/ads
-const MOCK_Ads = [
-  {
-    id: 1,
-    name: "Walton Ad",
-    playlist: "Playlist - 01",
-    Play_Count: "12118",
-    impressions: "24306",
-  },
-  {
-    id: 2,
-    name: "Glow & Lovely",
-    playlist: "Playlist - 02",
-    Play_Count: "4528",
-    impressions: "12459",
-  },
-  {
-    id: 3,
-    name: "Clear Men",
-    playlist: "Playlist - 03",
-    Play_Count: "22171",
-    impressions: "15552",
-  },
-];
 
 function AdsPage() {
   const navigate = useNavigate();
+  const [ads, setAds] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [search, setSearch] = useState("");
 
-  // Filter table by search input
-  const filtered = MOCK_Ads.filter((s) =>
-    s.name.toLowerCase().includes(search.toLowerCase()),
-  );
+  useEffect(() => {
+    getAds()
+      .then((data) => setAds(data))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  }, []);
 
   // TODO: open modal or navigate to add Ads form
   const handleAdd = () => navigate("/admin/ads/create");
 
   // TODO: connect to DELETE /api/admin/ads/:id
-  const handleDelete = (id) => console.log("Delete Ads:", id);
+  const handleDelete = async (id) => {
+    if (!confirm("Delete this ad?")) return;
+    try {
+      await deleteAd(id);
+      setAds(ads.filter((ad) => ad._id !== id));
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  // Filter table by search input
+  const filtered = ads.filter((s) =>
+    s.name.toLowerCase().includes(search.toLowerCase()),
+  );
+
+  if (loading) return <p className="text-sm text-gray-400">Loading ads...</p>;
+  if (error) return <p className="text-sm text-red-400">{error}</p>;
+
 
   // TODO: connect to PATCH /api/admin/ads/:id
   const handleEdit = (id) => console.log("Edit Ads:", id);
@@ -120,9 +119,9 @@ function AdsPage() {
                 </td>
               </tr>
             ) : (
-              filtered.map((ads) => (
+              filtered.map((ad) => (
                 <tr
-                  key={ads.id}
+                  key={ad._id}
                   className="border-b border-gray-200 hover:bg-gray-50 transition-colors"
                 >
                   {/* Ads color indicator */}
@@ -131,29 +130,29 @@ function AdsPage() {
                   </td>
 
                   <td className="px-4 py-4 font-medium text-gray-800">
-                    {ads.name}
+                    {ad.name}
                   </td>
                   <td className="px-4 py-4 font-medium text-gray-800 text-center ">
-                    {ads.playlist}
+                    {ad.playlist}
                   </td>
                   <td className="px-4 py-4 font-medium text-gray-800 text-center hover:text-red-500">
-                    {ads.Play_Count}
+                    {ad.Play_Count}
                   </td>
                   <td className="px-4 py-4 font-medium text-gray-800 text-center hover:text-red-500">
-                    {ads.impressions}
+                    {ad.impressions}
                   </td>
 
                   {/* Actions */}
                   <td className="px-4 py-4">
                     <div className="flex items-center justify-center gap-3">
                       <button
-                        onClick={() => handleDelete(ads.id)}
+                        onClick={() => handleDelete(ad._id)}
                         className="hover:text-red-500 transition-colors"
                       >
                         <Trash2 size={16} />
                       </button>
                       <button
-                        onClick={() => handleEdit(ads.id)}
+                        onClick={() => handleEdit(ad._id)}
                         className="hover:text-blue-600 transition-colors"
                       >
                         <Pencil size={16} />
