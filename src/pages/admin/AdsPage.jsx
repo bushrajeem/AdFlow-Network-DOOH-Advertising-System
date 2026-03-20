@@ -105,9 +105,6 @@ function AdsPage() {
               <th className="px-4 py-3 text-left font-medium">Ad's Name</th>
               <th className="px-4 py-3 text-center font-medium">Playlist</th>
               <th className="px-4 py-3 text-center font-medium">Play Count</th>
-              <th className="px-4 py-3 text-center font-medium">
-                Impressioins
-              </th>
               <th className="px-4 py-3 text-center font-medium">Action</th>
             </tr>
           </thead>
