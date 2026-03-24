@@ -1,81 +1,142 @@
-/**
- * LocationPage.jsx — Manage locations (Countries, Cities, Locations).
- * Route: /admin/location
- *
- * Three tabs: Countries | Cities | Locations
- * Each tab has a form on the left and a data table on the right.
- *
- * BACKEND: All TODO comments mark where API calls will be connected.
- */
 
-import { useState } from "react";
-import { ArrowLeft, Trash2, Pencil, X, PlusCircle } from "lucide-react";
+import { ArrowLeft, Pencil, PlusCircle, Trash2, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { createLocation, deleteLocation, getLocations } from "../../services/api";
 
-// Tab definitions — add new tabs here if needed
 const TABS = ["Countries", "Cities", "Locations"];
 
-// Mock data — TODO: replace with API call GET /api/admin/countries
-const MOCK_COUNTRIES = [
-  { id: 1, name: "Bangladesh", timezone: "Asia/Dhaka" },
-  { id: 2, name: "Bangladesh", timezone: "Asia/Chittagong" },
-];
-const MOCK_LOCATIONS = [
-  { id: 1, name: "PriyoShop HQ", city: "Dhaka" },
-  { id: 2, name: "DhakaUddan", city: "Dhaka" },
-];
-// TODO: replace with GET /api/admin/cities
-const MOCK_CITIES = [
-  { id: 1, name: "Dhaka", country: "Bangladesh" },
-  { id: 2, name: "Chittagong", country: "Bangladesh" },
-];
 
 function LocationPage() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("Countries");
 
-  // Form state
+  const [locations, setLocations] = useState([]);
+
+  // countries tab state
   const [countryName, setCountryName] = useState("");
   const [timezone, setTimezone] = useState("");
   const [search, setSearch] = useState("");
 
+  // cities tab state
   const [cityName, setCityName] = useState("");
   const [cityCountry, setCityCountry] = useState("");
   const [citySearch, setCitySearch] = useState("");
 
+  // locations
   const [showModal, setShowModal] = useState(false);
   const [step, setStep] = useState(1);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [locationName, setLocationName] = useState("");
 
-  // TODO: replace with useState + useEffect fetching from API
-  const countries = MOCK_COUNTRIES;
+  useEffect(() => {
+    getLocations()
+      .then((data) => setLocations(data))
+      .catch((err) => console.error("Error fetching locations:", err));
+
+  }, []);
+
+  // Refresh locations list from backend
+  const refreshLocations = () =>
+    getLocations()
+      .then((data) => setLocations(data))
+      .catch(console.error);
 
   // Filter table by search input
-  const filtered = countries.filter((c) =>
-    c.name.toLowerCase().includes(search.toLowerCase()),
+  const filteredCountries = locations.filter((l) =>
+    l.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  // TODO: connect to POST /api/admin/countries
-  const handleCreate = () => {
-    console.log("Create country:", { countryName, timezone });
+  const filteredCities = locations.filter((l) =>
+    l.name.toLowerCase().includes(citySearch.toLowerCase())
+  );
+  const filteredLocations = locations.filter((l) =>
+    l.name.toLowerCase().includes(search.toLowerCase()),
+  );
+
+
+  const uniqueCountries = [...new Set(locations.map((l) => l.name))];
+
+  const uniqueCities = [...new Set(locations.map((l) => l.city))];
+
+  // country
+  const handleCreateCountry = async () => {
+    if (!countryName.trim() || !timezone.trim())
+      return alert("Please fill in all fields.");
+    try {
+      // Storing country name as "name" and timezone as "city" field
+      // TODO: update backend model to have a separate "timezone" field later
+      await createLocation({ name: countryName.trim(), city: timezone.trim() });
+      await refreshLocations();
+      setCountryName("");
+      setTimezone("");
+    } catch (err) {
+      alert("Failed to create country.", err);
+    }
+  };
+  const handleDeleteCountry = async (id) => {
+    if (!confirm("Delete this entry?")) return;
+    try {
+      await deleteLocation(id);
+      // Use _id not id — MongoDB uses _id
+      setLocations((prev) => prev.filter((l) => l._id !== id));
+    } catch (err) {
+      alert("Failed to delete.", err);
+    }
+  };
+
+  // city
+  const handleCreateCity = async () => {
+    if (!cityName.trim() || !cityCountry.trim())
+      return alert("Fill in all fields.");
+    try {
+      // City stored as: name = cityName, city = cityCountry
+      await createLocation({ name: cityName.trim(), city: cityCountry.trim() });
+      await refreshLocations();
+      setCityName("");
+      setCityCountry("");
+    } catch (err) {
+      alert("Failed to create city.");
+    }
+  };
+
+  // locations
+  const handleSaveLocation = async () => {
+    if (!locationName.trim()) return alert("Enter a location name.");
+    try {
+      await createLocation({
+        name: locationName.trim(),
+        city: selectedCity,
+        country: selectedCountry,
+      });
+      await refreshLocations();
+      // Reset modal state
+      setShowModal(false);
+      setStep(1);
+      setSelectedCountry("");
+      setSelectedCity("");
+      setLocationName("");
+    } catch (err) {
+      alert("Failed to save location.", err);
+    }
   };
 
   // TODO: connect to DELETE /api/admin/countries/:id
-  const handleDelete = (id) => {
-    console.log("Delete country:", id);
+  const handleDelete = async (id) => {
+    if (!confirm("Delete this country?")) return;
+    try {
+      await deleteLocation(id);
+      setLocations((prev) => prev.filter((l) => l._id !== id));
+    } catch (err) {
+      console.error("Error deleting location:", err);
+    }
+
   };
 
   // TODO: connect to PATCH /api/admin/countries/:id
   const handleEdit = (id) => {
     console.log("Edit country:", id);
-  };
-
-  // TODO: connect to POST /api/admin/cities
-  const handleCreateCity = () => {
-    if (!cityName || !cityCountry) return alert("Fill in all fields.");
-    console.log("Create city:", { cityName, cityCountry });
   };
 
   return (
@@ -98,10 +159,9 @@ function LocationPage() {
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={`px-5 py-2.5 text-sm font-medium rounded-t-lg transition-colors
-              ${
-                activeTab === tab
-                  ? "bg-[#002B6B] text-white"
-                  : "text-gray-500 hover:text-gray-700 bg-white"
+              ${activeTab === tab
+                ? "bg-[#002B6B] text-white"
+                : "text-gray-500 hover:text-gray-700 bg-white"
               }`}
           >
             {tab}
@@ -146,7 +206,7 @@ function LocationPage() {
               </div>
 
               <button
-                onClick={handleCreate}
+                onClick={handleCreateCountry}
                 className="bg-[#002B6B] hover:bg-blue-900 text-white text-sm font-semibold py-4 rounded-lg tracking-wide transition-colors"
               >
                 CREATE COUNTRY
@@ -200,7 +260,7 @@ function LocationPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {filtered.length === 0 ? (
+                    {filteredCountries.length === 0 ? (
                       <tr>
                         <td
                           colSpan={3}
@@ -210,7 +270,7 @@ function LocationPage() {
                         </td>
                       </tr>
                     ) : (
-                      filtered.map((country) => (
+                      filteredCountries.map((country) => (
                         <tr
                           key={country.id}
                           className="border-b border-gray-100"
@@ -256,7 +316,7 @@ function LocationPage() {
           <p className="text-sm text-gray-400 mb-6">Add new cities</p>
 
           <div className="flex gap-6">
-            {/* ── Left: Create Form ────────────────────────────────────── */}
+            {/* ── Left: Create Form */}
             <div className="flex flex-col gap-4 w-80">
               <div className="flex flex-col gap-1">
                 <label className="text-sm text-gray-500 py-1">City Name</label>
@@ -278,7 +338,7 @@ function LocationPage() {
                   className="border border-gray-200 rounded-lg px-3 py-2.5 mb-2 text-sm outline-none focus:ring-2 focus:ring-blue-300"
                 >
                   <option value="">Select country</option>
-                  {MOCK_COUNTRIES.map((c) => (
+                  {uniqueCountries.map((c) => (
                     <option key={c.id} value={c.name}>
                       {c.name}
                     </option>
@@ -337,21 +397,14 @@ function LocationPage() {
                   </thead>
                   <tbody>
                     {/* TODO: replace MOCK_CITIES with GET /api/admin/cities */}
-                    {MOCK_CITIES.filter((c) =>
-                      c.name.toLowerCase().includes(citySearch.toLowerCase()),
-                    ).length === 0 ? (
+                    {filteredCities.length === 0 ? (
                       <tr>
-                        <td
-                          colSpan={3}
-                          className="text-center py-8 text-gray-400"
-                        >
+                        <td colSpan={3} className="text-center py-8 text-gray-400">
                           No cities found
                         </td>
                       </tr>
                     ) : (
-                      MOCK_CITIES.filter((c) =>
-                        c.name.toLowerCase().includes(citySearch.toLowerCase()),
-                      ).map((city) => (
+                      filteredCities.map((city) => (
                         <tr
                           key={city.id}
                           className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
@@ -428,14 +481,14 @@ function LocationPage() {
             {[
               {
                 label: "Countries",
-                value: 1,
+                value: uniqueCountries.length,
                 icon: "🌐",
                 color: "text-orange-500",
               },
-              { label: "Cities", value: 1, icon: "🏙️", color: "text-gray-800" },
+              { label: "Cities", value: uniqueCities.length, icon: "🏙️", color: "text-gray-800" },
               {
                 label: "Locations",
-                value: 1,
+                value: locations.length,
                 icon: "📍",
                 color: "text-green-500",
               },
@@ -484,7 +537,7 @@ function LocationPage() {
           />
 
           {/* Table */}
-          {/* TODO: replace MOCK_LOCATIONS with GET /api/admin/locations */}
+
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-[#002B6B] text-white">
@@ -493,18 +546,14 @@ function LocationPage() {
               </tr>
             </thead>
             <tbody>
-              {MOCK_LOCATIONS.filter((l) =>
-                l.name.toLowerCase().includes(search.toLowerCase()),
-              ).length === 0 ? (
+              {filteredLocations.length === 0 ? (
                 <tr>
-                  <td colSpan={2} className="text-center py-8 text-gray-400">
+                  <td colSpan={3} className="text-center py-8 text-gray-400">
                     No locations found
                   </td>
                 </tr>
               ) : (
-                MOCK_LOCATIONS.filter((l) =>
-                  l.name.toLowerCase().includes(search.toLowerCase()),
-                ).map((loc) => (
+                filteredLocations.map((loc) => (
                   <tr
                     key={loc.id}
                     className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
@@ -567,7 +616,7 @@ function LocationPage() {
                       >
                         <option value="">Choose a country</option>
                         {/* TODO: replace with API GET /api/admin/countries */}
-                        {MOCK_COUNTRIES.map((c) => (
+                        {uniqueCountries.map((c) => (
                           <option key={c.id} value={c.name}>
                             {c.name}
                           </option>
@@ -600,7 +649,7 @@ function LocationPage() {
                         >
                           <option value="">Choose a city</option>
                           {/* TODO: replace with API GET /api/admin/cities?country={selectedCountry} */}
-                          {MOCK_CITIES.filter(
+                          {uniqueCities.filter(
                             (c) => c.country === selectedCountry,
                           ).map((c) => (
                             <option key={c.id} value={c.name}>

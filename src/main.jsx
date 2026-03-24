@@ -37,6 +37,10 @@ import Home from "./pages/home/Home.jsx";
 import CreateAdPage from "./pages/admin/CreateAdPage.jsx";
 import CreateScreenPage from "./pages/admin/CreateScreenPage.jsx";
 import CreatePlaylistPage from "./pages/admin/CreatePlaylistPage.jsx";
+import LocationIndex from "./pages/admin/location/index.jsx";
+import CountryPage from "./pages/admin/location/CountryPage.jsx";
+import CityPage from "./pages/admin/location/CityPage.jsx";
+import LocationsPage from "./pages/admin/location/LocationsPage.jsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -53,7 +57,10 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Navigate to="dashboard" replace /> },
       { path: "dashboard", element: <AdminDashboardPage /> },
-      { path: "location", element: <LocationPage /> },
+      { path: "location", element: <LocationIndex /> },
+      { path: "location/countries", element: <CountryPage /> },
+      { path: "location/cities", element: <CityPage /> },
+      { path: "location/locations", element: <LocationsPage /> },
       { path: "screen", element: <ScreenPage /> },
       { path: "ads", element: <AdsPage /> },
       { path: "ads/create", element: <CreateAdPage /> },
