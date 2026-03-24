@@ -10,51 +10,50 @@
  */
 
 import { ArrowLeft, Pencil, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { deleteScreen, getScreens } from "../../services/api";
 
-// TODO: replace with API call GET /api/admin/screens
-const MOCK_SCREENS = [
-  {
-    id: 1,
-    name: "Private Screen - 01",
-    status: "Online",
-    location: "Allah r daan HQ",
-    playlist: "Playlist - 01",
-  },
-  {
-    id: 2,
-    name: "Private Screen - 02",
-    status: "Online",
-    location: "Mayer dua HQ",
-    playlist: "Playlist - 01",
-  },
-  {
-    id: 3,
-    name: "Private Screen - 03",
-    status: "Offline",
-    location: "Bhaat er hotel",
-    playlist: "Playlist - 01",
-  },
-];
 
 function ScreenPage() {
   const navigate = useNavigate();
-  const [search, setSearch] = useState("");
 
-  // Filter table by search input
-  const filtered = MOCK_SCREENS.filter((s) =>
+  const [screens, setScreens] = useState([]);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    getScreens()
+      .then((data) => setScreens(data))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  }, []);
+
+
+  const filtered = screens.filter((s) =>
     s.name.toLowerCase().includes(search.toLowerCase()),
   );
 
   // TODO: open modal or navigate to add screen form
   const handleAdd = () => navigate("/admin/screen/create");
 
-  // TODO: connect to DELETE /api/admin/screens/:id
-  const handleDelete = (id) => console.log("Delete screen:", id);
 
-  // TODO: connect to PATCH /api/admin/screens/:id
+  const handleDelete = async (id) => {
+    if (!confirm("Delete this screen?")) return;
+    try {
+      await deleteScreen(id);
+      setScreens((prev) => prev.filter((s) => s._id !== id));
+    } catch (err) {
+      alert(err.message);
+    }
+  }
+
+
   const handleEdit = (id) => console.log("Edit screen:", id);
+
+  if (loading) return <p className="text-sm text-gray-400 p-6">Loading screens...</p>;
+  if (error) return <p className="text-sm text-red-400 p-6">{error}</p>;
 
   return (
     <div>
@@ -121,7 +120,7 @@ function ScreenPage() {
             ) : (
               filtered.map((screen) => (
                 <tr
-                  key={screen.id}
+                  key={screen._id}
                   className="border-b border-gray-200 hover:bg-gray-50 transition-colors"
                 >
                   {/* Screen color indicator */}
@@ -158,13 +157,13 @@ function ScreenPage() {
                   <td className="px-4 py-4">
                     <div className="flex items-center justify-center gap-3">
                       <button
-                        onClick={() => handleDelete(screen.id)}
+                        onClick={() => handleDelete(screen._id)}
                         className="hover:text-red-500 transition-colors"
                       >
                         <Trash2 size={16} />
                       </button>
                       <button
-                        onClick={() => handleEdit(screen.id)}
+                        onClick={() => handleEdit(screen._id)}
                         className="hover:text-blue-600 transition-colors"
                       >
                         <Pencil size={16} />

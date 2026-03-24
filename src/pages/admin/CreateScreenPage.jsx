@@ -13,46 +13,37 @@
  */
 
 import { ArrowLeft } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { createScreen, getLocations, getPlaylists } from "../../services/api";
 
-// TODO: replace with GET /api/admin/playlists
-const MOCK_PLAYLISTS = [
-  { id: 1, name: "Playlist - 01" },
-  { id: 2, name: "Playlist - 02" },
-];
-
-// TODO: replace with GET /api/admin/locations
-const MOCK_LOCATIONS = [
-  { id: 1, name: "PriyoShop HQ" },
-  { id: 2, name: "Agora Dhanmondi" },
-];
 
 function CreateScreenPage() {
   const navigate = useNavigate();
 
-  // Required
   const [screenName, setScreenName] = useState("");
-
-  // Optional — empty string means "not assigned"
   const [playlistId, setPlaylistId] = useState("");
   const [locationId, setLocationId] = useState("");
+  const [playlists, setPlaylists] = useState([]); 
+  const [locations, setLocations] = useState([]);
 
-  const handleSave = () => {
-    // Only screen name is required
+  useEffect(() => {
+   getPlaylists().then((data) => setPlaylists(data).catch(console.error));
+   getLocations().then((data) => setLocations(data).catch(console.error));
+  }, []);
+
+  const handleSave = async () => {
     if (!screenName.trim()) return alert("Please enter a screen name.");
-
-    const payload = {
-      name: screenName.trim(),
-      // Only include if selected — backend treats null as unassigned
-      ...(playlistId && { playlistId: Number(playlistId) }),
-      ...(locationId && { locationId: Number(locationId) }),
-    };
-
-    // TODO: POST /api/admin/screens with payload
-    console.log("Save screen:", payload);
-    // On success:
-    // navigate("/admin/screen");
+    try{
+      await createScreen({
+        name: screenName.trim(),
+        playlistId: playlistId ? Number(playlistId) : null,
+        locationId: locationId ? Number(locationId) : null,
+      });
+      navigate("/admin/screen");
+    } catch(err) {
+      return alert(err.message);
+    }
   };
 
   return (
@@ -98,7 +89,7 @@ function CreateScreenPage() {
           >
             <option value="">-- No playlist assigned --</option>
             {/* TODO: replace MOCK_PLAYLISTS with API response */}
-            {MOCK_PLAYLISTS.map((p) => (
+            {playlists.map((p) => (
               <option key={p.id} value={p.id}>{p.name}</option>
             ))}
           </select>
@@ -117,7 +108,7 @@ function CreateScreenPage() {
           >
             <option value="">-- No location assigned --</option>
             {/* TODO: replace MOCK_LOCATIONS with API response */}
-            {MOCK_LOCATIONS.map((l) => (
+            {locations.map((l) => (
               <option key={l.id} value={l.id}>{l.name}</option>
             ))}
           </select>
