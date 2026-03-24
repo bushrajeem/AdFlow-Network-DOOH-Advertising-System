@@ -21,23 +21,34 @@ async function request(endpoint, options = {}) {
   return res.json();
 }
 
+// Dashboard
+export const getDashboardStats = () => request("/dashboard/stats");
+
 // Ads
-export const getAds    = ()     => request("/ads");
-export const createAd  = (data) => request("/ads", { method: "POST", body: JSON.stringify(data) });
-export const deleteAd  = (id)   => request(`/ads/${id}`, { method: "DELETE" });
+export const getAds = () => request("/ads");
+export const createAd = (data) =>
+  request("/ads", { method: "POST", body: JSON.stringify(data) });
+export const deleteAd = (id) => request(`/ads/${id}`, { method: "DELETE" });
 
 // Locations
-export const getLocations     = ()     => request("/locations");
-export const createLocation   = (data) => request("/locations", { method: "POST", body: JSON.stringify(data) });
-export const deleteLocation   = (id)   => request(`/locations/${id}`, { method: "DELETE" });
+export const getLocations = () => request("/locations");
+export const createLocation = (data) =>
+  request("/locations", { method: "POST", body: JSON.stringify(data) });
+export const deleteLocation = (id) =>
+  request(`/locations/${id}`, { method: "DELETE" });
 
 // Playlists
-export const getPlaylists   = ()     => request("/playlists");
-export const createPlaylist = (data) => request("/playlists", { method: "POST", body: JSON.stringify(data) });
-export const deletePlaylist = (id)   => request(`/playlists/${id}`, { method: "DELETE" });
+export const getPlaylists = () => request("/playlists");
+export const createPlaylist = (data) =>
+  request("/playlists", { method: "POST", body: JSON.stringify(data) });
+export const deletePlaylist = (id) =>
+  request(`/playlists/${id}`, { method: "DELETE" });
 
 // Screens
-export const getScreens    = ()         => request("/screens");
-export const createScreen  = (data)     => request("/screens", { method: "POST", body: JSON.stringify(data) });
-export const updateScreen  = (id, data) => request(`/screens/${id}`, { method: "PATCH", body: JSON.stringify(data) });
-export const deleteScreen  = (id)       => request(`/screens/${id}`, { method: "DELETE" });
+export const getScreens = () => request("/screens");
+export const createScreen = (data) =>
+  request("/screens", { method: "POST", body: JSON.stringify(data) });
+export const updateScreen = (id, data) =>
+  request(`/screens/${id}`, { method: "PATCH", body: JSON.stringify(data) });
+export const deleteScreen = (id) =>
+  request(`/screens/${id}`, { method: "DELETE" });
