@@ -13,32 +13,11 @@
  */
 
 import { ArrowLeft, Check } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { createPlaylist, getAds, getLocations } from "../../services/api";
 
-// ── Mock data — replace with API calls 
-// TODO: fetch from GET /api/admin/ads
-const MOCK_ADS = [
-    { id: 1, name: "Nokia Ad", duration: "15s" },
-    { id: 2, name: "Brand Ad", duration: "15s" },
-    { id: 3, name: "Choco Chip Ad", duration: "15s" },
-    { id: 4, name: "Summer Sale", duration: "15s" },
-];
 
-// TODO: fetch from GET /api/admin/locations
-const MOCK_LOCATIONS = [
-    { id: 1, name: "PriyoShop HQ" },
-    { id: 2, name: "Agora Dhanmondi" },
-    { id: 3, name: "Shwapno Mirpur" },
-];
-
-// ── SelectableItem — reusable selectable card
-// Used for both ads and locations.
-// Props:
-//   label    {string}  — primary text shown on the card
-//   sub      {string}  — optional secondary text (e.g. duration)
-//   selected {boolean} — whether this item is currently selected
-//   onToggle {fn}      — called when the card is clicked
 function SelectableItem({ label, sub, selected, onToggle }) {
     return (
         <button
@@ -64,11 +43,6 @@ function SelectableItem({ label, sub, selected, onToggle }) {
     );
 }
 
-// ── SectionLabel — reusable label + optional count badge
-// Props:
-//   title {string} — section heading
-//   count {number} — number of selected items (0 hides the badge)
-//   note  {string} — optional right-side note e.g. "Optional"
 function SectionLabel({ title, count, note }) {
     return (
         <div className="flex items-center justify-between mb-2">
@@ -89,34 +63,43 @@ function SectionLabel({ title, count, note }) {
 function CreatePlaylistPage() {
     const navigate = useNavigate();
 
-    // Required field
     const [playlistName, setPlaylistName] = useState("");
-
-    // Selected IDs — stored as Sets for O(1) toggle/lookup
-    // Set is ideal here: toggling an id is just add() or delete()
+    const [ads, setAds] = useState([]);
     const [selectedAds, setSelectedAds] = useState(new Set());
+    const [locations, setLocations] = useState([]);
     const [selectedLocations, setSelectedLocations] = useState(new Set());
+    const [loading, setLoading] = useState(true)
 
-    // Toggle logic — if id is already in the Set, remove it; otherwise add it
-    // Returns a NEW Set so React detects the state change
+    useEffect(() => {
+        getAds()
+            .then((data) => setAds(data))
+            .catch((err) => console.error("Failed to fetch ads:", err))
+            .finally(() => setLoading(false));
+        getLocations()
+            .then((data) => setLocations(data))
+            .catch((err) => console.error("Failed to fetch locations:", err))
+            .finally(() => setLoading(false));
+    }, []);
+
     const toggle = (set, setFn, id) => {
         const next = new Set(set);
         next.has(id) ? next.delete(id) : next.add(id);
         setFn(next);
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
         if (!playlistName.trim()) return alert("Please enter a playlist name.");
 
-        const payload = {
-            name: playlistName.trim(),
-            adIds: [...selectedAds],        // convert Set → array for API
-            locationIds: [...selectedLocations],  // convert Set → array for API
-        };
-
-        // TODO: POST /api/admin/playlists with payload
-        console.log("Save playlist:", payload);
-        // On success: navigate("/admin/playlists");
+        try {
+            await createPlaylist({
+                name: playlistName.trim(),
+                adIds: Array.from(selectedAds),
+                locationIds: Array.from(selectedLocations)
+            });
+            navigate("/admin/playlists");
+        } catch (err) {
+            alert("Failed to create playlist.", err);
+        }
     };
 
     return (
@@ -149,54 +132,62 @@ function CreatePlaylistPage() {
                     />
                 </div>
 
-                {/*  Ads Selection — optional, multiple */}
-                {/*
-          Renders each ad as a SelectableItem.
-          Clicking toggles it in/out of selectedAds Set.
-          SectionLabel shows the live count of selected ads.
-        */}
+                {/*  Ads Selection */}
                 <div>
                     <SectionLabel
                         title="Select Ads"
                         count={selectedAds.size}
                         note="Optional"
                     />
-                    <div className="flex flex-col gap-2">
-                        {/* TODO: replace MOCK_ADS with data fetched from GET /api/admin/ads */}
-                        {MOCK_ADS.map((ad) => (
-                            <SelectableItem
-                                key={ad.id}
-                                label={ad.name}
-                                sub={`Duration: ${ad.duration}`}
-                                selected={selectedAds.has(ad.id)}
-                                onToggle={() => toggle(selectedAds, setSelectedAds, ad.id)}
-                            />
-                        ))}
-                    </div>
+                    {loading ? (
+                        <p className="text-sm text-gray-400">Loading ads...</p>
+                    ) : ads.length === 0 ? (
+                        <p className="text-sm text-gray-400">
+                            No ads found.{" "}
+                            <button
+                                onClick={() => navigate("/admin/ads/create")}
+                                className="text-blue-500 hover:underline"
+                            >
+                                Create one first.
+                            </button>
+                        </p>
+                    ) : (
+                        <div className="flex flex-col gap-2">
+                            {ads.map((ad) => (
+                                <SelectableItem
+                                    key={ad._id}
+                                    label={ad.name}
+                                    sub={`Duration: ${ad.duration}s`}
+                                    selected={selectedAds.has(ad._id)}
+                                    onToggle={() => toggle(selectedAds, setSelectedAds, ad._id)}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
-
                 {/* Locations Selection — optional, multiple */}
-                {/*
-          Same pattern as ads selection above.
-          Clicking toggles location in/out of selectedLocations Set.
-        */}
+
                 <div>
                     <SectionLabel
                         title="Assign Locations"
                         count={selectedLocations.size}
                         note="Optional"
                     />
-                    <div className="flex flex-col gap-2">
-                        {/* TODO: replace MOCK_LOCATIONS with GET /api/admin/locations */}
-                        {MOCK_LOCATIONS.map((loc) => (
-                            <SelectableItem
-                                key={loc.id}
-                                label={loc.name}
-                                selected={selectedLocations.has(loc.id)}
-                                onToggle={() => toggle(selectedLocations, setSelectedLocations, loc.id)}
-                            />
-                        ))}
-                    </div>
+                    {locations.length === 0 ? (
+                        <p className="text-sm text-gray-400">No locations found.</p>
+                    ) : (
+                        <div className="flex flex-col gap-2">
+                            {locations.map((loc) => (
+                                <SelectableItem
+                                    key={loc._id}
+                                    label={loc.name}
+                                    sub={loc.city}
+                                    selected={selectedLocations.has(loc._id)}
+                                    onToggle={() => toggle(selectedLocations, setSelectedLocations, loc._id)}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
 
                 {/* Save */}

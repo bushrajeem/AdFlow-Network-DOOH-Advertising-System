@@ -1,45 +1,44 @@
 import { ArrowLeft, Pencil, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-// TODO: replace with API call GET /api/admin/playlists
-const MOCK_Playlists = [
-  {
-    id: 1,
-    name: "Playlist - 01",
-    totalAds: 1,
-    locations: 3,
-  },
-  {
-    id: 2,
-    name: "Playlist - 02",
-    totalAds: 2,
-    locations: 2,
-  },
-  {
-    id: 3,
-    name: "Playlist - 03",
-    totalAds: 3,
-    locations: 1,
-  },
-];
+import { deletePlaylist, getPlaylists } from "../../services/api";
 
 function PlaylistsPage() {
   const navigate = useNavigate();
+
+  const [playlists, setPlaylists] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [search, setSearch] = useState("");
 
+  useEffect(() => {
+    getPlaylists()
+      .then((data) => setPlaylists(data))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  }, []);
+
   // Filter table by search input
-  const filtered = MOCK_Playlists.filter((s) =>
-    s.name.toLowerCase().includes(search.toLowerCase()),
+  const filtered = playlists.filter((p) =>
+    p.name.toLowerCase().includes(search.toLowerCase()),
   );
 
   const handleAdd = () => navigate("/admin/playlists/create");
 
-  // TODO: connect to DELETE /api/admin/playlists/:id
-  const handleDelete = (id) => console.log("Delete Playlist:", id);
 
-  // TODO: connect to PATCH /api/admin/playlists/:id
+  const handleDelete = async (id) => {
+    if (!confirm("Delete this playlist?")) return;
+    try {
+      await deletePlaylist(id);
+      setPlaylists((prev) => prev.filter((p) => p._id !== id));
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
   const handleEdit = (id) => console.log("Edit Playlist:", id);
+  if (loading) return <p className="text-sm text-gray-400 p-6">Loading playlists...</p>;
+  if (error) return <p className="text-sm text-red-400 p-6">{error}</p>;
 
   return (
     <div>
@@ -108,7 +107,7 @@ function PlaylistsPage() {
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={6} className="text-center py-8 text-gray-400">
+                <td colSpan={4} className="text-center py-8 text-gray-400">
                   No Playlists found
                 </td>
               </tr>
@@ -127,17 +126,17 @@ function PlaylistsPage() {
                     {playlist.name}
                   </td>
                   <td className="px-4 py-4 font-medium text-gray-800 text-center ">
-                    {playlist.totalAds}
+                    {playlist.ads?.length || 0}
                   </td>
                   <td className="px-4 py-4 font-medium text-gray-800 text-center hover:text-red-500">
-                    {playlist.locations}
+                    {playlist.locations?.length || 0}
                   </td>
 
                   {/* Actions */}
                   <td className="px-4 py-4">
                     <div className="flex items-center justify-center gap-3">
                       <button
-                        onClick={() => handleDelete(playlist.id)}
+                        onClick={() => handleDelete(playlist._id)}
                         className="hover:text-red-500 transition-colors"
                       >
                         <Trash2 size={16} />
