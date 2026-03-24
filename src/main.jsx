@@ -28,19 +28,18 @@ import {
 import "./index.css";
 import AdminDashboardPage from "./pages/admin/AdminDashboardPage.jsx";
 import AdsPage from "./pages/admin/AdsPage.jsx";
+import CreateAdPage from "./pages/admin/CreateAdPage.jsx";
+import CreatePlaylistPage from "./pages/admin/CreatePlaylistPage.jsx";
+import CreateScreenPage from "./pages/admin/CreateScreenPage.jsx";
 import Admin from "./pages/admin/index.jsx";
-import LocationPage from "./pages/admin/LocationPage.jsx";
+import CityPage from "./pages/admin/location/CityPage.jsx";
+import CountryPage from "./pages/admin/location/CountryPage.jsx";
+import LocationIndex from "./pages/admin/location/index.jsx";
+import LocationsPage from "./pages/admin/location/LocationsPage.jsx";
 import PlaylistsPage from "./pages/admin/PlaylistsPage.jsx";
 import ScreenPage from "./pages/admin/ScreenPage.jsx";
 import UsersPage from "./pages/admin/UsersPage.jsx";
 import Home from "./pages/home/Home.jsx";
-import CreateAdPage from "./pages/admin/CreateAdPage.jsx";
-import CreateScreenPage from "./pages/admin/CreateScreenPage.jsx";
-import CreatePlaylistPage from "./pages/admin/CreatePlaylistPage.jsx";
-import LocationIndex from "./pages/admin/location/index.jsx";
-import CountryPage from "./pages/admin/location/CountryPage.jsx";
-import CityPage from "./pages/admin/location/CityPage.jsx";
-import LocationsPage from "./pages/admin/location/LocationsPage.jsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },

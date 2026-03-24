@@ -7,16 +7,27 @@ import mongoose from "mongoose";
 
 const locationSchema = new mongoose.Schema(
   {
+    type: {
+      type: String,
+      enum: ["country", "city", "location"],
+      default: "location",
+      trim: true,
+    },
+
     name: {
       type:     String,
       required: true,
       trim:     true,
     },
 
+    timezone: {
+      type: String,
+      trim: true,
+    },
+
     city: {
-      type:     String,
-      required: true,
-      trim:     true,
+      type: String,
+      trim: true,
     },
 
     country: {

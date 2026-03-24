@@ -17,13 +17,48 @@ export async function getLocations(req, res) {
 // POST /api/locations — create a new location
 export async function createLocation(req, res) {
   try {
-    const { name, city, country } = req.body;
+    const {
+      type: rawType,
+      name,
+      city,
+      country,
+      timezone,
+    } = req.body;
 
-    if (!name || !city) {
-      return res.status(400).json({ message: "Name and city are required." });
+    if (!name?.trim()) {
+      return res.status(400).json({ message: "Name is required." });
     }
 
-    const location = await Location.create({ name, city, country });
+    let type = rawType;
+    if (!type) {
+      if (timezone) type = "country";
+      else if (country && !city) type = "city";
+      else type = "location";
+    }
+
+    if (!["country", "city", "location"].includes(type)) {
+      return res.status(400).json({ message: "Invalid location type." });
+    }
+
+    if (type === "country" && !timezone?.trim()) {
+      return res.status(400).json({ message: "Timezone is required for country." });
+    }
+
+    if (type === "city" && !country?.trim()) {
+      return res.status(400).json({ message: "Country is required for city." });
+    }
+
+    if (type === "location" && (!city?.trim() || !country?.trim())) {
+      return res.status(400).json({ message: "City and country are required for location." });
+    }
+
+    const location = await Location.create({
+      type,
+      name: name.trim(),
+      timezone: timezone?.trim(),
+      city: city?.trim(),
+      country: country?.trim(),
+    });
     res.status(201).json(location);
   } catch (error) {
     res.status(500).json({ message: error.message });
