@@ -99,8 +99,8 @@ function AdsPage() {
 
         {/* Table */}
         <table className="w-full text-sm">
-          <thead>
-            <tr style={{ backgroundColor: "#002B6B" }} className="text-white">
+          <thead className="bg-[#002B6B] text-white">
+            <tr>
               <th className="w-12 px-4 py-3" />
               <th className="px-4 py-3 text-left font-medium">Ad's Name</th>
               <th className="px-4 py-3 text-center font-medium">Playlist</th>
@@ -111,7 +111,7 @@ function AdsPage() {
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={6} className="text-center py-8 text-gray-400">
+                <td colSpan={5} className="text-center py-8 text-gray-400">
                   No Ads found
                 </td>
               </tr>
@@ -134,9 +134,6 @@ function AdsPage() {
                   </td>
                   <td className="px-4 py-4 font-medium text-gray-800 text-center hover:text-red-500">
                     {ad.Play_Count}
-                  </td>
-                  <td className="px-4 py-4 font-medium text-gray-800 text-center hover:text-red-500">
-                    {ad.impressions}
                   </td>
 
                   {/* Actions */}
