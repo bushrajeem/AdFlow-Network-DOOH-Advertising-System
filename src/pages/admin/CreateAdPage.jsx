@@ -35,18 +35,17 @@ function CreateAdPage() {
     if (!adName) return alert("Please enter an ad name.");
     if (!video) return alert("Please upload a video.");
 
+    const formData = new FormData();
+    formData.append("name", adName);
+    formData.append("duration", "15");
+    formData.append("video", video);
+
     try {
-      await createAd({ name: adName, duration: 15 });
+      await createAd(formData);
       navigate("/admin/ads");
     } catch (err) {
       alert(err.message);
     }
-    const formData = new FormData();
-    formData.append("name", adName);
-    formData.append("video", video);
-
-    console.log("Save ad — POST /api/admin/ads", { adName, video });
-    // After successful save: navigate("/admin/ads");
   };
   const clearVideo = () => {
     setVideo(null);

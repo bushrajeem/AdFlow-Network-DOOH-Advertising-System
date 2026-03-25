@@ -5,6 +5,24 @@
 
 import Ad from "../models/Ad.js";
 import Playlist from "../models/Playlist.js";
+import cloudinary from "../config/cloudinary.js";
+
+function uploadVideoToCloudinary(fileBuffer) {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      {
+        resource_type: "video",
+        folder: "adflow/ads",
+      },
+      (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      },
+    );
+
+    stream.end(fileBuffer);
+  });
+}
 
 // GET /api/ads — fetch all ads
 export async function getAds(req, res) {
@@ -38,7 +56,30 @@ export async function createAd(req, res) {
 
     if (!name) return res.status(400).json({ message: "Ad name is required." });
 
-    const ad = await Ad.create({ name, duration });
+    if (!req.file) {
+      return res.status(400).json({ message: "Video file is required." });
+    }
+
+    const hasCloudinaryConfig =
+      (process.env.CLOUDINARY_CLOUD_NAME &&
+        process.env.CLOUDINARY_API_KEY &&
+        process.env.CLOUDINARY_API_SECRET) ||
+      process.env.CLOUDINARY_URL;
+
+    if (!hasCloudinaryConfig) {
+      return res.status(500).json({
+        message:
+          "Cloudinary is not configured. Set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in backend/.env and restart the backend.",
+      });
+    }
+
+    const uploadResult = await uploadVideoToCloudinary(req.file.buffer);
+
+    const ad = await Ad.create({
+      name,
+      duration,
+      videoUrl: uploadResult.secure_url,
+    });
     res.status(201).json(ad);
   } catch (error) {
     res.status(500).json({ message: error.message });

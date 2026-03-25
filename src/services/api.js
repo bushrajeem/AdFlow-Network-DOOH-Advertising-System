@@ -8,8 +8,10 @@ const BASE_URL = "http://localhost:5000/api";
 
 // Helper function to make API requests and handle errors in one place
 async function request(endpoint, options = {}) {
+  const isFormData = options.body instanceof FormData;
+
   const res = await fetch(`${BASE_URL}${endpoint}`, {
-    headers: { "Content-Type": "application/json" },
+    headers: isFormData ? {} : { "Content-Type": "application/json" },
     ...options,
   });
 
@@ -27,7 +29,13 @@ export const getDashboardStats = () => request("/dashboard/stats");
 // Ads
 export const getAds = () => request("/ads");
 export const createAd = (data) =>
-  request("/ads", { method: "POST", body: JSON.stringify(data) });
+  request(
+    "/ads",
+    {
+      method: "POST",
+      body: data instanceof FormData ? data : JSON.stringify(data),
+    },
+  );
 export const deleteAd = (id) => request(`/ads/${id}`, { method: "DELETE" });
 
 // Locations
