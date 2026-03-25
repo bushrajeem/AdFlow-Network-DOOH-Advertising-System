@@ -40,6 +40,7 @@ import PlaylistsPage from "./pages/admin/PlaylistsPage.jsx";
 import ScreenPage from "./pages/admin/ScreenPage.jsx";
 import UsersPage from "./pages/admin/UsersPage.jsx";
 import Home from "./pages/home/Home.jsx";
+import PlayerPage from "./pages/player/PlayerPage.jsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -69,6 +70,7 @@ const router = createBrowserRouter([
       { path: "users", element: <UsersPage /> },
     ],
   },
+  { path: "/player/:screenId", element: <PlayerPage /> },
 ]);
 
 createRoot(document.getElementById("root")).render(
