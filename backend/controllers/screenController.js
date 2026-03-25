@@ -3,9 +3,9 @@
  */
 
 import Screen from "../models/Screen.js";
+import {getIO} from "../socket.js";
 
 // GET /api/screens — fetch all screens
-// populate fills in playlist and location details
 export async function getScreens(req, res) {
   try {
     const screens = await Screen.find()
@@ -23,12 +23,13 @@ export async function createScreen(req, res) {
   try {
     const { name, playlistId, locationId } = req.body;
 
-    if (!name) return res.status(400).json({ message: "Screen name is required." });
+    if (!name)
+      return res.status(400).json({ message: "Screen name is required." });
 
     const screen = await Screen.create({
       name,
-      playlist: playlistId || null,  // optional
-      location: locationId || null,  // optional
+      playlist: playlistId || null, // optional
+      location: locationId || null, // optional
     });
 
     res.status(201).json(screen);
@@ -47,12 +48,22 @@ export async function updateScreen(req, res) {
       {
         ...(playlistId !== undefined && { playlist: playlistId }),
         ...(locationId !== undefined && { location: locationId }),
-        ...(status     !== undefined && { status }),
+        ...(status !== undefined && { status }),
       },
-      { new: true } // return updated document
-    ).populate("playlist").populate("location");
+      { new: true }, // return updated document
+    )
+      .populate("playlist")
+      .populate("location");
 
     if (!screen) return res.status(404).json({ message: "Screen not found." });
+
+    try{
+      getIO().to(screen._id.toString()).emit("playlist-updated", {
+        playlist: screen.playlist,
+      });
+    } catch(err) {
+      console.warn("Error emitting playlist-updated event:", err.message);
+    }
 
     res.json(screen);
   } catch (error) {

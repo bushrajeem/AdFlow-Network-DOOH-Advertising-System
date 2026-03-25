@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import { createServer } from "http";
+import { initSocket } from "./socket.js";
 import connectDB from "./config/db.js";
 
 import adRoutes from "./routes/adRoutes.js";
@@ -13,7 +15,11 @@ dotenv.config();
 connectDB();
 
 const app = express();
+const server = createServer(app);
 const PORT = process.env.PORT || 5000;
+
+// initilize socket.io with HTTP server
+initSocket(server);
 
 app.use(cors());
 app.use(express.json());
