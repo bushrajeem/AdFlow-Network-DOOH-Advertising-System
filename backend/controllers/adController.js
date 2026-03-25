@@ -24,6 +24,46 @@ function uploadVideoToCloudinary(fileBuffer) {
   });
 }
 
+// Helper function to extract public_id from Cloudinary URL
+function extractPublicIdFromUrl(videoUrl) {
+  if (!videoUrl) return null;
+
+  try {
+    const url = new URL(videoUrl);
+    const pathname = url.pathname;
+
+    // URL format: /v{cloud_name}/video/upload/v{version}/{folder}/{public_id}.{ext}
+    // We need to extract everything after "upload/v{number}/" excluding the extension
+    const match = pathname.match(/\/upload\/v\d+\/(.+)\.\w+$/);
+    if (match) {
+      return match[1]; // Returns "adflow/ads/public_id"
+    }
+  } catch (error) {
+    console.error("Error extracting public_id from URL:", error);
+  }
+
+  return null;
+}
+
+// Helper function to delete video from Cloudinary
+function deleteVideoFromCloudinary(videoUrl) {
+  return new Promise((resolve, reject) => {
+    const publicId = extractPublicIdFromUrl(videoUrl);
+
+    if (!publicId) {
+      return resolve(); // If no public_id, just resolve silently
+    }
+
+    cloudinary.uploader.destroy(publicId, { resource_type: "video" }, (error, result) => {
+      if (error) {
+        console.error("Error deleting video from Cloudinary:", error);
+        return reject(error);
+      }
+      resolve(result);
+    });
+  });
+}
+
 // GET /api/ads — fetch all ads
 export async function getAds(req, res) {
   try {
@@ -89,11 +129,19 @@ export async function createAd(req, res) {
 // DELETE /api/ads/:id — delete an ad by ID
 export async function deleteAd(req, res) {
   try {
-    const ad = await Ad.findByIdAndDelete(req.params.id);
+    const ad = await Ad.findById(req.params.id);
 
     if (!ad) return res.status(404).json({ message: "Ad not found." });
 
-    res.json({ message: "Ad deleted." });
+    // Delete video from Cloudinary if it has a videoUrl
+    if (ad.videoUrl) {
+      await deleteVideoFromCloudinary(ad.videoUrl);
+    }
+
+    // Delete ad from MongoDB
+    await Ad.findByIdAndDelete(req.params.id);
+
+    res.json({ message: "Ad and associated video deleted successfully." });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
