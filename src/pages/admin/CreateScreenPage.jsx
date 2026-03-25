@@ -15,7 +15,7 @@
 import { ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createScreen, getLocations, getPlaylists } from "../../services/api";
+import { createScreen, getLocationsByType, getPlaylists } from "../../services/api";
 
 
 function CreateScreenPage() {
@@ -28,8 +28,13 @@ function CreateScreenPage() {
   const [locations, setLocations] = useState([]);
 
   useEffect(() => {
-   getPlaylists().then((data) => setPlaylists(data).catch(console.error));
-   getLocations().then((data) => setLocations(data).catch(console.error));
+    getPlaylists()
+      .then((data) => setPlaylists(data))
+      .catch(console.error);
+
+    getLocationsByType("location")
+      .then((data) => setLocations(data))
+      .catch(console.error);
   }, []);
 
   const handleSave = async () => {
@@ -37,8 +42,8 @@ function CreateScreenPage() {
     try{
       await createScreen({
         name: screenName.trim(),
-        playlistId: playlistId ? Number(playlistId) : null,
-        locationId: locationId ? Number(locationId) : null,
+        playlistId: playlistId || null,
+        locationId: locationId || null,
       });
       navigate("/admin/screen");
     } catch(err) {
@@ -90,7 +95,7 @@ function CreateScreenPage() {
             <option value="">-- No playlist assigned --</option>
             {/* TODO: replace MOCK_PLAYLISTS with API response */}
             {playlists.map((p) => (
-              <option key={p.id} value={p.id}>{p.name}</option>
+              <option key={p._id} value={p._id}>{p.name}</option>
             ))}
           </select>
         </div>
@@ -109,7 +114,7 @@ function CreateScreenPage() {
             <option value="">-- No location assigned --</option>
             {/* TODO: replace MOCK_LOCATIONS with API response */}
             {locations.map((l) => (
-              <option key={l.id} value={l.id}>{l.name}</option>
+              <option key={l._id} value={l._id}>{l.name}</option>
             ))}
           </select>
         </div>

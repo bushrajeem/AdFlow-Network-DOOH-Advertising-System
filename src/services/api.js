@@ -31,6 +31,7 @@ export const createAd = (data) =>
 export const deleteAd = (id) => request(`/ads/${id}`, { method: "DELETE" });
 
 // Locations
+export const getLocationsByType = (type) => request(`/locations/type/${type}`);
 export const getLocations = () => request("/locations");
 export const createLocation = (data) =>
   request("/locations", { method: "POST", body: JSON.stringify(data) });

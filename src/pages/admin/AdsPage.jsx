@@ -130,10 +130,10 @@ function AdsPage() {
                     {ad.name}
                   </td>
                   <td className="px-4 py-4 font-medium text-gray-800 text-center ">
-                    {ad.playlist}
+                    {ad.playlistCount || 0}
                   </td>
                   <td className="px-4 py-4 font-medium text-gray-800 text-center hover:text-red-500">
-                    {ad.Play_Count}
+                    {ad.playCount || 0}
                   </td>
 
                   {/* Actions */}

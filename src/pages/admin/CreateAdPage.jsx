@@ -24,7 +24,7 @@ function CreateAdPage() {
   const handleVideo = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    // TODO: add size and duration validation before upload
+    
     if (file.type !== "video/mp4") return alert("Only MP4 files are allowed.");
     setVideo(file);
     setVideoPreview(URL.createObjectURL(file));

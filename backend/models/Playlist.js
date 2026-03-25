@@ -25,6 +25,14 @@ const playlistSchema = new mongoose.Schema(
         ref:  "Ad", // tells Mongoose which model to populate from
       },
     ],
+
+    // Locations where this playlist is intended to run
+    locations: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Location",
+      },
+    ],
   },
   { timestamps: true }
 );

@@ -13,7 +13,15 @@ export async function getLocations(req, res) {
     res.status(500).json({ message: error.message });
   }
 }
-
+// GET /api/locations/type/:type — filter by type
+export async function getLocationsByType(req, res) {
+  try {
+    const data = await Location.find({ type: req.params.type });
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
 // POST /api/locations — create a new location
 export async function createLocation(req, res) {
   try {

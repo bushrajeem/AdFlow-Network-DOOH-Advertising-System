@@ -4,12 +4,28 @@
  */
 
 import Ad from "../models/Ad.js";
+import Playlist from "../models/Playlist.js";
 
 // GET /api/ads — fetch all ads
 export async function getAds(req, res) {
   try {
     const ads = await Ad.find().sort({ createdAt: -1 });
-    res.json(ads);
+
+    const playlistCounts = await Playlist.aggregate([
+      { $unwind: "$ads" },
+      { $group: { _id: "$ads", count: { $sum: 1 } } },
+    ]);
+
+    const countByAdId = new Map(
+      playlistCounts.map((item) => [String(item._id), item.count]),
+    );
+
+    const adsWithCounts = ads.map((ad) => ({
+      ...ad.toObject(),
+      playlistCount: countByAdId.get(String(ad._id)) || 0,
+    }));
+
+    res.json(adsWithCounts);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

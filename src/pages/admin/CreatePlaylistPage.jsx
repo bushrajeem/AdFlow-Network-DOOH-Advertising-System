@@ -15,7 +15,7 @@
 import { ArrowLeft, Check } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createPlaylist, getAds, getLocations } from "../../services/api";
+import { createPlaylist, getAds, getLocationsByType } from "../../services/api";
 
 
 function SelectableItem({ label, sub, selected, onToggle }) {
@@ -75,10 +75,9 @@ function CreatePlaylistPage() {
             .then((data) => setAds(data))
             .catch((err) => console.error("Failed to fetch ads:", err))
             .finally(() => setLoading(false));
-        getLocations()
+        getLocationsByType("location")
             .then((data) => setLocations(data))
-            .catch((err) => console.error("Failed to fetch locations:", err))
-            .finally(() => setLoading(false));
+            .catch(console.error);
     }, []);
 
     const toggle = (set, setFn, id) => {

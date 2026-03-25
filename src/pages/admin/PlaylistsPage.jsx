@@ -1,22 +1,56 @@
 import { ArrowLeft, Pencil, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { deletePlaylist, getPlaylists } from "../../services/api";
+import { deletePlaylist, getPlaylists, getScreens } from "../../services/api";
 
 function PlaylistsPage() {
   const navigate = useNavigate();
 
   const [playlists, setPlaylists] = useState([]);
+  const [screens, setScreens] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    getPlaylists()
-      .then((data) => setPlaylists(data))
+    Promise.all([getPlaylists(), getScreens()])
+      .then(([playlistData, screenData]) => {
+        setPlaylists(playlistData);
+        setScreens(screenData);
+      })
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   }, []);
+
+  const getPlaylistLocationNames = (playlistId) => {
+    const names = screens
+      .filter((screen) => {
+        const screenPlaylistId =
+          typeof screen.playlist === "object"
+            ? screen.playlist?._id
+            : screen.playlist;
+        return String(screenPlaylistId) === String(playlistId);
+      })
+      .map((screen) =>
+        typeof screen.location === "object"
+          ? screen.location?.name
+          : null,
+      )
+      .filter(Boolean);
+
+    return [...new Set(names)];
+  };
+
+  const getDisplayLocationNames = (playlist) => {
+    const fromPlaylist = (playlist.locations || [])
+      .map((loc) => (typeof loc === "object" ? loc?.name : null))
+      .filter(Boolean);
+
+    if (fromPlaylist.length) return [...new Set(fromPlaylist)];
+
+    // Fallback for old playlists created before locations[] was persisted
+    return getPlaylistLocationNames(playlist._id);
+  };
 
   // Filter table by search input
   const filtered = playlists.filter((p) =>
@@ -107,14 +141,14 @@ function PlaylistsPage() {
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={4} className="text-center py-8 text-gray-400">
+                <td colSpan={5} className="text-center py-8 text-gray-400">
                   No Playlists found
                 </td>
               </tr>
             ) : (
               filtered.map((playlist) => (
                 <tr
-                  key={playlist.id}
+                  key={playlist._id}
                   className="border-b border-gray-200 hover:bg-gray-50 transition-colors"
                 >
                   {/* Playlist color indicator */}
@@ -129,7 +163,10 @@ function PlaylistsPage() {
                     {playlist.ads?.length || 0}
                   </td>
                   <td className="px-4 py-4 font-medium text-gray-800 text-center hover:text-red-500">
-                    {playlist.locations?.length || 0}
+                    {(() => {
+                      const locationNames = getDisplayLocationNames(playlist);
+                      return locationNames.length ? locationNames.join(", ") : "--";
+                    })()}
                   </td>
 
                   {/* Actions */}
@@ -142,7 +179,7 @@ function PlaylistsPage() {
                         <Trash2 size={16} />
                       </button>
                       <button
-                        onClick={() => handleEdit(playlist.id)}
+                        onClick={() => handleEdit(playlist._id)}
                         className="hover:text-blue-600 transition-colors"
                       >
                         <Pencil size={16} />

@@ -10,6 +10,7 @@ export async function getPlaylists(req, res) {
   try {
     const playlists = await Playlist.find()
       .populate("ads")
+      .populate("locations")
       .sort({ createdAt: -1 });
     res.json(playlists);
   } catch (error) {
@@ -20,12 +21,16 @@ export async function getPlaylists(req, res) {
 // POST /api/playlists — create a new playlist
 export async function createPlaylist(req, res) {
   try {
-    const { name, adIds } = req.body;
+    const { name, adIds, locationIds } = req.body;
 
     if (!name) return res.status(400).json({ message: "Playlist name is required." });
 
     // adIds is an array of Ad ObjectIds from the frontend
-    const playlist = await Playlist.create({ name, ads: adIds || [] });
+    const playlist = await Playlist.create({
+      name,
+      ads: adIds || [],
+      locations: locationIds || [],
+    });
     res.status(201).json(playlist);
   } catch (error) {
     res.status(500).json({ message: error.message });

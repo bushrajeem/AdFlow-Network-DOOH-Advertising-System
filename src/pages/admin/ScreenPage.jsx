@@ -147,10 +147,10 @@ function ScreenPage() {
                   </td>
 
                   <td className="px-4 py-4 text-center text-gray-700">
-                    {screen.location}
+                    {screen.location?.name || "--"}
                   </td>
                   <td className="px-4 py-4 text-center text-gray-700">
-                    {screen.playlist}
+                    {screen.playlist?.name || "--"}
                   </td>
 
                   {/* Actions */}
