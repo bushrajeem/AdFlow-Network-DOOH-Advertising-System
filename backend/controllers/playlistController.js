@@ -4,8 +4,6 @@
 
 import Playlist from "../models/Playlist.js";
 
-// GET /api/playlists — fetch all playlists
-// populate("ads") replaces ad IDs with full ad objects
 export async function getPlaylists(req, res) {
   try {
     const playlists = await Playlist.find()
@@ -32,6 +30,29 @@ export async function createPlaylist(req, res) {
       locations: locationIds || [],
     });
     res.status(201).json(playlist);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+// Add updatePlaylist function
+export async function updatePlaylist(req, res) {
+  try {
+    const { name, adIds, locationIds } = req.body;
+
+    const playlist = await Playlist.findByIdAndUpdate(
+      req.params.id,
+      {
+        ...(name        && { name }),
+        ...(adIds       && { ads: adIds }),
+        ...(locationIds && { locations: locationIds }),
+      },
+      { new: true }
+    ).populate("ads").populate("locations");
+
+    if (!playlist) return res.status(404).json({ message: "Playlist not found." });
+
+    res.json(playlist);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -27,7 +27,7 @@ function PlayerPage() {
   const videoRef = useRef(null);
   const heartbeatRef = useRef(null);
 
-  // ── Fetch screen data by screenCode ───────────────────────────────────────
+  // Fetch screen data by screenCode
   const fetchScreen = useCallback(async () => {
     try {
       const res = await fetch(`${SOCKET_URL}/api/screens/code/${screenCode}`);
@@ -50,7 +50,7 @@ function PlayerPage() {
     }
   }, [screenCode]);
 
-  // ── Socket + heartbeat setup ───────────────────────────────────────────────
+  // Socket + heartbeat setup 
   useEffect(() => {
     const fetchTimeout = setTimeout(() => {
       fetchScreen();
@@ -110,13 +110,13 @@ function PlayerPage() {
     };
   }, [screenCode, fetchScreen]);
 
-  // ── Auto advance to next ad ───────────────────────────────────────────────
+  //  Auto advance to next ad 
   const handleVideoEnd = () => {
     if (!playlist?.ads) return;
     setCurrentIndex((prev) => (prev + 1) % playlist.ads.length);
   };
 
-  // ── Play video when index changes ─────────────────────────────────────────
+  // Play video when index changes
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.load();
@@ -126,7 +126,7 @@ function PlayerPage() {
 
   const currentAd = playlist?.ads?.[currentIndex];
 
-  // ── Render ────────────────────────────────────────────────────────────────
+  // Render 
   if (status === "connecting") return <StatusScreen message="Connecting..." />;
   if (status === "error") return <StatusScreen message="Screen not found. Check the screen code." />;
   if (status === "waiting") return <WaitingScreen screenCode={screenCode} screenName={screenName} />;
@@ -153,11 +153,6 @@ function PlayerPage() {
           <p className="text-gray-400 text-sm mt-2">No video uploaded yet</p>
         </div>
       )}
-
-      {/* Ad counter */}
-      <div className="absolute bottom-4 right-4 bg-black/50 text-white text-xs px-3 py-1 rounded-full">
-        {currentIndex + 1} / {playlist.ads.length}
-      </div>
 
       {/* Screen name — top left */}
       <div className="absolute top-4 left-4 bg-black/50 text-white text-xs px-3 py-1 rounded-full">

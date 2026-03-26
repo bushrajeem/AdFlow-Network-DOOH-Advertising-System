@@ -70,7 +70,7 @@ const router = createBrowserRouter([
       { path: "users", element: <UsersPage /> },
     ],
   },
-  { path: "/player/:screenId", element: <PlayerPage /> },
+  { path: "/player/:screenCode", element: <PlayerPage /> },
 ]);
 
 createRoot(document.getElementById("root")).render(

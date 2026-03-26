@@ -16,8 +16,8 @@ function PlaylistsPage() {
   //edit
   const [editPlaylist, setEditPlaylist] = useState(null);
   const [editName, setEditName] = useState("");
-  const [editAds, setEditAds] = useState("");
-  const [editLocation, setEditLocation] = useState("");
+  const [editAds, setEditAds] = useState(new Set());
+  const [editLocation, setEditLocation] = useState(new Set());
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
@@ -85,16 +85,22 @@ function PlaylistsPage() {
   const handleEdit = (playlist) => {
     setEditPlaylist(playlist);
     setEditName(playlist.name);
-    setEditAds(playlist.ads?._id || "");
-    setEditLocation(playlist.location?._id || "");
+    setEditAds(new Set(playlist.ads?.map((a) => a._id || a) || []));
+    setEditLocation(new Set(playlist.locations?.map((l) => l._id || l) || []));
   };
 
   const closeEdit = () => {
     setEditPlaylist(null);
     setEditName("");
-    setEditAds("");
-    setEditLocation("");
+    setEditAds(new Set());
+    setEditLocation(new Set());
   }
+
+  const toggle = (set, setFn, id) => {
+    const next = new Set(set);
+    next.has(id) ? next.delete(id) : next.add(id);
+    setFn(next);
+  };
 
   const handleSave = async () => {
     if (!editName.trim()) return alert("Playlist name is required.");
@@ -102,11 +108,11 @@ function PlaylistsPage() {
     try {
       const updated = await updatePlaylist(editPlaylist._id, {
         name: editName.trim(),
-        adsId: editAds || null,
-        locationId: editLocation || null,
+        adIds: [...editAds],
+        locationIds: [...editLocation],
       });
       setPlaylists((prev) =>
-        prev.map((s) => (String(s._id) === String(updated._id) ? updated : s)),
+        prev.map((p) => (String(p._id) === String(updated._id) ? updated : p)),
       );
       closeEdit();
     } catch (err) {
@@ -238,6 +244,8 @@ function PlaylistsPage() {
           </tbody>
         </table>
       </div>
+
+
       {/* edit drawer */}
       {editPlaylist && (
         <div
@@ -277,40 +285,73 @@ function PlaylistsPage() {
               className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-300"
             />
           </div>
-          {/* ads */}
+
+          {/* Ads — multiple selectable */}
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
               <label className="text-sm font-medium text-gray-700">Ads</label>
-              <span className="text-xs text-gray-400">Optional</span>
+              {editAds.size > 0 && (
+                <span className="text-xs bg-blue-100 text-blue-700 font-semibold px-2 py-0.5 rounded-full">
+                  {editAds.size} selected
+                </span>
+              )}
             </div>
-            <select
-              value={editAds}
-              onChange={(e) => setEditAds(e.target.value)}
-              className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-300 bg-white">
-              <option value="">Select ads</option>
+            <div className="flex flex-col gap-1.5 max-h-48 overflow-y-auto">
               {ads.map((ad) => (
-                <option key={ad._id} value={ad._id}>{ad.name}</option>
+                <button
+                  key={ad._id}
+                  onClick={() => toggle(editAds, setEditAds, ad._id)}
+                  className={`flex items-center justify-between px-3 py-2.5 rounded-lg border text-left text-sm transition-colors
+          ${editAds.has(ad._id)
+                      ? "border-blue-500 bg-blue-50 text-blue-800"
+                      : "border-gray-200 text-gray-700 hover:bg-gray-50"
+                    }`}
+                >
+                  <span>{ad.name}</span>
+                  {editAds.has(ad._id) && (
+                    <span className="w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center shrink-0">
+                      <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
+                        <path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+                      </svg>
+                    </span>
+                  )}
+                </button>
               ))}
-            </select>
-
+            </div>
           </div>
 
-          {/* Location */}
-          <div className="flex flex-col gap-1.5">
+          {/* Locations — multiple selectable */}
+          <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-medium text-gray-700">Location</label>
-              <span className="text-xs text-gray-400">Optional</span>
+              <label className="text-sm font-medium text-gray-700">Locations</label>
+              {editLocation.size > 0 && (
+                <span className="text-xs bg-blue-100 text-blue-700 font-semibold px-2 py-0.5 rounded-full">
+                  {editLocation.size} selected
+                </span>
+              )}
             </div>
-            <select
-              value={editLocation}
-              onChange={(e) => setEditLocation(e.target.value)}
-              className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-300 bg-white"
-            >
-              <option value="">-- No location --</option>
-              {locations.map((l) => (
-                <option key={l._id} value={l._id}>{l.name}</option>
+            <div className="flex flex-col gap-1.5 max-h-36 overflow-y-auto">
+              {locations.map((loc) => (
+                <button
+                  key={loc._id}
+                  onClick={() => toggle(editLocation, setEditLocation, loc._id)}
+                  className={`flex items-center justify-between px-3 py-2.5 rounded-lg border text-left text-sm transition-colors
+          ${editLocation.has(loc._id)
+                      ? "border-blue-500 bg-blue-50 text-blue-800"
+                      : "border-gray-200 text-gray-700 hover:bg-gray-50"
+                    }`}
+                >
+                  <span>{loc.name}</span>
+                  {editLocation.has(loc._id) && (
+                    <span className="w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center shrink-0">
+                      <svg width="8" height="8" viewBox="0 0 10 10" fill="none">
+                        <path d="M2 5l2.5 2.5L8 3" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+                      </svg>
+                    </span>
+                  )}
+                </button>
               ))}
-            </select>
+            </div>
           </div>
 
 
