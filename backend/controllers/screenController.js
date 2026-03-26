@@ -3,7 +3,18 @@
  */
 
 import Screen from "../models/Screen.js";
-import {getIO} from "../socket.js";
+import { getIO } from "../socket.js";
+
+function normalizeScreenCode(rawCode = "") {
+  const compact = String(rawCode).trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
+
+  // Convert AB1234 -> AB-1234 to match stored format.
+  if (/^[A-Z]{2}\d{4}$/.test(compact)) {
+    return `${compact.slice(0, 2)}-${compact.slice(2)}`;
+  }
+
+  return String(rawCode).trim().toUpperCase();
+}
 
 // GET /api/screens — fetch all screens
 export async function getScreens(req, res) {
@@ -18,16 +29,30 @@ export async function getScreens(req, res) {
   }
 }
 
+function generateScreenCode() {
+  const letters = Math.random().toString(36).substring(2, 4).toUpperCase();
+  const numbers = Math.floor(1000 + Math.random() * 9000);
+  return `${letters}-${numbers}`;
+}
+
 // POST /api/screens — create a new screen
 export async function createScreen(req, res) {
   try {
     const { name, playlistId, locationId } = req.body;
+
+    let screenCode;
+    let exists = true;
+    while (exists) {
+      screenCode = generateScreenCode();
+      exists = await Screen.exists({ screenCode });
+    }
 
     if (!name)
       return res.status(400).json({ message: "Screen name is required." });
 
     const screen = await Screen.create({
       name,
+      screenCode,
       playlist: playlistId || null, // optional
       location: locationId || null, // optional
     });
@@ -52,18 +77,37 @@ export async function updateScreen(req, res) {
       },
       { new: true }, // return updated document
     )
-      .populate("playlist")
+      .populate({ path: "playlist", populate: { path: "ads" } })
       .populate("location");
 
     if (!screen) return res.status(404).json({ message: "Screen not found." });
 
-    try{
-      getIO().to(screen._id.toString()).emit("playlist-updated", {
+    try {
+      getIO().to(screen.screenCode || screen._id.toString()).emit("playlist-updated", {
         playlist: screen.playlist,
       });
-    } catch(err) {
+    } catch (err) {
       console.warn("Error emitting playlist-updated event:", err.message);
     }
+
+    res.json(screen);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+// GET /api/screens/code/:code — fetch screen by screenCode
+export async function getScreenByCode(req, res) {
+  try {
+    const normalizedCode = normalizeScreenCode(req.params.code);
+
+    const screen = await Screen.findOne({
+      screenCode: { $regex: `^${normalizedCode}$`, $options: "i" },
+    })
+      .populate("playlist")
+      .populate("location");
+
+    if (!screen) return res.status(404).json({ message: "Screen not found." });
 
     res.json(screen);
   } catch (error) {

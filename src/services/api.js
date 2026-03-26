@@ -29,13 +29,10 @@ export const getDashboardStats = () => request("/dashboard/stats");
 // Ads
 export const getAds = () => request("/ads");
 export const createAd = (data) =>
-  request(
-    "/ads",
-    {
-      method: "POST",
-      body: data instanceof FormData ? data : JSON.stringify(data),
-    },
-  );
+  request("/ads", {
+    method: "POST",
+    body: data instanceof FormData ? data : JSON.stringify(data),
+  });
 export const deleteAd = (id) => request(`/ads/${id}`, { method: "DELETE" });
 
 // Locations
@@ -50,11 +47,14 @@ export const deleteLocation = (id) =>
 export const getPlaylists = () => request("/playlists");
 export const createPlaylist = (data) =>
   request("/playlists", { method: "POST", body: JSON.stringify(data) });
+export const updatePlaylist = (id, data) =>
+  request(`/playlists/${id}`, { method: "PATCH", body: JSON.stringify(data) });
 export const deletePlaylist = (id) =>
   request(`/playlists/${id}`, { method: "DELETE" });
 
 // Screens
 export const getScreens = () => request("/screens");
+export const getScreen = (id) => request(`/screens/${id}`);
 export const createScreen = (data) =>
   request("/screens", { method: "POST", body: JSON.stringify(data) });
 export const updateScreen = (id, data) =>

@@ -1,6 +1,7 @@
 import express from "express";
 import {
   getScreens,
+  getScreenByCode,
   createScreen,
   updateScreen,
   deleteScreen,
@@ -9,6 +10,7 @@ import {
 const router = express.Router();
 
 router.get("/", getScreens);
+router.get("/code/:code", getScreenByCode);
 router.post("/", createScreen);
 router.patch("/:id", updateScreen);
 router.delete("/:id", deleteScreen);

@@ -35,6 +35,6 @@ app.get("/", (req, res) => {
   res.json({ message: "AdFlow backend is running." });
 });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
