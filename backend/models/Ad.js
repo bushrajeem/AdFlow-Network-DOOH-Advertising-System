@@ -14,8 +14,6 @@ const adSchema = new mongoose.Schema(
       trim: true,
     },
 
-    // URL of the uploaded video file (stored in cloud storage later)
-    // TODO: integrate with Cloudinary or AWS S3 for actual file storage
     videoUrl: {
       type: String,
       default: "",
@@ -24,6 +22,10 @@ const adSchema = new mongoose.Schema(
     duration: {
       type: Number, // in seconds
       default: 15,
+    },
+    playCount: {
+      type: Number,
+      default: 0,
     },
   },
   {

@@ -104,7 +104,7 @@ export async function getScreenByCode(req, res) {
     const screen = await Screen.findOne({
       screenCode: { $regex: `^${normalizedCode}$`, $options: "i" },
     })
-      .populate("playlist")
+      .populate({ path: "playlist", populate: { path: "ads" } })
       .populate("location");
 
     if (!screen) return res.status(404).json({ message: "Screen not found." });

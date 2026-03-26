@@ -3,9 +3,10 @@
  * Each function maps to one API endpoint.
  */
 
+import cloudinary from "../config/cloudinary.js";
 import Ad from "../models/Ad.js";
 import Playlist from "../models/Playlist.js";
-import cloudinary from "../config/cloudinary.js";
+import { getIO } from "../socket.js";
 
 function uploadVideoToCloudinary(fileBuffer) {
   return new Promise((resolve, reject) => {
@@ -54,13 +55,17 @@ function deleteVideoFromCloudinary(videoUrl) {
       return resolve(); // If no public_id, just resolve silently
     }
 
-    cloudinary.uploader.destroy(publicId, { resource_type: "video" }, (error, result) => {
-      if (error) {
-        console.error("Error deleting video from Cloudinary:", error);
-        return reject(error);
-      }
-      resolve(result);
-    });
+    cloudinary.uploader.destroy(
+      publicId,
+      { resource_type: "video" },
+      (error, result) => {
+        if (error) {
+          console.error("Error deleting video from Cloudinary:", error);
+          return reject(error);
+        }
+        resolve(result);
+      },
+    );
   });
 }
 
@@ -142,6 +147,32 @@ export async function deleteAd(req, res) {
     await Ad.findByIdAndDelete(req.params.id);
 
     res.json({ message: "Ad and associated video deleted successfully." });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+// PATCH /api/ads/:id/play — increment play count by 1
+export async function incrementPlayCount(req, res) {
+  try {
+    const ad = await Ad.findByIdAndUpdate(
+      req.params.id,
+      { $inc: { playCount: 1 } }, // $inc adds 1 without overwriting
+      { new: true },
+    );
+
+    if (!ad) return res.status(404).json({ message: "Ad not found." });
+
+    try {
+      getIO().emit("ad-playcount-updated", {
+        adId: String(ad._id),
+        playCount: ad.playCount,
+      });
+    } catch (err) {
+      console.warn("Error emitting ad-playcount-updated event:", err.message);
+    }
+
+    res.json({ playCount: ad.playCount });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

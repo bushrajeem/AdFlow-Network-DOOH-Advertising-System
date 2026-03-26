@@ -51,6 +51,8 @@ export const updatePlaylist = (id, data) =>
   request(`/playlists/${id}`, { method: "PATCH", body: JSON.stringify(data) });
 export const deletePlaylist = (id) =>
   request(`/playlists/${id}`, { method: "DELETE" });
+export const incrementPlayCount = (id) => 
+  request(`/ads/${id}/play`, {method: "PATCH"});
 
 // Screens
 export const getScreens = () => request("/screens");

@@ -1,7 +1,10 @@
 import { ArrowLeft, Pencil, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
 import { deleteAd, getAds } from "../../services/api";
+
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || "http://localhost:5000";
 
 
 function AdsPage() {
@@ -16,6 +19,24 @@ function AdsPage() {
       .then((data) => setAds(data))
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    const socket = io(SOCKET_URL);
+
+    socket.on("ad-playcount-updated", ({ adId, playCount }) => {
+      if (!adId || typeof playCount !== "number") return;
+
+      setAds((prev) =>
+        prev.map((ad) =>
+          String(ad._id) === String(adId) ? { ...ad, playCount } : ad,
+        ),
+      );
+    });
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   // TODO: open modal or navigate to add Ads form

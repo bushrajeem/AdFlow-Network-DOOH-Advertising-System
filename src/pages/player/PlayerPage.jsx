@@ -11,6 +11,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
+import { incrementPlayCount } from "../../services/api";
 
 const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || "http://localhost:5000";
 const HEARTBEAT_MS = 10000; // every 10 seconds
@@ -26,6 +27,7 @@ function PlayerPage() {
   const socketRef = useRef(null);
   const videoRef = useRef(null);
   const heartbeatRef = useRef(null);
+  const lastTrackedPlayRef = useRef("");
 
   // Fetch screen data by screenCode
   const fetchScreen = useCallback(async () => {
@@ -113,8 +115,24 @@ function PlayerPage() {
   //  Auto advance to next ad 
   const handleVideoEnd = () => {
     if (!playlist?.ads) return;
+
+    //advance to next ad
     setCurrentIndex((prev) => (prev + 1) % playlist.ads.length);
   };
+
+  // Track play count once when an ad becomes the current ad on screen.
+  useEffect(() => {
+    const currentAd = playlist?.ads?.[currentIndex];
+    if (!currentAd || typeof currentAd !== "object" || !currentAd._id) return;
+
+    const key = `${playlist?._id || "unknown"}:${currentIndex}:${currentAd._id}`;
+    if (lastTrackedPlayRef.current === key) return;
+
+    lastTrackedPlayRef.current = key;
+    incrementPlayCount(currentAd._id).catch((err) => {
+      console.error("Failed to increment play count:", err);
+    });
+  }, [playlist, currentIndex]);
 
   // Play video when index changes
   useEffect(() => {
