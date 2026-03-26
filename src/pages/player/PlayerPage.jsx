@@ -116,8 +116,21 @@ function PlayerPage() {
   const handleVideoEnd = () => {
     if (!playlist?.ads) return;
 
-    //advance to next ad
-    setCurrentIndex((prev) => (prev + 1) % playlist.ads.length);
+    // Increment play count
+    const finishedAd = playlist.ads[currentIndex];
+    if (finishedAd?._id) {
+      incrementPlayCount(finishedAd._id).catch(console.error);
+    }
+
+    const nextIndex = (currentIndex + 1) % playlist.ads.length;
+
+    if (nextIndex === currentIndex) {
+      // Only 1 ad — index won't change so useEffect won't fire
+      // Manually replay the video instead
+      playCurrentAd();
+    } else {
+      setCurrentIndex(nextIndex);
+    }
   };
 
   // Track play count once when an ad becomes the current ad on screen.
@@ -134,12 +147,15 @@ function PlayerPage() {
     });
   }, [playlist, currentIndex]);
 
-  // Play video when index changes
-  useEffect(() => {
+  const playCurrentAd = () => {
     if (videoRef.current) {
       videoRef.current.load();
       videoRef.current.play().catch(console.error);
     }
+  };
+  // Play whenever index changes
+  useEffect(() => {
+    playCurrentAd();
   }, [currentIndex]);
 
   const currentAd = playlist?.ads?.[currentIndex];
