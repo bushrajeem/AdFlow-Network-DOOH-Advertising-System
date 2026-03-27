@@ -26,18 +26,31 @@ const allowedOrigins = [
   "http://127.0.0.1:5173",
 ];
 
-// Add production Vercel URL if it exists
+const normalizeOrigin = (value = "") => value.trim().replace(/\/$/, "");
+
+// Add production URL if it exists
 if (process.env.FRONTEND_URL) {
-  allowedOrigins.push(process.env.FRONTEND_URL);
+  allowedOrigins.push(normalizeOrigin(process.env.FRONTEND_URL));
+}
+
+// Optional comma-separated allowlist for multiple frontend domains
+if (process.env.FRONTEND_URLS) {
+  process.env.FRONTEND_URLS.split(",")
+    .map(normalizeOrigin)
+    .filter(Boolean)
+    .forEach((origin) => allowedOrigins.push(origin));
 }
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
+      const normalizedOrigin = normalizeOrigin(origin || "");
+      const isVercelDomain = /^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(normalizedOrigin);
+
+      if (!origin || allowedOrigins.includes(normalizedOrigin) || isVercelDomain) {
         callback(null, true);
       } else {
-        callback(new Error("CORS not allowed for this origin"));
+        callback(new Error(`CORS not allowed for this origin: ${origin}`));
       }
     },
     credentials: true,
