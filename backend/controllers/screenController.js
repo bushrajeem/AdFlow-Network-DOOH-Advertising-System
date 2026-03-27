@@ -66,11 +66,12 @@ export async function createScreen(req, res) {
 // PATCH /api/screens/:id — update screen (assign playlist or location)
 export async function updateScreen(req, res) {
   try {
-    const { playlistId, locationId, status } = req.body;
+    const { name, playlistId, locationId, status } = req.body;
 
     const screen = await Screen.findByIdAndUpdate(
       req.params.id,
       {
+        ...(name !== undefined && { name: String(name).trim() }),
         ...(playlistId !== undefined && { playlist: playlistId }),
         ...(locationId !== undefined && { location: locationId }),
         ...(status !== undefined && { status }),

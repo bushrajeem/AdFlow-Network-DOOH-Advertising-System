@@ -176,7 +176,7 @@ function ScreenPage() {
           <thead>
             <tr style={{ backgroundColor: "#002B6B" }} className="text-white">
               <th className="w-12 px-4 py-3" />
-              <th className="px-4 py-3 text-left font-medium">Ad's Name</th>
+              <th className="px-4 py-3 text-left font-medium">Screen Name</th>
               <th className="px-4 py-3 text-center font-medium">Status</th>
               <th className="px-4 py-3 text-center font-medium">Location</th>
               <th className="px-4 py-3 text-center font-medium">Playlist</th>
