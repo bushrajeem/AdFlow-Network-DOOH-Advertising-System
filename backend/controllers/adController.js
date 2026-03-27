@@ -127,6 +127,13 @@ export async function createAd(req, res) {
     });
     res.status(201).json(ad);
   } catch (error) {
+    if (error?.http_code === 401 || /Invalid Signature/i.test(error?.message || "")) {
+      return res.status(500).json({
+        message:
+          "Cloudinary credentials are mismatched in deployment env. Verify CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET (no quotes/spaces), then redeploy backend.",
+      });
+    }
+
     res.status(500).json({ message: error.message });
   }
 }
