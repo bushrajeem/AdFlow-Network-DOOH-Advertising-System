@@ -191,11 +191,6 @@ function PlayerPage() {
         </div>
       )}
 
-      {/* Screen name — top left */}
-      <div className="absolute top-4 left-4 bg-black/50 text-white text-xs px-3 py-1 rounded-full">
-        {screenName}
-      </div>
-
     </div>
   );
 }
