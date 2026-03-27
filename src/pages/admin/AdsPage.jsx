@@ -4,7 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import { deleteAd, getAds } from "../../services/api";
 
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || "http://localhost:5000";
+const RAW_SOCKET_URL = (import.meta.env.VITE_SOCKET_URL || "").trim();
+const SOCKET_URL = RAW_SOCKET_URL
+  ? (/^https?:\/\//i.test(RAW_SOCKET_URL) ? RAW_SOCKET_URL : `https://${RAW_SOCKET_URL}`)
+  : "http://localhost:5000";
 
 
 function AdsPage() {

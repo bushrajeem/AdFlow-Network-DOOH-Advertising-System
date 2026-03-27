@@ -21,7 +21,10 @@ import {
 } from "../../services/api";
 import { io } from "socket.io-client";
 
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || "http://localhost:5000";
+const RAW_SOCKET_URL = (import.meta.env.VITE_SOCKET_URL || "").trim();
+const SOCKET_URL = RAW_SOCKET_URL
+  ? (/^https?:\/\//i.test(RAW_SOCKET_URL) ? RAW_SOCKET_URL : `https://${RAW_SOCKET_URL}`)
+  : "http://localhost:5000";
 
 function ScreenPage() {
   const navigate = useNavigate();
@@ -55,7 +58,7 @@ function ScreenPage() {
 
   useEffect(() => {
 
-    const socket = io("http://localhost:5000");
+    const socket = io(SOCKET_URL);
     // Listen for screen status changes
     socket.on("screen-status", ({ screenId, status }) => {
       setScreens((prev) =>

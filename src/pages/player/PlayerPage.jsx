@@ -13,7 +13,10 @@ import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import { incrementPlayCount } from "../../services/api";
 
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || "http://localhost:5000";
+const RAW_SOCKET_URL = (import.meta.env.VITE_SOCKET_URL || "").trim();
+const SOCKET_URL = RAW_SOCKET_URL
+  ? (/^https?:\/\//i.test(RAW_SOCKET_URL) ? RAW_SOCKET_URL : `https://${RAW_SOCKET_URL}`)
+  : "http://localhost:5000";
 const HEARTBEAT_MS = 10000; // every 10 seconds
 
 function PlayerPage() {
