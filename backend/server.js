@@ -18,10 +18,35 @@ const app = express();
 const server = createServer(app);
 const PORT = process.env.PORT || 5000;
 
+// Configure CORS to allow both local and deployed frontends
+const allowedOrigins = [
+  "http://localhost:3000", // local Vite dev
+  "http://localhost:5173", // Vite default
+  "http://127.0.0.1:3000",
+  "http://127.0.0.1:5173",
+];
+
+// Add production Vercel URL if it exists
+if (process.env.FRONTEND_URL) {
+  allowedOrigins.push(process.env.FRONTEND_URL);
+}
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS not allowed for this origin"));
+      }
+    },
+    credentials: true,
+  })
+);
+
 // initilize socket.io with HTTP server
 initSocket(server);
 
-app.use(cors());
 app.use(express.json());
 
 // All routes prefixed with /api

@@ -4,7 +4,7 @@
  * NEVER scatter fetch() calls inside components — always use this file.
  */
 
-const BASE_URL = "http://localhost:5000/api";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
 
 // Helper function to make API requests and handle errors in one place
 async function request(endpoint, options = {}) {
