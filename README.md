@@ -6,8 +6,8 @@ A cloud-based platform where brands upload digital ads and they display on scree
 
 ## Live Demo
 
-- Frontend : [https: ](https://ad-flow-network-dooh-advertising-sy.vercel.app/)
-
+- Frontend : https://ad-flow-network-dooh-advertising-sy.vercel.app/
+- Backend : https://adflow-network-dooh-advertising-system-production.up.railway.app
 - Player demo/Screen : https://ad-flow-network-dooh-advertising-sy.vercel.app/player/ScreenCode
 
 ### Admin Dashboard
@@ -22,7 +22,7 @@ A cloud-based platform where brands upload digital ads and they display on scree
 ### Screen Player
 
 -Any device as a digital screen
--Opens via a short screen code - `player/ScreenCode`
+-Opens via a short screen code - `player/XX-0000`
 -Plays assigned playlist in loop
 -Updates when admin changes playlist (no refresh needed)
 -Sends heartbeat to stay Online
@@ -61,6 +61,8 @@ A cloud-based platform where brands upload digital ads and they display on scree
 - Cloudinary : Media files
 
 ### Project Structure
+
+```
 
 adflow-network/
 ├── src/ # React frontend
@@ -106,6 +108,7 @@ adflow-network/
 │ └── db.js
 ├── socket.js
 └── server.js
+```
 
 ### Clone the repo
 
@@ -121,6 +124,15 @@ cd adflow-network
 npm install
 ```
 
+Create `.env` in the root folder and paste these:
+
+```
+VITE_SOCKET_URL=https://adflow-network-dooh-advertising-system-production.up.railway.app
+VITE_API_BASE_URL=https://adflow-network-dooh-advertising-system-production.up.railway.app/api
+```
+
+npm run dev
+
 ### Backend setup
 
 ```bash
@@ -128,11 +140,23 @@ cd backend
 npm install
 ```
 
+Create .env in backend root folder and paste:
+
+```
+PORT=5000
+MONGO_URI=mongodb+srv://jeem:adflow@cluster0.zknjti2.mongodb.net/adflow?retryWrites=true&w=majority
+CLOUDINARY_CLOUD_NAME=dryxnxrj3
+CLOUDINARY_API_KEY=724199456619878
+CLOUDINARY_API_SECRET=YbgU5f8dqyMgLGpOa_wH9fuCDwI
+```
+
+npm run dev
+
 ## How to use the Screen Player
 
 1. Go to admin/screen and create new screen
 2. copy the generated code (ScreenCode)
-3. open vercel link or local host and paste: `player/ScreenCode(insert generated code)` on any device
+3. open vercel link or local host and paste: `player/ScreenCode(insert generated code)` on any device (phone, laptop, tab)
 4. device appears Online in the admin screen page
 5. create a playlist with ads and assign to the screen
 6. device automatically starts to play in loop; no refresh needed
