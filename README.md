@@ -145,9 +145,6 @@ Create .env in backend root folder and paste:
 ```
 PORT=5000
 MONGO_URI=mongodb+srv://jeem:adflow@cluster0.zknjti2.mongodb.net/adflow?retryWrites=true&w=majority
-CLOUDINARY_CLOUD_NAME=dryxnxrj3
-CLOUDINARY_API_KEY=724199456619878
-CLOUDINARY_API_SECRET=YbgU5f8dqyMgLGpOa_wH9fuCDwI
 ```
 
 npm run dev
