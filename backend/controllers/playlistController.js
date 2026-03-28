@@ -3,6 +3,8 @@
  */
 
 import Playlist from "../models/Playlist.js";
+import Screen from "../models/Screen.js";
+import { getIO } from "../socket.js";
 
 export async function getPlaylists(req, res) {
   try {
@@ -43,14 +45,28 @@ export async function updatePlaylist(req, res) {
     const playlist = await Playlist.findByIdAndUpdate(
       req.params.id,
       {
-        ...(name        && { name }),
-        ...(adIds       && { ads: adIds }),
-        ...(locationIds && { locations: locationIds }),
+        ...(name !== undefined && { name: String(name).trim() }),
+        ...(adIds !== undefined && { ads: adIds }),
+        ...(locationIds !== undefined && { locations: locationIds }),
       },
       { new: true }
     ).populate("ads").populate("locations");
 
     if (!playlist) return res.status(404).json({ message: "Playlist not found." });
+
+    // Push updated playlist to every online/offline screen assigned to this playlist.
+    try {
+      const screens = await Screen.find({ playlist: playlist._id }).select("screenCode _id");
+      const io = getIO();
+
+      for (const screen of screens) {
+        io.to(screen.screenCode || screen._id.toString()).emit("playlist-updated", {
+          playlist,
+        });
+      }
+    } catch (err) {
+      console.warn("Error emitting playlist-updated after playlist edit:", err.message);
+    }
 
     res.json(playlist);
   } catch (error) {
