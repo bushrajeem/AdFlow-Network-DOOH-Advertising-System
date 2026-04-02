@@ -1,0 +1,65 @@
+.services {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px 80px;
+  background: #f5f5f5;
+}
+
+/* Left */
+.services-text {
+  max-width: 50%;
+}
+
+.services-text h1 {
+  font-size: 80px;
+  color: #0b2c5f;
+  margin-bottom: 20px;
+}
+
+.services-text p {
+  font-size: 24px;
+  color: #000000;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.btn {
+  background: #0b2c5f;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Right Images Layout */
+.services-images {
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+
+.services-images img {
+  position: absolute;
+  width: 120px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+/* Positioning like your design */
+.img-top {
+  top: 0;
+  right: 0;
+}
+
+.img-middle {
+  top: 80px;
+  left: 50px;
+}
+
+.img-bottom {
+  bottom: 0;
+  right: 10px;
+}
