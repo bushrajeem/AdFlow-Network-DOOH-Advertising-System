@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased text-gray-900;
+    background-color: #E9EDF0; /* Clean light gray/blue background */
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}

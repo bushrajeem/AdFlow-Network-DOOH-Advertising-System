@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Login from '../auth/Login'; 
-import Signup from '../auth/Signup';
+import Login from './Login';
+import Signup from './Signup';
 
-function Home() {
+function App() {
   const [view, setView] = useState('login');
 
   return (
@@ -18,4 +18,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default App;
