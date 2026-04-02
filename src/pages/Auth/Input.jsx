@@ -9,6 +9,7 @@ const Input = ({ label, placeholder, type = 'text', variant = 'standard', value,
     ${variant === 'outlined' ? 'bg-[#F1F3F7] border border-gray-100 rounded-lg pl-10 pr-12 focus:bg-white focus:border-[#2297FE] focus:ring-4 focus:ring-blue-50/50' : 'bg-white border border-gray-200 rounded-lg pl-10 pr-4 focus:border-[#2297FE]'}
   `;
 
+  
   return (
     <div className="w-full space-y-1.5 text-left">
       {label && <label className="text-sm font-bold text-[#333333] ml-0.5">{label}</label>}

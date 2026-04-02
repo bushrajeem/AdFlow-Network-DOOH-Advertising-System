@@ -48,9 +48,9 @@ A sleek, production-ready authentication interface with a unified design. This m
    npm start
 
 ## How It Works
-- Switching Views: The App.js uses a state-based view switcher to toggle between Login and Signup.
-- Password Recovery: Click "Forgot Password" in Login. Enter Email to receive a 4-digit OTP via EmailJS. Verify OTP to unlock the Password Reset field.
-- Responsive Design: Uses Tailwind's utility classes to ensure the 360x550 card looks perfect on Desktop and Mobile.
+1. Switching Views: The App.js uses a state-based view switcher to toggle between Login and Signup.
+2. Password Recovery: Click "Forgot Password" in Login. Enter Email to receive a 4-digit OTP via EmailJS. Verify OTP to unlock the Password Reset field.
+3. Responsive Design: Uses Tailwind's utility classes to ensure the 360x550 card looks perfect on Desktop and Mobile.
 
 ## Design Constants
 - Card Width: 360px

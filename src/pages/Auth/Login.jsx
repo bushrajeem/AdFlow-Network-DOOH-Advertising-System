@@ -7,10 +7,10 @@ const Login = ({ onSwitch }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [otp, setOtp] = useState('');
-  const [generatedOtp, setGeneratedOtp] = useState(''); // রিয়েল কোড চেক করার জন্য
+  const [generatedOtp, setGeneratedOtp] = useState(''); 
   const [newPassword, setNewPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [mode, setMode] = useState('login'); // login, forgot, otp, reset
+  const [mode, setMode] = useState('login'); 
 
   // --- EmailJS Config ---
   const SERVICE_ID = "YOUR_SERVICE_ID";
@@ -55,12 +55,12 @@ const Login = ({ onSwitch }) => {
   };
 
   const handleGoogleClick = () => {
-    // এই লিঙ্কটি আপনার ল্যাপটপের সব একাউন্ট লিস্ট দেখাবে
+   
     window.location.href = "https://accounts.google.com/AccountChooser?service=lso&continue=https://myaccount.google.com/";
   };
 
   return (
-    /* বক্স সাইজ ছোট (360px), ফিক্সড পজিশন এবং প্যাডিং অ্যাডজাস্টমেন্ট */
+   
     <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[360px] h-[550px] bg-white rounded-[24px] border border-gray-100 p-7 shadow-sm text-center flex flex-col justify-center">
       
       <h1 className="text-2xl font-bold text-[#333333] mb-6">
@@ -70,7 +70,7 @@ const Login = ({ onSwitch }) => {
       {message && <p className="mb-4 text-green-600 font-bold text-sm">{message}</p>}
 
       {mode === 'login' && (
-        /* গ্যাপ কমিয়ে ৩ করা হয়েছে (Signup-এর মতো) */
+      
         <form className="space-y-3" onSubmit={handleLogin}>
           <Input label="Email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" type="email" variant="outlined" required />
           <Input label="Password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" variant="outlined" required />
@@ -84,7 +84,6 @@ const Login = ({ onSwitch }) => {
         </form>
       )}
 
-      {/* বাকি মোডগুলোর জন্য ফর্ম স্পেসিং অ্যাডজাস্ট করা হয়েছে */}
       {mode === 'forgot' && (
         <form className="space-y-4" onSubmit={handleRequestOTP}>
           <Input label="Email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" type="email" variant="outlined" required />

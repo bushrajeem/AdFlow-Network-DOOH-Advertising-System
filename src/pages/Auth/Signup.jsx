@@ -30,7 +30,6 @@ const Signup = ({ onSwitch }) => {
         <Input label="Email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" type="email" variant="outlined" required />
         <Input label="Password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" variant="outlined" required />
         
-        {/* আপনার অরিজিনাল Terms and Privacy লিঙ্কগুলো এখানে আবার যোগ করা হয়েছে */}
         <div className="text-[10px] text-gray-500 mt-2">
           I agree to the{' '}
           <a href="https://policies.google.com/terms" target="_blank" className="text-[#2297FE] font-bold hover:underline">
