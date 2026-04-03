@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+@theme {
+}
+
+@layer base {
+  body {
+
+    @apply antialiased;
+    color: theme('colors.gray.900'); 
+    background-color: #E9EDF0; 
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
