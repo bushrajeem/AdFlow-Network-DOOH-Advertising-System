@@ -39,13 +39,15 @@ import LocationsPage from "./pages/admin/location/LocationsPage.jsx";
 import PlaylistsPage from "./pages/admin/PlaylistsPage.jsx";
 import ScreenPage from "./pages/admin/ScreenPage.jsx";
 import UsersPage from "./pages/admin/UsersPage.jsx";
+import Login from "./pages/Auth/Login.jsx";
+import Signup from "./pages/Auth/Signup.jsx";
 import Home from "./pages/home/Home.jsx";
 import PlayerPage from "./pages/player/PlayerPage.jsx";
-import Login from "./pages/Auth/Login.jsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
-  {path: '/login', element: < Login />},
+  { path: '/login', element: < Login /> },
+  { path: "/signup", element: <Signup /> },
 
   /* example for landing page team: Admin Routes — all admin routes are handled separately */
   /* See: src/pages/admin/index.jsx */
