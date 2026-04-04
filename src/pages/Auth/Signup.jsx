@@ -49,9 +49,9 @@ const Signup = ({ onSwitch }) => {
       </p>
 
       <div className="flex items-center my-4">
-        <div className="flex-grow border-t border-gray-200"></div>
+        <div className="grow border-t border-gray-200"></div>
         <span className="mx-3 text-[10px] font-bold text-gray-400">or</span>
-        <div className="flex-grow border-t border-gray-200"></div>
+        <div className="grow border-t border-gray-200"></div>
       </div>
 
       <Button variant="outline" onClick={handleGoogleClick}>
