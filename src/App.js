@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Login from './Login';
-import Signup from './Signup';
+import Login from './pages/Auth/Login'; 
+import Signup from './pages/Auth/Signup';
 
 function App() {
   const [view, setView] = useState('login');
