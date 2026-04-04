@@ -26,10 +26,13 @@ export default defineConfig([
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
     },
   },
+<<<<<<< HEAD
+=======
   {
     files: ['backend/**/*.js'],
     languageOptions: {
       globals: globals.node,
     },
   },
+>>>>>>> a90c83806c2ca722e5b9fa477c9981e67b7524f0
 ])

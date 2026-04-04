@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+=======
 // main.jsx — Root Application Component
 
 // PURPOSE:
@@ -78,3 +89,4 @@ createRoot(document.getElementById("root")).render(
     <RouterProvider router={router} />
   </StrictMode>,
 );
+>>>>>>> a90c83806c2ca722e5b9fa477c9981e67b7524f0
