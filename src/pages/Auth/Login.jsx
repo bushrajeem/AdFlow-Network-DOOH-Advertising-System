@@ -61,7 +61,7 @@ const Login = ({ onSwitch }) => {
 
   return (
    
-    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[360px] h-[550px] bg-white rounded-[24px] border border-gray-100 p-7 shadow-sm text-center flex flex-col justify-center">
+    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-90 h-137.5 bg-white rounded-3xl border border-gray-100 p-7 shadow-sm text-center flex flex-col justify-center">
       
       <h1 className="text-2xl font-bold text-[#333333] mb-6">
         {mode === 'login' ? 'Login' : mode === 'forgot' ? 'Forgot Password' : mode === 'otp' ? 'Enter Code' : 'New Password'}
