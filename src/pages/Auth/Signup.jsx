@@ -11,7 +11,7 @@ const Signup = ({ onSwitch }) => {
   const handleSignup = (e) => {
     e.preventDefault();
     setMessage('Signup Successful!');
-    setTimeout(() => { onSwitch(); }, 1000);
+    setTimeout(() => { window.location.href = "/"; }, 1000);
   };
 
   const handleGoogleClick = () => {
