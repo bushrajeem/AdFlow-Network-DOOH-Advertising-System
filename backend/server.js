@@ -9,9 +9,13 @@ import adRoutes from "./routes/adRoutes.js";
 import locationRoutes from "./routes/locationRoutes.js";
 import playlistRoutes from "./routes/playlistRoutes.js";
 import screenRoutes from "./routes/screenRoutes.js";
-import dashboardRoutes from "./routes/dashboardRoutes.js"; 
+import dashboardRoutes from "./routes/dashboardRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
+// Load environment variables
 dotenv.config();
+
+// Connect to MongoDB
 connectDB();
 
 const app = express();
@@ -20,8 +24,8 @@ const PORT = process.env.PORT || 5000;
 
 // Configure CORS to allow both local and deployed frontends
 const allowedOrigins = [
-  "http://localhost:3000", // local Vite dev
-  "http://localhost:5173", // Vite default
+  "http://localhost:3000",
+  "http://localhost:5173",
   "http://127.0.0.1:3000",
   "http://127.0.0.1:5173",
 ];
@@ -33,7 +37,7 @@ if (process.env.FRONTEND_URL) {
   allowedOrigins.push(normalizeOrigin(process.env.FRONTEND_URL));
 }
 
-// Optional comma-separated allowlist for multiple frontend domains
+// Optional comma-separated allowlist
 if (process.env.FRONTEND_URLS) {
   process.env.FRONTEND_URLS.split(",")
     .map(normalizeOrigin)
@@ -45,7 +49,8 @@ app.use(
   cors({
     origin: (origin, callback) => {
       const normalizedOrigin = normalizeOrigin(origin || "");
-      const isVercelDomain = /^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(normalizedOrigin);
+      const isVercelDomain =
+        /^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(normalizedOrigin);
 
       if (!origin || allowedOrigins.includes(normalizedOrigin) || isVercelDomain) {
         callback(null, true);
@@ -57,22 +62,25 @@ app.use(
   })
 );
 
-// initilize socket.io with HTTP server
+// Initialize socket.io
 initSocket(server);
 
 app.use(express.json());
 
-// All routes prefixed with /api
+// Routes
 app.use("/api/ads", adRoutes);
 app.use("/api/locations", locationRoutes);
 app.use("/api/playlists", playlistRoutes);
 app.use("/api/screens", screenRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/users", userRoutes);
 
+// Test route
 app.get("/", (req, res) => {
   res.json({ message: "AdFlow backend is running." });
 });
 
+// Start server
 server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
