@@ -1,6 +1,6 @@
 import React from 'react';
 // Importing the map image from assets
-import mapImage from "../../../assets/map.png";
+ 
 import { FaPhoneAlt, FaEnvelope, FaFacebook, FaInstagram, FaLinkedin, FaYoutube, FaMapMarkerAlt } from 'react-icons/fa';
 
 export default function App() {
@@ -78,7 +78,7 @@ export default function App() {
             {/* Map Image Container - Increased size and styling */}
             <div className="w-full rounded-[40px] overflow-hidden shadow-2xl border-[10px] border-white ring-1 ring-gray-100">
   <img 
-    src={mapImage} 
+    src='./map.png'
     className="w-full h-[350px] object-cover" 
     alt="Location Map" 
   />
