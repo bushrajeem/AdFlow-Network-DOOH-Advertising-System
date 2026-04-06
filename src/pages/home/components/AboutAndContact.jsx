@@ -13,17 +13,17 @@ export default function App() {
         <div className="relative w-full max-w-[480px] h-[380px]">
           {/* Back Image */}
           <div className="absolute top-0 left-0 w-[200px] h-[260px] rounded-[30px] overflow-hidden shadow-xl -rotate-6 border">
-            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400" className="w-full h-full object-cover" alt="Team" />
+            <img src= "./meeting.png" className="w-full h-full object-cover" alt="Team" />
           </div>
           
           {/* Middle Image (Award) - Balanced Gap & Overlap as requested */}
           <div className="absolute bottom-[-10px] left-32 w-[170px] h-[230px] rounded-[30px] overflow-hidden shadow-2xl z-10 border-[6px] border-white rotate-3">
-             <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=400" className="w-full h-full object-cover" alt="Award" />
+             <img src="./coding.png" className="w-full h-full object-cover" alt="Award" />
           </div>
           
           {/* Right/Top Image */}
           <div className="absolute top-8 right-0 w-[180px] h-[240px] rounded-[30px] overflow-hidden shadow-lg rotate-6 border">
-             <img src="https://images.unsplash.com/photo-1497215842964-222b430dc094?w=400" className="w-full h-full object-cover" alt="Office" />
+             <img src="./dask.png" className="w-full h-full object-cover" alt="Office" />
           </div>
         </div>
 
