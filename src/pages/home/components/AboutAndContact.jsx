@@ -1,7 +1,5 @@
-import React from 'react';
-// Importing the map image from assets
+import { Facebook, Instagram, Linkedin, Mail, MapPinIcon, Phone, Youtube } from 'lucide-react';
  
-import { FaPhoneAlt, FaEnvelope, FaFacebook, FaInstagram, FaLinkedin, FaYoutube, FaMapMarkerAlt } from 'react-icons/fa';
 
 export default function App() {
   return (
@@ -49,21 +47,21 @@ export default function App() {
           
           <div className="space-y-6 mb-10 text-2xl font-bold text-[#003366]">
             <div className="flex items-center gap-5">
-              <FaPhoneAlt className="text-xl text-[#003366]" /> 
+              <Phone className="text-xl text-[#003366]" /> 
               <span>01759639439</span>
             </div>
             <div className="flex items-center gap-5">
-              <FaEnvelope className="text-xl text-[#003366]" /> 
+              <Mail className="text-xl text-[#003366]" /> 
               <span>info@adflow.com</span>
             </div>
           </div>
           
           {/* Social Icons - Sizes maintained for clarity */}
      <div className="flex gap-6 text-4xl">
-            <FaFacebook className="text-[#1877F2] cursor-pointer hover:scale-110 transition" />
-            <FaInstagram className="text-[#E4405F] cursor-pointer hover:scale-110 transition" />
-            <FaLinkedin className="text-[#0A66C2] cursor-pointer hover:scale-110 transition" />
-            <FaYoutube className="text-[#FF0000] cursor-pointer hover:scale-110 transition" />
+            <Facebook className="text-[#1877F2] cursor-pointer hover:scale-110 transition" />
+            <Instagram className="text-[#E4405F] cursor-pointer hover:scale-110 transition" />
+            <Linkedin className="text-[#0A66C2] cursor-pointer hover:scale-110 transition" />
+            <Youtube className="text-[#FF0000] cursor-pointer hover:scale-110 transition" />
           </div>
         </div>  
 
@@ -71,7 +69,7 @@ export default function App() {
         <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-end">
           <div className="w-full max-w-[650px]">
             <div className="flex items-center gap-3 mb-6 font-bold text-2xl text-[#003366]">
-              <FaMapMarkerAlt className="text-red-600" />
+              <MapPinIcon className="text-red-600" />
               <span>Mohammadpur, Dhaka</span>
             </div>
 
