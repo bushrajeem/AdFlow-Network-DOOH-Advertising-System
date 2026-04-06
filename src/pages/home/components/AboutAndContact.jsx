@@ -1,6 +1,6 @@
 import React from 'react';
 // Importing the map image from assets
-import mapImage from './assets/map.png'; 
+import mapImage from "../../../assets/map.png";
 import { FaPhoneAlt, FaEnvelope, FaFacebook, FaInstagram, FaLinkedin, FaYoutube, FaMapMarkerAlt } from 'react-icons/fa';
 
 export default function App() {
@@ -67,21 +67,28 @@ export default function App() {
           </div>
         </div>  
 
-        {/* Right Side: Map Section - Slightly Increased Size */}
-        <div className="w-full lg:w-1/2">
-          <div className="flex items-center gap-3 mb-6 font-bold text-2xl text-[#003366]">
-            <FaMapMarkerAlt className="text-red-600" /> 
-            <span>Mohammadpur, Dhaka</span>
-          </div>
-          {/* Map Image Container - Increased height to 380px */}
-          <div className="rounded-[40px] overflow-hidden shadow-2xl border-[10px] border-white ring-1 ring-gray-100">
-            <img src={mapImage} className="w-full h-[380px] object-cover" alt="Location Map" />
+        {/* Right Side: Map Section */}
+        <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-end">
+          <div className="w-full max-w-[650px]">
+            <div className="flex items-center gap-3 mb-6 font-bold text-2xl text-[#003366]">
+              <FaMapMarkerAlt className="text-red-600" />
+              <span>Mohammadpur, Dhaka</span>
+            </div>
+
+            {/* Map Image Container - Increased size and styling */}
+            <div className="w-full rounded-[40px] overflow-hidden shadow-2xl border-[10px] border-white ring-1 ring-gray-100">
+  <img 
+    src={mapImage} 
+    className="w-full h-[350px] object-cover" 
+    alt="Location Map" 
+  />
+</div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="mt-28 text-center font-bold text-[#003366] text-base">
+      <footer className="mt-28 mb-10 text-center font-bold text-[#003366] text-base">
         © AdFlow Network 2026
       </footer>
     </div>
