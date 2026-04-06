@@ -18,11 +18,26 @@ const Login = () => {
   const TEMPLATE_ID = "YOUR_TEMPLATE_ID";
   const PUBLIC_KEY = "YOUR_PUBLIC_KEY";
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    setMessage('Login Successful!');
-    setTimeout(() => { window.location.href = "/"; }, 1000);
-  };
+  const handleLogin = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await fetch("http://localhost:5000/api/users/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      setMessage("Login Successful!");
+      localStorage.setItem("user", JSON.stringify(data.user)); 
+      setTimeout(() => { window.location.href = "/"; }, 1000);
+    } else {
+      setMessage(data.message || "Invalid credentials");
+    }
+  } catch (error) {
+    setMessage("Connection error!");
+  }
+};
 
   const handleRequestOTP = (e) => {
     e.preventDefault();
