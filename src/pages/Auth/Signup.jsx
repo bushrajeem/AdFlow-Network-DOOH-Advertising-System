@@ -8,11 +8,25 @@ const Signup = ({ onSwitch }) => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleSignup = (e) => {
-    e.preventDefault();
-    setMessage('Signup Successful!');
-    setTimeout(() => { window.location.href = "/"; }, 1000);
-  };
+  const handleSignup = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await fetch("http://localhost:5000/api/users/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password }),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      setMessage("Signup Successful!");
+      setTimeout(() => { onSwitch(); }, 1500); 
+    } else {
+      setMessage(data.message || "Signup failed");
+    }
+  } catch (error) {
+    setMessage("Connection error!");
+  }
+};
 
   const handleGoogleClick = () => {
     window.location.href = "https://accounts.google.com/AccountChooser?service=lso&continue=https://myaccount.google.com/";
