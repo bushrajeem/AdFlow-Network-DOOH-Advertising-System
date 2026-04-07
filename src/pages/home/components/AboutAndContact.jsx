@@ -7,22 +7,22 @@ export default function AboutAndContact() {
 
       {/* ================= ABOUT US SECTION ================= */}
       <section className="flex flex-col lg:flex-row items-center justify-between gap-16 mb-28">
-
+        
         {/* Images Grid - Path updated for public folder */}
         <div className="relative w-full max-w-[480px] h-[380px]">
           {/* Back Image */}
           <div className="absolute top-0 left-0 w-[200px] h-[260px] rounded-[30px] overflow-hidden shadow-xl -rotate-6 border">
             <img src="/meeting.png" className="w-full h-full object-cover" alt="Team" />
           </div>
-
+          
           {/* Middle Image (Award) */}
           <div className="absolute bottom-[-10px] left-32 w-[170px] h-[230px] rounded-[30px] overflow-hidden shadow-2xl z-10 border-[6px] border-white rotate-3">
-            <img src="/coding.png" className="w-full h-full object-cover" alt="Award" />
+             <img src="/coding.png" className="w-full h-full object-cover" alt="Award" />
           </div>
 
           {/* Right/Top Image */}
           <div className="absolute top-8 right-0 w-[180px] h-[240px] rounded-[30px] overflow-hidden shadow-lg rotate-6 border">
-            <img src="/dask.png" className="w-full h-full object-cover" alt="Office" />
+             <img src="/dask.png" className="w-full h-full object-cover" alt="Office" />
           </div>
         </div>
 
@@ -38,22 +38,22 @@ export default function AboutAndContact() {
 
       {/* ================= CONTACTS SECTION ================= */}
       <section className="flex flex-col lg:flex-row justify-between items-start gap-16">
-
+        
         {/* Left Side: Contact Info */}
         <div className="lg:w-1/2">
-          <h2 className="text-5xl lg:text-7xl font-bold mb-10 text-[#003366] tracking-tight">Contacts</h2>
-
+         <h2 className="text-5xl lg:text-7xl font-bold mb-10 text-[#003366] tracking-tight">Contacts</h2>
+          
           <div className="space-y-6 mb-10 text-2xl font-bold text-[#003366]">
             <div className="flex items-center gap-5">
-              <Phone className="w-8 h-8" />
+              <Phone className="w-8 h-8" /> 
               <span>01759639439</span>
             </div>
             <div className="flex items-center gap-5">
-              <Mail className="w-8 h-8" />
+              <Mail className="w-8 h-8" /> 
               <span>info@adflow.com</span>
             </div>
           </div>
-
+          
           {/* Social Icons */}
           <div className="flex gap-6">
             <Facebook className="w-10 h-10 text-[#1877F2] cursor-pointer hover:scale-110 transition" />
@@ -73,10 +73,10 @@ export default function AboutAndContact() {
 
             {/* Map Image Container - Path updated for public folder */}
             <div className="w-full rounded-[40px] overflow-hidden shadow-2xl border-[10px] border-white ring-1 ring-gray-100">
-              <img
+              <img 
                 src="/map.png"
-                className="w-full h-[350px] object-cover"
-                alt="Location Map"
+                className="w-full h-[350px] object-cover" 
+                alt="Location Map" 
               />
             </div>
           </div>
