@@ -4,7 +4,7 @@ export default function AboutAndContact() {
   return (
     // Main Container
     <div className="max-w-[1250px] mx-auto px-8 py-16 font-sans text-[#003366]">
-      
+
       {/* ================= ABOUT US SECTION ================= */}
       <section className="flex flex-col lg:flex-row items-center justify-between gap-16 mb-28">
         
@@ -19,7 +19,7 @@ export default function AboutAndContact() {
           <div className="absolute bottom-[-10px] left-32 w-[170px] h-[230px] rounded-[30px] overflow-hidden shadow-2xl z-10 border-[6px] border-white rotate-3">
              <img src="/coding.png" className="w-full h-full object-cover" alt="Award" />
           </div>
-          
+
           {/* Right/Top Image */}
           <div className="absolute top-8 right-0 w-[180px] h-[240px] rounded-[30px] overflow-hidden shadow-lg rotate-6 border">
              <img src="/dask.png" className="w-full h-full object-cover" alt="Office" />
@@ -30,7 +30,7 @@ export default function AboutAndContact() {
         <div className="lg:text-right lg:w-1/2">
           <h1 className="text-5xl lg:text-7xl font-bold mb-6 text-[#003366] tracking-tight">About US</h1>
           <p className="text-lg leading-relaxed text-gray-700 max-w-[500px] lg:ml-auto">
-            At AdFlow Network, we are committed to providing the best advertising solutions. 
+            At AdFlow Network, we are committed to providing the best advertising solutions.
             Our team works tirelessly to ensure your success in the digital landscape.
           </p>
         </div>
@@ -61,7 +61,7 @@ export default function AboutAndContact() {
             <Linkedin className="w-10 h-10 text-[#0A66C2] cursor-pointer hover:scale-110 transition" />
             <Youtube className="w-10 h-10 text-[#FF0000] cursor-pointer hover:scale-110 transition" />
           </div>
-        </div>  
+        </div>
 
         {/* Right Side: Map Section */}
         <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-end">

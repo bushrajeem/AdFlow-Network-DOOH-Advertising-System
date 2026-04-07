@@ -8,12 +8,9 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-<<<<<<< HEAD
-=======
 .env
 backend/node_modules
 backend/.env
->>>>>>> a90c83806c2ca722e5b9fa477c9981e67b7524f0
 dist
 dist-ssr
 *.local
