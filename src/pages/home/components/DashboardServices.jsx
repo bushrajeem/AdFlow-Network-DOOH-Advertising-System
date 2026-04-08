@@ -57,4 +57,19 @@ function DashboardServices() {
   );
 }
 
+const AboutAndContact = () => {
+  return (
+    <div>
+      <section id="about">
+        {/* About Content */}
+      </section>
+
+      <section id="contact">
+        {/* Contact Content */}
+      </section>
+    </div>
+  );
+};
+
+
 export default DashboardServices;
