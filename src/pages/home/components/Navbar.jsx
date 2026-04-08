@@ -1,15 +1,13 @@
 import { NavLink } from "react-router-dom";
-import adflowLogo from "../assets/adflowlogo.png"; // adjust path if needed
-<section id="home">
-  
-</section>
+
+
 const Navbar = () => {
   return (
     <nav className="flex items-center justify-between px-20 py-7 bg-white shadow-sm sticky top-0 z-50">
-      
+
       <div className="flex items-center">
-        <img 
-          src={adflowLogo} 
+        <img
+          src="./adflowlogo.png "
           alt="AdFlow Network"
           className="h-10 w-auto"   // 40px height logo
         />
