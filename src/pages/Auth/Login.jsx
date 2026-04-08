@@ -1,27 +1,43 @@
-import React, { useState } from 'react';
 import emailjs from '@emailjs/browser';
-import Input from './Input';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Button from './Button';
+import Input from './Input';
 
-const Login = ({ onSwitch }) => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [otp, setOtp] = useState('');
-  const [generatedOtp, setGeneratedOtp] = useState(''); 
+  const [generatedOtp, setGeneratedOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [mode, setMode] = useState('login'); 
+  const [mode, setMode] = useState('login');
 
   // --- EmailJS Config ---
   const SERVICE_ID = "YOUR_SERVICE_ID";
   const TEMPLATE_ID = "YOUR_TEMPLATE_ID";
   const PUBLIC_KEY = "YOUR_PUBLIC_KEY";
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    setMessage('Login Successful!');
-    setTimeout(() => { window.location.href = "/dashboard"; }, 1000);
-  };
+  const handleLogin = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await fetch("http://localhost:5000/api/users/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      setMessage("Login Successful!");
+      localStorage.setItem("user", JSON.stringify(data.user)); 
+      setTimeout(() => { window.location.href = "/"; }, 1000);
+    } else {
+      setMessage(data.message || "Invalid credentials");
+    }
+  } catch (error) {
+    setMessage("Connection error!");
+  }
+};
 
   const handleRequestOTP = (e) => {
     e.preventDefault();
@@ -55,14 +71,14 @@ const Login = ({ onSwitch }) => {
   };
 
   const handleGoogleClick = () => {
-   
+
     window.location.href = "https://accounts.google.com/AccountChooser?service=lso&continue=https://myaccount.google.com/";
   };
 
   return (
-   
-    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[360px] h-[550px] bg-white rounded-[24px] border border-gray-100 p-7 shadow-sm text-center flex flex-col justify-center">
-      
+
+    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-90 h-137.5 bg-white rounded-3xl border border-gray-100 p-7 shadow-sm text-center flex flex-col justify-center">
+
       <h1 className="text-2xl font-bold text-[#333333] mb-6">
         {mode === 'login' ? 'Login' : mode === 'forgot' ? 'Forgot Password' : mode === 'otp' ? 'Enter Code' : 'New Password'}
       </h1>
@@ -70,7 +86,7 @@ const Login = ({ onSwitch }) => {
       {message && <p className="mb-4 text-green-600 font-bold text-sm">{message}</p>}
 
       {mode === 'login' && (
-      
+
         <form className="space-y-3" onSubmit={handleLogin}>
           <Input label="Email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" type="email" variant="outlined" required />
           <Input label="Password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" variant="outlined" required />
@@ -109,15 +125,15 @@ const Login = ({ onSwitch }) => {
       {mode === 'login' && (
         <>
           <div className="flex items-center my-4">
-            <div className="flex-grow border-t border-gray-200"></div>
+            <div className="grow border-t border-gray-200"></div>
             <span className="mx-3 text-[10px] font-bold text-gray-400">OR</span>
-            <div className="flex-grow border-t border-gray-200"></div>
+            <div className="grow border-t border-gray-200"></div>
           </div>
           <Button variant="outline" onClick={handleGoogleClick}>
             <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="w-4 h-4" alt="" /> Log in with Google
           </Button>
           <p className="mt-6 text-xs text-gray-500">
-            Need an account? <button onClick={onSwitch} className="font-bold text-[#2297FE] hover:underline uppercase">SIGN UP</button>
+            Need an account? <Link to="/signup" className="font-bold text-[#2297FE] hover:underline uppercase">SIGN UP</Link>
           </p>
         </>
       )}

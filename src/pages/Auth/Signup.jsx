@@ -8,18 +8,32 @@ const Signup = ({ onSwitch }) => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleSignup = (e) => {
-    e.preventDefault();
-    setMessage('Signup Successful!');
-    setTimeout(() => { onSwitch(); }, 1000);
-  };
+  const handleSignup = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await fetch("http://localhost:5000/api/users/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password }),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      setMessage("Signup Successful!");
+      setTimeout(() => { onSwitch(); }, 1500); 
+    } else {
+      setMessage(data.message || "Signup failed");
+    }
+  } catch (error) {
+    setMessage("Connection error!");
+  }
+};
 
   const handleGoogleClick = () => {
     window.location.href = "https://accounts.google.com/AccountChooser?service=lso&continue=https://myaccount.google.com/";
   };
 
   return (
-    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[360px] h-[550px] bg-white rounded-[24px] border border-gray-100 p-7 shadow-sm text-center flex flex-col justify-center">
+    <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-90 h-137.5 bg-white rounded-3xl border border-gray-100 p-7 shadow-sm text-center flex flex-col justify-center">
       
       <h1 className="text-2xl font-bold text-[#333333] mb-5">Sign Up</h1>
 
@@ -49,9 +63,9 @@ const Signup = ({ onSwitch }) => {
       </p>
 
       <div className="flex items-center my-4">
-        <div className="flex-grow border-t border-gray-200"></div>
+        <div className="grow border-t border-gray-200"></div>
         <span className="mx-3 text-[10px] font-bold text-gray-400">or</span>
-        <div className="flex-grow border-t border-gray-200"></div>
+        <div className="grow border-t border-gray-200"></div>
       </div>
 
       <Button variant="outline" onClick={handleGoogleClick}>
