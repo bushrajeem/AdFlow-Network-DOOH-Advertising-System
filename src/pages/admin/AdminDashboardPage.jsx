@@ -2,7 +2,7 @@
  * DashboardPage.jsx — Admin overview page. Route: /admin/dashboard
  * BACKEND: fetch('/api/admin/stats') to replace placeholder stats.
  */
-
+import ProfileMenu from "../../components/ProfileMenu";
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { getDashboardStats } from "../../services/api";
@@ -35,6 +35,12 @@ function DashboardPage() {
 
   return (
     <div>
+
+       <div className="flex justify-end p-4 bg-white border-b">
+      <ProfileMenu />
+    </div>
+
+
       <h1 className="text-xl font-bold text-gray-800 mb-6">Overview</h1>
 
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
