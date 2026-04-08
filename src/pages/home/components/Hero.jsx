@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import bannerBg from "../assets/bannerbg.jpg"; 
 
 const Hero = () => {
