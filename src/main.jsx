@@ -44,6 +44,8 @@ import Signup from "./pages/Auth/Signup.jsx";
 import Home from "./pages/home/Home.jsx";
 import PlayerPage from "./pages/player/PlayerPage.jsx";
 
+
+
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
   { path: '/login', element: < Login /> },
@@ -81,4 +83,5 @@ createRoot(document.getElementById("root")).render(
     <RouterProvider router={router} />
   </StrictMode>,
 );
+
 
