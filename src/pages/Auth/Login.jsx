@@ -1,12 +1,14 @@
 import emailjs from '@emailjs/browser';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Eye, EyeOff } from 'lucide-react'; 
 import Button from './Button';
 import Input from './Input';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [otp, setOtp] = useState('');
   const [generatedOtp, setGeneratedOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -14,30 +16,30 @@ const Login = () => {
   const [mode, setMode] = useState('login');
 
   // --- EmailJS Config ---
-  const SERVICE_ID = "YOUR_SERVICE_ID";
-  const TEMPLATE_ID = "YOUR_TEMPLATE_ID";
-  const PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+  const SERVICE_ID = "service_6tzyvsh";
+  const TEMPLATE_ID = "template_l9kih5l";
+  const PUBLIC_KEY = "4czWcp390FbkccKB-";
 
   const handleLogin = async (e) => {
-  e.preventDefault();
-  try {
-    const response = await fetch("http://localhost:5000/api/users/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await response.json();
-    if (response.ok) {
-      setMessage("Login Successful!");
-      localStorage.setItem("user", JSON.stringify(data.user)); 
-      setTimeout(() => { window.location.href = "/"; }, 1000);
-    } else {
-      setMessage(data.message || "Invalid credentials");
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5000/api/users/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setMessage("Login Successful!");
+        localStorage.setItem("user", JSON.stringify(data.user)); 
+        setTimeout(() => { window.location.href = "/"; }, 1000);
+      } else {
+        setMessage(data.message || "Invalid credentials");
+      }
+    } catch (error) {
+      setMessage("Connection error!");
     }
-  } catch (error) {
-    setMessage("Connection error!");
-  }
-};
+  };
 
   const handleRequestOTP = (e) => {
     e.preventDefault();
@@ -71,12 +73,10 @@ const Login = () => {
   };
 
   const handleGoogleClick = () => {
-
     window.location.href = "https://accounts.google.com/AccountChooser?service=lso&continue=https://myaccount.google.com/";
   };
 
   return (
-
     <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-90 h-137.5 bg-white rounded-3xl border border-gray-100 p-7 shadow-sm text-center flex flex-col justify-center">
 
       <h1 className="text-2xl font-bold text-[#333333] mb-6">
@@ -86,10 +86,28 @@ const Login = () => {
       {message && <p className="mb-4 text-green-600 font-bold text-sm">{message}</p>}
 
       {mode === 'login' && (
-
         <form className="space-y-3" onSubmit={handleLogin}>
           <Input label="Email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" type="email" variant="outlined" required />
-          <Input label="Password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" variant="outlined" required />
+          
+          <div className="relative">
+            <Input 
+              label="Password" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+              placeholder="Password" 
+              type={showPassword ? "text" : "password"} 
+              variant="outlined" 
+              required 
+            />
+            <button 
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-[38px] text-black z-10"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
+
           <div className="flex items-center justify-between px-1">
             <label className="flex items-center text-[11px] text-gray-500 cursor-pointer">
               <input type="checkbox" className="mr-1 w-3 h-3 border-gray-300 text-[#2297FE]" /> Remember me
