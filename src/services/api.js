@@ -66,3 +66,14 @@ export const updateScreen = (id, data) =>
   request(`/screens/${id}`, { method: "PATCH", body: JSON.stringify(data) });
 export const deleteScreen = (id) =>
   request(`/screens/${id}`, { method: "DELETE" });
+
+// Auth
+export const loginUser = (data) => 
+  request("/users/login", { method: "POST", body: JSON.stringify(data) });
+
+export const signupUser = (data) => 
+  request("/users/signup", { method: "POST", body: JSON.stringify(data) });
+
+// Password Reset (If needed)
+export const resetUserPassword = (data) => 
+  request("/users/reset-password", { method: "POST", body: JSON.stringify(data) });

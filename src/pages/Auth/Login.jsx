@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react'; 
 import Button from './Button';
 import Input from './Input';
+import { loginUser, resetUserPassword } from "../../services/api";
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -15,7 +16,6 @@ const Login = () => {
   const [message, setMessage] = useState('');
   const [mode, setMode] = useState('login');
 
-  // --- EmailJS Config ---
   const SERVICE_ID = "service_6tzyvsh";
   const TEMPLATE_ID = "template_l9kih5l";
   const PUBLIC_KEY = "4czWcp390FbkccKB-";
@@ -23,21 +23,12 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/users/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setMessage("Login Successful!");
-        localStorage.setItem("user", JSON.stringify(data.user)); 
-        setTimeout(() => { window.location.href = "/"; }, 1000);
-      } else {
-        setMessage(data.message || "Invalid credentials");
-      }
+      const data = await loginUser({ email, password });
+      setMessage("Login Successful!");
+      localStorage.setItem("user", JSON.stringify(data.user)); 
+      setTimeout(() => { window.location.href = "/"; }, 1000);
     } catch (error) {
-      setMessage("Connection error!");
+      setMessage(error.message || "Invalid credentials");
     }
   };
 
@@ -53,7 +44,7 @@ const Login = () => {
         setMessage('Security code sent to your email!');
         setMode('otp');
       })
-      .catch(() => alert("Email sending failed!"));
+      .catch(() => setMessage("Email sending failed!"));
   };
 
   const handleVerifyOTP = (e) => {
@@ -62,14 +53,23 @@ const Login = () => {
       setMode('reset');
       setMessage('');
     } else {
-      alert("Invalid Code! Please check your email again.");
+      setMessage("Invalid Code! Please check your email again.");
     }
   };
 
-  const handleResetPassword = (e) => {
+  const handleResetPassword = async (e) => {
     e.preventDefault();
-    setMessage('Password Updated Successful!');
-    setTimeout(() => { setMode('login'); setMessage(''); }, 2000);
+    try {
+      await resetUserPassword({ email, newPassword });
+      setMessage('Password Updated Successful!');
+      setTimeout(() => { 
+        setMode('login'); 
+        setMessage(''); 
+        setNewPassword('');
+      }, 2000);
+    } catch (error) {
+      setMessage(error.message || "Failed to update password");
+    }
   };
 
   const handleGoogleClick = () => {
@@ -99,13 +99,6 @@ const Login = () => {
               variant="outlined" 
               required 
             />
-            <button 
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-[38px] text-black z-10"
-            >
-              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-            </button>
           </div>
 
           <div className="flex items-center justify-between px-1">

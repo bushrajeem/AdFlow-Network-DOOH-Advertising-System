@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Link import korte hobe
+import { Link } from 'react-router-dom'; 
 import { Eye, EyeOff } from 'lucide-react'; 
 import Input from './Input';
 import Button from './Button';
+import { signupUser } from "../../services/api";
 
-const Signup = () => { // onSwitch dorkar nai jodi Link use koren
+const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,21 +15,11 @@ const Signup = () => { // onSwitch dorkar nai jodi Link use koren
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/api/users/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setMessage("Signup Successful!");
-        // Signup success hole login page e niye jabe
-        setTimeout(() => { window.location.href = "/login"; }, 1500); 
-      } else {
-        setMessage(data.message || "Signup failed");
-      }
+      await signupUser({ name, email, password });
+      setMessage("Signup Successful!");
+      setTimeout(() => { window.location.href = "/login"; }, 1500); 
     } catch (error) {
-      setMessage("Connection error!");
+      setMessage(error.message || "Signup failed");
     }
   };
 
@@ -57,13 +48,6 @@ const Signup = () => { // onSwitch dorkar nai jodi Link use koren
             variant="outlined" 
             required 
           />
-          <button 
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-4 top-[38px] text-black z-10"
-          >
-            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-          </button>
         </div>
         
         <div className="text-[10px] text-gray-500 mt-2">
@@ -80,7 +64,6 @@ const Signup = () => { // onSwitch dorkar nai jodi Link use koren
         <Button variant="primary" type="submit">Sign up</Button>
       </form>
 
-      {/* Login page-er moto ekhane-o Link use kora holo jate kaj kore */}
       <p className="mt-4 text-xs text-gray-500">
         Already have an account? <Link to="/login" className="font-bold text-[#2297FE] hover:underline uppercase">Log In</Link>
       </p>
