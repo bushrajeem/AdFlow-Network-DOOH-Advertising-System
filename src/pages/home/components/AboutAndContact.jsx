@@ -29,8 +29,14 @@ export default function AboutAndContact() {
         {/* Text Section */}
         <div className="lg:text-right lg:w-1/2">
           <h1 className="text-5xl lg:text-7xl font-bold mb-6 text-[#003366] tracking-tight">About US</h1>
+  suraiya
+          
+          <p className="text-lg leading-relaxed text-gray-700 max-w-[500px] lg:ml-auto">
+            At AdFlow Network, we are committed to providing the best advertising solutions. 
+ 
           <p className="text-lg leading-relaxed text-gray-700 max-w-125 lg:ml-auto">
             At AdFlow Network, we are committed to providing the best advertising solutions.
+  main
             Our team works tirelessly to ensure your success in the digital landscape.
           </p>
         </div>
