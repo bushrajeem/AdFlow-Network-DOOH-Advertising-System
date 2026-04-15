@@ -1,18 +1,7 @@
 import { ArrowLeft, Eye, Pencil, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-
-// TODO: replace with API call GET /api/admin/users
-const MOCK_Users = [
-  {
-    id: 1,
-    name: "Jeem",
-    roles: "standard",
-    email: "jeem@gmail.com",
-    phone: "0123456789",
-    avatar: null, // TODO: replace with image URL from backend
-  },
-];
+import { getUsers } from "../../services/api";
 
 // Auto-generate initials from name — e.g. "Jeem" → "J"
 function getInitials(name) {
@@ -27,9 +16,17 @@ function getInitials(name) {
 function UsersPage() {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  const filtered = MOCK_Users.filter((u) =>
-    u.name.toLowerCase().includes(search.toLowerCase())
+  useEffect(() => {
+       getUsers().then(setUsers).catch((err) => setError(err.message))
+       .finally(() => setLoading(false));
+},[])
+
+  const filtered = users.filter((u) =>
+    (u.name || "").toLowerCase().includes(search.toLowerCase())
   );
 
   // TODO: open modal or navigate to add Users form
@@ -137,7 +134,7 @@ function UsersPage() {
                     </div>
                   </td>
 
-                  <td className="px-4 py-4 text-center text-gray-700">{user.roles}</td>
+                  <td className="px-4 py-4 text-center text-gray-700">{user.role}</td>
                   <td className="px-4 py-4 text-center text-gray-700">{user.email}</td>
                   <td className="px-4 py-4 text-center text-gray-700">{user.phone}</td>
 

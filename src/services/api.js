@@ -68,6 +68,7 @@ export const deleteScreen = (id) =>
   request(`/screens/${id}`, { method: "DELETE" });
 
 // Auth
+export const getUsers = () => request("/users");
 export const loginUser = (data) => 
   request("/users/login", { method: "POST", body: JSON.stringify(data) });
 
