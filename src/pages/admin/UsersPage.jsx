@@ -1,6 +1,6 @@
 import { ArrowLeft, Eye, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 // TODO: replace with API call GET /api/admin/users
 const MOCK_Users = [
@@ -56,12 +56,12 @@ function UsersPage() {
       {/* Action Row */}
       <div className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-2">
-          <button
+          <NavLink to="/Signup"
             onClick={handleAdd}
             className="bg-[#002B6B] hover:bg-blue-900 text-white text-sm font-semibold px-5 py-2.5 rounded-lg tracking-wide transition-colors"
           >
             + ADD NEW USER
-          </button>
+          </NavLink>
           <button
             onClick={handleDelete}
             className="flex items-center gap-1.5 bg-white hover:bg-red-500 hover:text-white text-black text-sm font-semibold px-5 py-2.5 rounded-lg tracking-wide transition-colors border border-gray-200"
