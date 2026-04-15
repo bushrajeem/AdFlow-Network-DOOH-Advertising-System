@@ -17,7 +17,7 @@ const Signup = () => {
     try {
       await signupUser({ name, email, password });
       setMessage("Signup Successful!");
-      setTimeout(() => { window.location.href = "/login"; }, 1500); 
+      setTimeout(() => { window.location.href = "/login"; }, 300); 
     } catch (error) {
       setMessage(error.message || "Signup failed");
     }
