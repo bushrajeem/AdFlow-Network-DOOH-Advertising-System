@@ -68,7 +68,6 @@ export const deleteScreen = (id) =>
   request(`/screens/${id}`, { method: "DELETE" });
 
 // Auth
-export const getUsers = () => request("/users");
 export const loginUser = (data) => 
   request("/users/login", { method: "POST", body: JSON.stringify(data) });
 
@@ -78,3 +77,7 @@ export const signupUser = (data) =>
 // Password Reset (If needed)
 export const resetUserPassword = (data) => 
   request("/users/reset-password", { method: "POST", body: JSON.stringify(data) });
+
+export const getUsers = () => request("/users");
+export const deleteUser = (id) =>
+  request(`/users/${id}`, { method: "DELETE" });
