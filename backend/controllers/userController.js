@@ -52,3 +52,8 @@ export async function login(req, res) {
     res.status(500).json({ message: error.message });
   }
 }
+
+export async function getUsers(req, res) {
+  const users = await User.find().select("name email role phone avatar");
+  res.json(users);
+}
