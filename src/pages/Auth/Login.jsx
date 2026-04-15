@@ -26,7 +26,7 @@ const Login = () => {
       const data = await loginUser({ email, password });
       setMessage("Login Successful!");
       localStorage.setItem("user", JSON.stringify(data.user)); 
-      setTimeout(() => { window.location.href = "/"; }, 1000);
+      setTimeout(() => { window.location.href = "/admin"; }, 300);
     } catch (error) {
       setMessage(error.message || "Invalid credentials");
     }
