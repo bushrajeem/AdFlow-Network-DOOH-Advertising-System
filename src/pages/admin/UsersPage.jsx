@@ -1,7 +1,7 @@
 import { ArrowLeft, Pencil, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { getUsers } from "../../services/api";
+import { deleteUser, getUsers } from "../../services/api";
 
 // Auto-generate initials from name — e.g. "Jeem" → "J"
 function getInitials(name) {
@@ -34,6 +34,16 @@ function UsersPage() {
 
   // TODO: connect to PATCH /api/admin/users/:id
   const handleEdit = (id) => console.log("Edit User:", id);
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Delete this user?")) return;
+    try {
+      await deleteUser(id);
+      setUsers((prev) => prev.filter((u) => u._id !== id));
+    } catch (err) {
+      alert(err.message);
+    }
+  }
 
   return (
     <div>
@@ -134,8 +144,8 @@ function UsersPage() {
                   <td className="px-4 py-4">
                     <div className="flex items-center justify-center gap-3">
                       <button
-                        onClick={() => handleEdit(user.id)}
-                        className="text-gray-400 hover:text-blue-600 transition-colors"
+                        onClick={() => handleDelete(user._id)}
+                        className="hover:text-red-500 transition-colors"
                       >
                         <Trash2 size={16} />
                       </button>
