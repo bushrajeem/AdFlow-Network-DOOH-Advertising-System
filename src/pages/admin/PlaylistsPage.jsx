@@ -152,9 +152,6 @@ function PlaylistsPage() {
             onClick={handleAdd}
             className="bg-white hover:bg-red-500 hover:text-white text-black text-sm font-semibold px-5 py-2.5 rounded-lg tracking-wide transition-colors"
           >
-            <span className="flex items-center">
-              <Trash2 size={14} /> Delete Playlists
-            </span>
           </button>
         </span>
 
