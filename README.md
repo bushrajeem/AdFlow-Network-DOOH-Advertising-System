@@ -60,6 +60,8 @@ A cloud-based platform where brands upload digital ads and they display on scree
 - MongoDB Atlas : Database
 - Cloudinary : Media files
 
+Note: For Vercel, use `frontend/` as the Root Directory (or keep the root `vercel.json` in this repo to build from `frontend`).
+
 ### Project Structure
 
 ```
