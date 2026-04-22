@@ -1,7 +1,6 @@
 import emailjs from '@emailjs/browser';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Eye, EyeOff } from 'lucide-react'; 
 import Button from './Button';
 import Input from './Input';
 import { loginUser, resetUserPassword } from "../../services/api";
@@ -9,7 +8,6 @@ import { loginUser, resetUserPassword } from "../../services/api";
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
   const [otp, setOtp] = useState('');
   const [generatedOtp, setGeneratedOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -96,7 +94,7 @@ const Login = () => {
               value={password} 
               onChange={(e) => setPassword(e.target.value)} 
               placeholder="Password" 
-              type={showPassword ? "text" : "password"} 
+              type="password" 
               variant="outlined" 
               required 
             />

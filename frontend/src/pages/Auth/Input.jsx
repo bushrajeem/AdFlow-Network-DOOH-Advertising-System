@@ -36,7 +36,9 @@ const Input = ({ label, placeholder, type = 'text', variant = 'standard', value,
           type="button"
             onClick={() => setShowPassword(!showPassword)}
             className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition"
+            aria-label={showPassword ? "Hide password" : "Show password"}
           >
+            {showPassword ? <EyeOff size={18} strokeWidth={2} /> : <Eye size={18} strokeWidth={2} />}
           </button>
         )}
       </div>
