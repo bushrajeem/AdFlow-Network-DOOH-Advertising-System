@@ -21,17 +21,17 @@ function UsersPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // getUsers().then(setUsers).catch((err) => setError(err.message))
-    //   .finally(() => setLoading(false));
+    getUsers().then(setUsers).catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
 
     fetch("/api/users", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     })
-    .then(res => res.json())
-    .then(data => setUsers(data))
-    .catch(err => setError(err.message))
+      .then(res => res.json())
+      .then(data => setUsers(data))
+      .catch(err => setError(err.message))
   }, [])
 
   const filtered = users.filter((u) =>
