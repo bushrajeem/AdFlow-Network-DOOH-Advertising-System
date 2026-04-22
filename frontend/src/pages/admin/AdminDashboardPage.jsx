@@ -8,11 +8,11 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { getDashboardStats } from "../../services/api";
 
 const Stat_config = [
-  { key: "locations", label: "Locations", icon: "📍", color: "bg-orange-500", path: "/admin/location" },
-  { key: "screens", label: "Screens", icon: "🖥️", color: "bg-green-500", path: "/admin/screen" },
-  { key: "ads", label: "Ads", icon: "📢", color: "bg-yellow-500", path: "/admin/ads" },
-  { key: "playlists", label: "Playlists", icon: "▶️", color: "bg-blue-500", path: "/admin/playlists" },
-  { key: "users", label: "Users", icon: "👤", color: "bg-red-500", path: "/admin/users" },
+  { key: "locations", label: "Locations", icon: "📍", color: "bg-orange-500", path: "/admin/location", roles: ["admin"] },
+  { key: "screens", label: "Screens", icon: "🖥️", color: "bg-green-500", path: "/admin/screen", roles: ["admin"] },
+  { key: "ads", label: "Ads", icon: "📢", color: "bg-yellow-500", path: "/admin/ads", roles: ["admin", "user"] },
+  { key: "playlists", label: "Playlists", icon: "▶️", color: "bg-blue-500", path: "/admin/playlists", roles: ["admin", "user"] },
+  { key: "users", label: "Users", icon: "👤", color: "bg-red-500", path: "/admin/users", roles: ["admin"] },
 ]
 
 function DashboardPage() {
@@ -21,6 +21,8 @@ function DashboardPage() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const role = currentUser?.role;
 
   useEffect(() => {
     getDashboardStats()
@@ -39,20 +41,22 @@ function DashboardPage() {
 
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
         {Stat_config.map((stat) => (
-          <button
-            key={stat.key}
-            onClick={() => navigate(stat.path)}
-            className="bg-white rounded-xl border border-gray-200 p-5 flex items-center gap-4 hover:border-blue-300 hover:shadow-sm transition-all text-left"
-          >
-            <div className={`w-12 h-12 rounded-lg ${stat.color} flex items-center justify-center text-white text-xl shrink-0`}>
-              {stat.icon}
-            </div>
-            <div>
-              {/* Real count from backend */}
-              <p className="text-2xl font-bold text-gray-800">{stats[stat.key]}</p>
-              <p className="text-sm text-gray-500 mt-0.5">{stat.label}</p>
-            </div>
-          </button>
+          stat.roles.includes(currentUser?.role) && (
+            <button
+              key={stat.key}
+              onClick={() => navigate(stat.path)}
+              className="bg-white rounded-xl border border-gray-200 p-5 flex items-center gap-4 hover:border-blue-300 hover:shadow-sm transition-all text-left"
+            >
+              <div className={`w-12 h-12 rounded-lg ${stat.color} flex items-center justify-center text-white text-xl shrink-0`}>
+                {stat.icon}
+              </div>
+              <div>
+                {/* Real count from backend */}
+                <p className="text-2xl font-bold text-gray-800">{stats[stat.key]}</p>
+                <p className="text-sm text-gray-500 mt-0.5">{stat.label}</p>
+              </div>
+            </button>
+          )
         ))}
       </div>
 
