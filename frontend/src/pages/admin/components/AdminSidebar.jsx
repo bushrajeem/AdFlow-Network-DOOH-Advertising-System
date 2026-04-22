@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 
 const NAV_ITEMS = [
-  { label: "Overview", path: "/admin/dashboard", icon: <LayoutDashboard size={18} />, roles: ["admin"] },
+  { label: "Overview", path: "/admin/dashboard", icon: <LayoutDashboard size={18} />, roles: ["admin", "user"] },
   { label: "Location", path: "/admin/location", icon: <MapPin size={18} />, roles: ["admin"] },
   { label: "Screen", path: "/admin/screen", icon: <Monitor size={18} />, roles: ["admin"] },
   { label: "Ads", path: "/admin/ads", icon: <Megaphone size={18} />, roles: ["admin", "user"] },
