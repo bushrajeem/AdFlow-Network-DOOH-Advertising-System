@@ -121,7 +121,7 @@ function UsersPage() {
               </tr>
             ) : (
               filtered.map((user) => (
-                <tr key={user.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                <tr key={user._id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
 
                   {/* User — avatar + name + email, left aligned */}
                   <td className="px-4 py-4">
@@ -159,7 +159,7 @@ function UsersPage() {
                         <Trash2 size={16} />
                       </button>
                       <button
-                        onClick={() => handleEdit(user.id)}
+                        onClick={() => handleEdit(user._id)}
                         className="text-gray-400 hover:text-blue-600 transition-colors"
                       >
                         <Pencil size={16} />
