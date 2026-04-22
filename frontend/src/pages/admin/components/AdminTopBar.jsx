@@ -5,6 +5,7 @@
  */
 
 import { Menu } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function AdminTopBar({ onToggleSidebar }) {
   return (
@@ -22,7 +23,9 @@ function AdminTopBar({ onToggleSidebar }) {
 
         {/* Logo */}
         <div className="leading-tight">
-          <img className="w-30 h-17.5" src="/logo.png" alt="Logo" />
+          <Link to="/">
+            <img className="w-30 h-17.5" src="/logo.png" alt="Logo" />
+          </Link>
         </div>
       </div>
 
