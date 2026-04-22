@@ -90,11 +90,6 @@ function AdsPage() {
           >
             + ADD NEW AD
           </button>
-          <button
-            onClick={handleAdd}
-            className="bg-white hover:bg-red-500 hover:text-white text-black text-sm font-semibold px-5 py-2.5 rounded-lg tracking-wide transition-colors"
-          >
-          </button>
         </span>
 
         {/* TODO: connect to pagination logic */}
