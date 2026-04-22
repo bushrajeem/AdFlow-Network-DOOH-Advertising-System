@@ -19,39 +19,44 @@ import {
 } from "lucide-react";
 
 const NAV_ITEMS = [
-  { label: "Overview",  path: "/admin/dashboard", icon: <LayoutDashboard size={18} /> },
-  { label: "Location",  path: "/admin/location",  icon: <MapPin size={18} /> },
-  { label: "Screen",    path: "/admin/screen",    icon: <Monitor size={18} /> },
-  { label: "Ads",       path: "/admin/ads",       icon: <Megaphone size={18} /> },
-  { label: "Playlists", path: "/admin/playlists", icon: <ListVideo size={18} /> },
-  { label: "Users",     path: "/admin/users",     icon: <Users size={18} /> },
+  { label: "Overview", path: "/admin/dashboard", icon: <LayoutDashboard size={18} />, roles: ["admin"] },
+  { label: "Location", path: "/admin/location", icon: <MapPin size={18} />, roles: ["admin"] },
+  { label: "Screen", path: "/admin/screen", icon: <Monitor size={18} />, roles: ["admin"] },
+  { label: "Ads", path: "/admin/ads", icon: <Megaphone size={18} />, roles: ["admin", "user"] },
+  { label: "Playlists", path: "/admin/playlists", icon: <ListVideo size={18} />, roles: ["admin", "user"] },
+  { label: "Users", path: "/admin/users", icon: <Users size={18} />, roles: ["admin"] },
 ];
 
 function AdminSidebar({ isOpen }) {
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const role = currentUser?.role;
+
   return (
     <aside
       style={{ backgroundColor: "#002B6B", width: isOpen ? "208px" : "0px" }}
       className="h-full flex flex-col transition-all duration-300 overflow-hidden shrink-0"
     >
       {/* min-w keeps content from wrapping during animation */}
-      <nav className="pt-20 px-3 space-y-1" style={{ minWidth: "208px" }}>
-        {NAV_ITEMS.map((item) => (
-          <NavLink
-            key={item.path}
-            to={item.path}
-            className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors
-              ${isActive
-                ? "text-[#FFA7A7]"
-                : "text-[#8AB9FF] hover:text-white hover:bg-white/10"
-              }`
-            }
-          >
-            {item.icon}
-            {item.label}
-          </NavLink>
-        ))}
-      </nav>
+      <navli className="pt-20 px-3 space-y-1" style={{ minWidth: "208px" }}>
+        {NAV_ITEMS.map((item) =>
+          item.roles.includes(role) ? (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors
+                ${isActive
+                  ? "text-[#FFA7A7]"
+                  : "text-[#8AB9FF] hover:text-white hover:bg-white/10"
+                }`
+              }
+            >
+              {item.icon}
+              {item.label}
+            </NavLink>
+          ) : null
+        )}
+      </navli>
     </aside>
   );
 }
