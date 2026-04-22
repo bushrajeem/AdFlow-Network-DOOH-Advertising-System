@@ -32,12 +32,12 @@ function AdminSidebar({ isOpen }) {
   const role = currentUser?.role;
 
   return (
-    <aside
+    <div
       style={{ backgroundColor: "#002B6B", width: isOpen ? "208px" : "0px" }}
       className="h-full flex flex-col transition-all duration-300 overflow-hidden shrink-0"
     >
       {/* min-w keeps content from wrapping during animation */}
-      <navli className="pt-20 px-3 space-y-1" style={{ minWidth: "208px" }}>
+      <div className="pt-20 px-3 space-y-1" style={{ minWidth: "208px" }}>
         {NAV_ITEMS.map((item) =>
           item.roles.includes(role) ? (
             <NavLink
@@ -47,7 +47,7 @@ function AdminSidebar({ isOpen }) {
                 `flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors
                 ${isActive
                   ? "text-[#FFA7A7]"
-                  : "text-[#8AB9FF] hover:text-white hover:bg-white/10"
+                  : "text-white hover:text-white hover:bg-white/10"
                 }`
               }
             >
@@ -56,8 +56,8 @@ function AdminSidebar({ isOpen }) {
             </NavLink>
           ) : null
         )}
-      </navli>
-    </aside>
+      </div>
+    </div>
   );
 }
 
