@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; 
-import { Eye, EyeOff } from 'lucide-react'; 
 import Input from './Input';
 import Button from './Button';
 import { signupUser } from "../../services/api";
@@ -9,7 +8,6 @@ const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState('');
 
   const handleSignup = async (e) => {
@@ -44,7 +42,7 @@ const Signup = () => {
             value={password} 
             onChange={(e) => setPassword(e.target.value)} 
             placeholder="Password" 
-            type={showPassword ? "text" : "password"} 
+            type="password" 
             variant="outlined" 
             required 
           />
