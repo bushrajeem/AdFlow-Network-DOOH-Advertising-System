@@ -15,7 +15,7 @@ function PaymentFail() {
         )}
         <div className="mt-6 flex flex-col gap-3">
           <Link
-            to="/"
+            to="/admin/dashboard"
             className="w-full inline-flex items-center justify-center rounded-xl bg-blue-700 text-white text-sm font-semibold py-3"
           >
             Go to Home
