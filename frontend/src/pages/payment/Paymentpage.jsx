@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { initiatePayment } from '../../services/PaymentApi';
+import { initiatePayment } from '../../services/Paymentapi';
 
 
 function Paymentpage() {
