@@ -12,14 +12,8 @@ const normalizeUrl = (value, fallback) => {
   return raw.endsWith("/") ? raw.slice(0, -1) : raw;
 };
 
-const FRONTEND_URL = normalizeUrl(
-  process.env.FRONTEND_URL,
-  "http://localhost:5173",
-);
-const BACKEND_URL = normalizeUrl(
-  process.env.BACKEND_URL,
-  "http://localhost:5000",
-);
+const FRONTEND_URL = normalizeUrl(process.env.FRONTEND_URL,"http://localhost:5173",);
+const BACKEND_URL = normalizeUrl(process.env.BACKEND_URL,"http://localhost:5000",);
 
 const initiatePayment = async (req, res) => {
   try {
@@ -139,9 +133,18 @@ const paymentSuccess = async (req, res) => {
       return res.redirect(`${FRONTEND_URL}/payment/success?tran_id=${tran_id}`);
     }
 
-    //validate with sslcommerz api
-    const sslcommerz = new SSLCommerzPayment(store_id, store_passwd, is_live);
-    const validationResponse = await sslcommerz.validate(val_id, tran_id);
+    // validate with sslcommerz api
+    let validationResponse = null;
+    try {
+      const sslcommerz = new SSLCommerzPayment(store_id, store_passwd, is_live);
+      validationResponse = await sslcommerz.validate(val_id, tran_id);
+    } catch (validationError) {
+      payment.markFailed({ error: validationError?.message || "Validation failed" });
+      await payment.save();
+      return res.redirect(
+        `${FRONTEND_URL}/payment/fail?reason=validation_error`,
+      );
+    }
 
     const isAmountCorrect =
       parseFloat(validationResponse?.amount) === payment.amount;
@@ -158,7 +161,7 @@ const paymentSuccess = async (req, res) => {
       return res.redirect(`${FRONTEND_URL}/payment/success?tran_id=${tran_id}`);
     }
 
-    payment.markFailed(validationResponse);
+    payment.markFailed(validationResponse || { error: "Validation response invalid" });
     await payment.save();
     return res.redirect(
       `${FRONTEND_URL}/payment/fail?reason=validation_failed`,
