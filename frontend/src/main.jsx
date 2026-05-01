@@ -55,9 +55,6 @@ const router = createBrowserRouter([
   { path: '/login', element: < Login /> },
   { path: "/signup", element: <Signup /> },
 
-  /* example for landing page team: Admin Routes — all admin routes are handled separately */
-  /* See: src/pages/admin/index.jsx */
-
 
   // admin side
   {
@@ -84,6 +81,8 @@ const router = createBrowserRouter([
     ],
   },
   { path: "/player/:screenCode", element: <PlayerPage /> },
+
+
   { path: "/payment", element: <Paymentpage /> },
   { path: "/payment/success", element: <PaymentSuccess /> },
   { path: "/payment/fail", element: <PaymentFail /> },
