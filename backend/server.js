@@ -11,6 +11,7 @@ import playlistRoutes from "./routes/playlistRoutes.js";
 import screenRoutes from "./routes/screenRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import paymentRoutes from "./routes/Paymentroutes.js";
 
 // Load environment variables
 dotenv.config();
@@ -52,7 +53,9 @@ app.use(
       const isVercelDomain =
         /^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(normalizedOrigin);
 
-      if (!origin || allowedOrigins.includes(normalizedOrigin) || isVercelDomain) {
+      const isNullOrigin = normalizedOrigin === "null";
+
+      if (!origin || isNullOrigin || allowedOrigins.includes(normalizedOrigin) || isVercelDomain) {
         callback(null, true);
       } else {
         callback(new Error(`CORS not allowed for this origin: ${origin}`));
@@ -66,6 +69,7 @@ app.use(
 initSocket(server);
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // for SSLCommerz POST callbacks
 
 // Routes
 app.use("/api/ads", adRoutes);
@@ -74,6 +78,9 @@ app.use("/api/playlists", playlistRoutes);
 app.use("/api/screens", screenRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/users", userRoutes);
+
+// payment routes
+app.use("/api/payment", paymentRoutes);
 
 // Test route
 app.get("/", (req, res) => {

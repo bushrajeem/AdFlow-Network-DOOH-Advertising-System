@@ -7,7 +7,7 @@ A cloud-based platform where brands upload digital ads and they display on scree
 ## Live Demo
 
 - Frontend : https://ad-flow-network-dooh-advertising-sy.vercel.app/
-- Backend : https://adflow-network-dooh-advertising-system-production.up.railway.app
+- Backend : https://adflow-network.onrender.com
 - Player demo/Screen : https://ad-flow-network-dooh-advertising-sy.vercel.app/player/ScreenCode
 
 ### Admin Dashboard
@@ -129,8 +129,8 @@ npm install
 Create `.env` in the root folder and paste these:
 
 ```
-VITE_SOCKET_URL=https://adflow-network-dooh-advertising-system-production.up.railway.app
-VITE_API_BASE_URL=https://adflow-network-dooh-advertising-system-production.up.railway.app/api
+VITE_SOCKET_URL=https://adflow-network.onrender.com
+VITE_API_BASE_URL=https://adflow-network.onrender.com/api
 ```
 
 npm run dev
