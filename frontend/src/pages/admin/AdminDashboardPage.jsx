@@ -13,6 +13,7 @@ const Stat_config = [
   { key: "ads", label: "Ads", icon: "📢", color: "bg-yellow-500", path: "/admin/ads", roles: ["admin", "user"] },
   { key: "playlists", label: "Playlists", icon: "▶️", color: "bg-blue-500", path: "/admin/playlists", roles: ["admin", "user"] },
   { key: "users", label: "Users", icon: "👤", color: "bg-red-500", path: "/admin/users", roles: ["admin"] },
+  { key: "payments", label: "Payments", icon: "💳", color: "bg-purple-500", path: "/payment", roles: ["admin", "user"] },
 ]
 
 function DashboardPage() {
