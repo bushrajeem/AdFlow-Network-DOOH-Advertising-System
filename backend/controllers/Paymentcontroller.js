@@ -7,8 +7,19 @@ const store_id = process.env.SSLCOMMERZ_STORE_ID;
 const store_passwd = process.env.SSLCOMMERZ_STORE_PASSWORD;
 const is_live = process.env.SSLCOMMERZ_IS_LIVE === "true";
 
-const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
-const BackendURL = process.env.BACKEND_URL || "http://localhost:5000";
+const normalizeUrl = (value, fallback) => {
+  const raw = (value || fallback || "").trim();
+  return raw.endsWith("/") ? raw.slice(0, -1) : raw;
+};
+
+const FRONTEND_URL = normalizeUrl(
+  process.env.FRONTEND_URL,
+  "http://localhost:5173",
+);
+const BACKEND_URL = normalizeUrl(
+  process.env.BACKEND_URL,
+  "http://localhost:5000",
+);
 
 const initiatePayment = async (req, res) => {
   try {
@@ -50,10 +61,10 @@ const initiatePayment = async (req, res) => {
       total_amount: parseFloat(amount).toFixed(2),
       currency: "BDT",
       tran_id: transactionId,
-      success_url: `${BackendURL}/api/payment/success`,
-      fail_url: `${BackendURL}/api/payment/fail`,
-      cancel_url: `${BackendURL}/api/payment/cancel`,
-      ipn_url: `${BackendURL}/api/payment/ipn`,
+      success_url: `${BACKEND_URL}/api/payment/success`,
+      fail_url: `${BACKEND_URL}/api/payment/fail`,
+      cancel_url: `${BACKEND_URL}/api/payment/cancel`,
+      ipn_url: `${BACKEND_URL}/api/payment/ipn`,
 
       //shipping (for sslcommerz)
       shipping_method: "NO",
@@ -146,7 +157,9 @@ const paymentSuccess = async (req, res) => {
 
     payment.markFailed(validationResponse);
     await payment.save();
-    return res.redirect(`${FRONTEND_URL}/payment/fail?reason=validation_failed`);
+    return res.redirect(
+      `${FRONTEND_URL}/payment/fail?reason=validation_failed`,
+    );
   } catch (error) {
     return res.status(500).json({ error: "Internal server error" });
   }
@@ -163,7 +176,9 @@ const paymentFail = async (req, res) => {
         console.log(`[Payment] FAILED: ${tran_id}`);
       }
     }
-    return res.redirect(`${FRONTEND_URL}/payment/fail?tran_id=${tran_id || ""}`);
+    return res.redirect(
+      `${FRONTEND_URL}/payment/fail?tran_id=${tran_id || ""}`,
+    );
   } catch (error) {
     return res.status(500).json({ error: "Internal server error" });
   }
@@ -181,7 +196,9 @@ const paymentCancel = async (req, res) => {
         console.log(`[Payment] CANCELLED: ${tran_id}`);
       }
     }
-    return res.redirect(`${FRONTEND_URL}/payment/cancel?tran_id=${tran_id || ""}`);
+    return res.redirect(
+      `${FRONTEND_URL}/payment/cancel?tran_id=${tran_id || ""}`,
+    );
   } catch (error) {
     return res.status(500).json({ error: "Internal server error" });
   }
@@ -197,7 +214,9 @@ const paymentIPN = async (req, res) => {
 
     const payment = await Payment.findOne({ transactionId: tran_id });
     if (!payment) {
-      console.warn(`[Payment IPN] No payment record found for tran_id: ${tran_id}`);
+      console.warn(
+        `[Payment IPN] No payment record found for tran_id: ${tran_id}`,
+      );
       return;
     }
 
@@ -214,7 +233,9 @@ const paymentIPN = async (req, res) => {
           payment.markCompleted(validationResponse);
           payment.ipnVerified = true;
           await payment.save();
-          console.log(`[Payment IPN] Payment marked as COMPLETED for tran_id: ${tran_id}`);
+          console.log(
+            `[Payment IPN] Payment marked as COMPLETED for tran_id: ${tran_id}`,
+          );
         }
       } else {
         console.warn(`[IPN] Validation mismatch for ${tran_id}`);
@@ -226,61 +247,64 @@ const paymentIPN = async (req, res) => {
       console.warn(`[IPN] Payment failed for tran_id: ${tran_id}`);
     }
   } catch (error) {
-    console.error(`[Payment IPN] Error processing IPN for tran_id: ${req.body.tran_id || "N/A"}`, error);
+    console.error(
+      `[Payment IPN] Error processing IPN for tran_id: ${req.body.tran_id || "N/A"}`,
+      error,
+    );
   }
 };
 
 const getPaymentStatus = async (req, res) => {
-    try {
-        const { tran_id } = req.params;
-        const payment = await Payment.findOne({ transactionId: tran_id });
+  try {
+    const { tran_id } = req.params;
+    const payment = await Payment.findOne({ transactionId: tran_id });
 
-        if (!payment) {
-            return res.status(404).json({ error: "Payment not found" });
-        }
-        return res.json({
-            transactionId: payment.transactionId,
-            amount: payment.amount,
-            status: payment.status,
-            customerName: payment.customerName,
-            customerEmail: payment.customerEmail,
-            customerPhone: payment.customerPhone,
-            brandName: payment.brandName,
-            createdAt: payment.createdAt,
-            paymentMethod: payment.cardType || "N/A",
-            bankTransactionId: payment.bankTransactionId || "N/A",
-            paidAt: payment.paidAt,
-        });
-    }catch (error) {
-        return res.status(500).json({ error: "Internal server error" });
+    if (!payment) {
+      return res.status(404).json({ error: "Payment not found" });
     }
+    return res.json({
+      transactionId: payment.transactionId,
+      amount: payment.amount,
+      status: payment.status,
+      customerName: payment.customerName,
+      customerEmail: payment.customerEmail,
+      customerPhone: payment.customerPhone,
+      brandName: payment.brandName,
+      createdAt: payment.createdAt,
+      paymentMethod: payment.cardType || "N/A",
+      bankTransactionId: payment.bankTransactionId || "N/A",
+      paidAt: payment.paidAt,
+    });
+  } catch (error) {
+    return res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 const getPaymentHistory = async (req, res) => {
-    try{
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 20;
-        const status = req.query.status; //optional filter by status
-        const skip = (page - 1) * limit;
-        const filter = status ? { status } : {};
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+    const status = req.query.status; //optional filter by status
+    const skip = (page - 1) * limit;
+    const filter = status ? { status } : {};
 
-        const [payments, total] = await Promise.all([
-            Payment.find(filter)
-            .sort({ createdAt: -1 })
-            .skip(skip)
-            .limit(limit)
-            .select("-gatewayResponse"), //exclude large response data
-            Payment.countDocuments(filter),
-        ]);
-        return res.json({
-            payments,
-            total,
-            page,
-            totalPages: Math.ceil(total / limit),
-        });
-    } catch (error) {
-        return res.status(500).json({ error: "Internal server error" });
-    }
+    const [payments, total] = await Promise.all([
+      Payment.find(filter)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .select("-gatewayResponse"), //exclude large response data
+      Payment.countDocuments(filter),
+    ]);
+    return res.json({
+      payments,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+    });
+  } catch (error) {
+    return res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 export {
