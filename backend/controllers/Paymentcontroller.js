@@ -164,7 +164,10 @@ const paymentSuccess = async (req, res) => {
       `${FRONTEND_URL}/payment/fail?reason=validation_failed`,
     );
   } catch (error) {
-    return res.status(500).json({ error: "Internal server error" });
+    console.error("[Payment Success] Error handling callback:", error);
+    return res.redirect(
+      `${FRONTEND_URL}/payment/fail?reason=server_error`,
+    );
   }
 };
 
@@ -186,7 +189,10 @@ const paymentFail = async (req, res) => {
       `${FRONTEND_URL}/payment/fail?tran_id=${tran_id || ""}`,
     );
   } catch (error) {
-    return res.status(500).json({ error: "Internal server error" });
+    console.error("[Payment Fail] Error handling callback:", error);
+    return res.redirect(
+      `${FRONTEND_URL}/payment/fail?reason=server_error`,
+    );
   }
 };
 
@@ -209,7 +215,10 @@ const paymentCancel = async (req, res) => {
       `${FRONTEND_URL}/payment/cancel?tran_id=${tran_id || ""}`,
     );
   } catch (error) {
-    return res.status(500).json({ error: "Internal server error" });
+    console.error("[Payment Cancel] Error handling callback:", error);
+    return res.redirect(
+      `${FRONTEND_URL}/payment/fail?reason=server_error`,
+    );
   }
 };
 
