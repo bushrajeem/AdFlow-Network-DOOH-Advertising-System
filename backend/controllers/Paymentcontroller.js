@@ -116,7 +116,10 @@ const initiatePayment = async (req, res) => {
 
 const paymentSuccess = async (req, res) => {
   try {
-    const { tran_id, val_id, status } = req.body;
+    const payload = (req.body && Object.keys(req.body).length)
+      ? req.body
+      : req.query;
+    const { tran_id, val_id, status } = payload;
 
     //missing data or invalid status
     if (!tran_id || !val_id || status !== "VALID") {
@@ -167,11 +170,14 @@ const paymentSuccess = async (req, res) => {
 
 const paymentFail = async (req, res) => {
   try {
-    const { tran_id } = req.body;
+    const payload = (req.body && Object.keys(req.body).length)
+      ? req.body
+      : req.query;
+    const { tran_id } = payload;
     if (tran_id) {
       const payment = await Payment.findOne({ transactionId: tran_id });
       if (payment && payment.status === "pending") {
-        payment.markFailed(req.body);
+        payment.markFailed(payload);
         await payment.save();
         console.log(`[Payment] FAILED: ${tran_id}`);
       }
@@ -186,7 +192,10 @@ const paymentFail = async (req, res) => {
 
 const paymentCancel = async (req, res) => {
   try {
-    const { tran_id } = req.body;
+    const payload = (req.body && Object.keys(req.body).length)
+      ? req.body
+      : req.query;
+    const { tran_id } = payload;
 
     if (tran_id) {
       const payment = await Payment.findOne({ transactionId: tran_id });

@@ -22,5 +22,8 @@
     "multer": "^2.1.1",
     "socket.io": "^4.8.3",
     "sslcommerz-lts": "^1.2.0"
+  },
+  "devDependencies": {
+    "jest": "^30.3.0"
   }
 }
