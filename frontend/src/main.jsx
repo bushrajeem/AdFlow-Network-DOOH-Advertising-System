@@ -37,12 +37,15 @@ import CountryPage from "./pages/admin/location/CountryPage.jsx";
 import LocationIndex from "./pages/admin/location/index.jsx";
 import LocationsPage from "./pages/admin/location/LocationsPage.jsx";
 import PlaylistsPage from "./pages/admin/PlaylistsPage.jsx";
+import RequireAdmin from "./pages/admin/RequireAdmin.jsx";
 import ScreenPage from "./pages/admin/ScreenPage.jsx";
 import UsersPage from "./pages/admin/UsersPage.jsx";
-import RequireAdmin from "./pages/admin/RequireAdmin.jsx";
 import Login from "./pages/Auth/Login.jsx";
 import Signup from "./pages/Auth/Signup.jsx";
 import Home from "./pages/home/Home.jsx";
+import PaymentCancel from "./pages/payment/PaymentCancel.jsx";
+import Paymentpage from "./pages/payment/Paymentpage.jsx";
+import { default as PaymentFail, default as PaymentSuccess } from "./pages/payment/PaymentSuccess.jsx";
 import PlayerPage from "./pages/player/PlayerPage.jsx";
 
 
@@ -81,6 +84,10 @@ const router = createBrowserRouter([
     ],
   },
   { path: "/player/:screenCode", element: <PlayerPage /> },
+  { path: "/payment", element: <Paymentpage /> },
+  { path: "/payment/success", element: <PaymentSuccess /> },
+  { path: "/payment/fail", element: <PaymentFail /> },
+  { path: "/payment/cancel", element: <PaymentCancel /> },
 ]);
 
 createRoot(document.getElementById("root")).render(
