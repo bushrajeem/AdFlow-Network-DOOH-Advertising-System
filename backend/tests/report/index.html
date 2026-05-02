@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AdFlow — Unit Test Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f3f4f6; color: #111; }
+  .header { background: #002B6B; color: white; padding: 32px 48px; }
+  .header h1 { font-size: 26px; font-weight: 800; }
+  .header p  { font-size: 14px; color: #93c5fd; margin-top: 4px; }
+  .summary { display: flex; gap: 20px; padding: 24px 48px; flex-wrap: wrap; }
+  .card { background: white; border-radius: 12px; padding: 18px 28px;
+           border: 1px solid #e5e7eb; min-width: 150px; flex: 1; }
+  .card .val { font-size: 32px; font-weight: 800; }
+  .card .lbl { font-size: 13px; color: #6b7280; margin-top: 2px; }
+  .green { color: #16a34a; }
+  .red   { color: #dc2626; }
+  .blue  { color: #2563eb; }
+  .gray  { color: #374151; }
+  .section { padding: 0 48px 48px; }
+  .section h2 { font-size: 18px; font-weight: 700; color: #1e3a5f;
+                margin-bottom: 16px; padding-top: 8px; }
+  table { width: 100%; border-collapse: collapse; background: white;
+           border-radius: 12px; overflow: hidden;
+           border: 1px solid #e5e7eb; font-size: 13px; }
+  thead tr { background: #002B6B; color: white; }
+  thead th { padding: 12px 14px; text-align: left; font-weight: 600;
+              font-size: 12px; letter-spacing: .4px; white-space: nowrap; }
+  tbody tr:hover { filter: brightness(0.97); }
+  .footer { text-align: center; padding: 20px; font-size: 12px; color: #9ca3af; }
+  .pill { display:inline-block; padding:2px 8px; border-radius:8px;
+           font-size:11px; font-weight:600; }
+  .pill-pass { background:#dcfce7; color:#15803d; }
+  .pill-fail { background:#fee2e2; color:#b91c1c; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>AdFlow Network — Unit Test Report</h1>
+  <p>Payment System &nbsp;|&nbsp; Tool: Jest 30 &nbsp;|&nbsp; Generated: 02 May 2026, 04:21 AM</p>
+</div>
+
+<div class="summary">
+  <div class="card"><div class="val blue">31</div><div class="lbl">Total Test Cases</div></div>
+  <div class="card"><div class="val green">31</div><div class="lbl">Passed ✓</div></div>
+  <div class="card"><div class="val red">0</div><div class="lbl">Failed ✗</div></div>
+  <div class="card"><div class="val green">100%</div><div class="lbl">Pass Rate</div></div>
+  <div class="card"><div class="val gray">0.4s</div><div class="lbl">Execution Time</div></div>
+</div>
+
+<div class="section">
+  <h2>📋 Test Case Results</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Test ID</th>
+        <th>Test Description</th>
+        <th>Endpoint Tested</th>
+        <th>Input / Scenario</th>
+        <th>Expected Output</th>
+        <th style="text-align:center">Result</th>
+        <th style="text-align:center">Time</th>
+        <th style="text-align:center">Assertions</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-ADS-01</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Returns full list of ads with name and playCount</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">GET  /api/admin/ads</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">no body</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 200 list of ads</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">2 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">2</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-ADS-02</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Returns empty array when no ads exist</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">GET  /api/admin/ads</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">no body</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 200 empty array</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">0 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-ADS-03</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Valid name + video file creates ad and returns 201</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">POST /api/admin/ads</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">body: { name, duration }, file</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 201 created ad</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">3</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-ADS-04</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Missing ad name returns 400</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">POST /api/admin/ads</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">body: { } + file</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 400 missing name</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">2</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-ADS-05</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Missing video file returns 400</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">POST /api/admin/ads</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">body: { name } + no file</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 400 missing file</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">0 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">2</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-ADS-06</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Deletes existing ad and returns success</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">DELETE /api/admin/ads/:id</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">params: { id }</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 200 delete success</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-ADS-07</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Returns 404 for unknown ad id</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">DELETE /api/admin/ads/:id</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">params: { id }</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 404 not found</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">0 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">2</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-ADS-08</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Play count increments by 1 and returns new count</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">PATCH /api/admin/ads/:id/play</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">params: { id }</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 200 playCount incremented</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">2</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-PL-01</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Returns all playlists with ads count</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">GET  /api/admin/playlists</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">no body</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 200 list of playlists</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">3 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">3</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-PL-02</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Creates playlist with name only â€” ads and locations are optional</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">POST /api/admin/playlists</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">body: { name }</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 201 playlist created</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">2</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-PL-03</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Creates playlist with adIds and locationIds stored</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">POST /api/admin/playlists</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">body: { name, adIds, locationIds }</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 201 playlist created with ads/locations</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">3</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-PL-04</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Missing name returns 400</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">POST /api/admin/playlists</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">body: { adIds }</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 400 missing name</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">2</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-PL-05</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Deletes existing playlist</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">DELETE /api/admin/playlists/:id</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">params: { id }</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 200 delete success</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-PL-06</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Returns 404 for unknown playlist id</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">DELETE /api/admin/playlists/:id</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">params: { id }</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 404 not found</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">0 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-PL-07</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Updates name, ads, and locations</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">PATCH /api/admin/playlists/:id</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">params: { id }, body: { name, adIds, locationIds }</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 200 updated playlist</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-PL-08</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Returns 404 when playlist not found during update</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">PATCH /api/admin/playlists/:id</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">params: { id }, body: { name }</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 404 not found</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">3 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-01</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Rejects amount below minimum à§³10</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">POST /api/payment/initiate</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">{ amount: 5, customerName, customerEmail, customerPhone }</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 400, error message about minimum ৳10</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">2 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">2</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-02</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Rejects request when required customer fields are missing</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">POST /api/payment/initiate</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">{ amount: 500 }  ← name/email/phone missing</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 400, error about required fields</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">2</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-03</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Successful initiation returns tran_id and gatewayUrl</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">POST /api/payment/initiate</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">{ amount: 500, brandName, customerName, customerEmail, customerPhone }</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 200, { success: true, tran_id, gatewayUrl }</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">2</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-04</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Returns 502 when SSLCommerz does not return a GatewayPageURL</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">POST /api/payment/initiate</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">Valid body + SSLCommerz returns no GatewayPageURL</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 502, error from gateway failure</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">28 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">3</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-05</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Redirects to /payment/fail when gateway status is not VALID</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">POST /api/payment/success</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">{ tran_id, val_id, status: 'FAILED' }</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">Redirect to /payment/fail with reason</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-06</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Redirects to /payment/fail when order is not found in DB</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">POST /api/payment/success</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">{ tran_id: 'UNKNOWN', val_id, status: 'VALID' } + DB returns null</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">Redirect to /payment/fail?reason=order_not_found</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">0 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-07</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Already-completed payment is handled idempotently (no double-process)</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">POST /api/payment/success</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">{ tran_id, val_id, status: 'VALID' } + DB payment already completed</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">Redirect to /payment/success, markCompleted NOT called</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">2</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-08</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Validation mismatch marks payment failed and redirects to /payment/fail</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">POST /api/payment/success</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">{ tran_id, val_id, status: 'VALID' } + SSLCommerz amount = ৳1 (mismatch)</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">markFailed() called, redirect to /payment/fail?reason=validation_failed</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">0 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">3</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-09</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Valid payment marks status as completed and redirects to /payment/success</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">POST /api/payment/success</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">{ tran_id, val_id, status: 'VALID' } + SSLCommerz amount = ৳500 (match)</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">markCompleted() called, redirect to /payment/success</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">0 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">3</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-10</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Marks a pending payment as failed and redirects to /payment/fail</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">POST /api/payment/fail</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">{ tran_id } + DB payment status = pending</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">markFailed() called, DB saved, redirect to /payment/fail</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">2 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">3</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-11</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Marks a pending payment as cancelled and redirects to /payment/cancel</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">POST /api/payment/cancel</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">{ tran_id } + DB payment status = pending</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">markCancelled() called, DB saved, redirect to /payment/cancel</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">2 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">3</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-12</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Responds HTTP 200 immediately before any async processing</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">POST /api/payment/ipn</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">{ tran_id, status: 'VALID', val_id } + DB returns null</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 200 { received: true } sent immediately</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">6 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">2</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-13</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Returns 404 when tran_id does not exist in DB</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">GET  /api/payment/status/:id</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">params: { tran_id: 'DOES-NOT-EXIST' } + DB returns null</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 404 { error: 'Payment not found' }</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">2</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-14</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Returns correct payment data for a known tran_id</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">GET  /api/payment/status/:id</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">params: { tran_id: 'ADFLOW-MOCK-12345' } + DB returns payment doc</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 200 with tran_id, status, amount, paymentMethod, bankTranId</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">0 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1</td>
+    </tr>
+    <tr style="background:#f0fdf4;border-bottom:1px solid #e5e7eb;">
+      <td style="padding:10px 14px;font-weight:700;color:#1e3a5f;white-space:nowrap;">TC-15</td>
+      <td style="padding:10px 14px;font-size:13px;color:#374151;max-width:240px;">Returns paginated payment list with correct total and page info</td>
+      <td style="padding:10px 14px;font-family:monospace;font-size:12px;color:#6366f1;">GET  /api/payment/history</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">query: { page: '1', limit: '20' } + DB returns 3 records</td>
+      <td style="padding:10px 14px;font-size:12px;color:#374151;">HTTP 200 { payments: [...], total: 3, page: 1, totalPages: 1 }</td>
+      <td style="padding:10px 14px;text-align:center;"><span style="background:#16a34a;color:#fff;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;">PASS</span></td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1 ms</td>
+      <td style="padding:10px 14px;text-align:center;font-size:12px;color:#6b7280;">1</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="footer">
+  AdFlow Network &copy; 2025 &nbsp;|&nbsp; Unit Testing with Jest &nbsp;|&nbsp;
+  All 31 test cases executed &nbsp;|&nbsp; 31 passed, 0 failed
+</div>
+
+</body>
+</html>
