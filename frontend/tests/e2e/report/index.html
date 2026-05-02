@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AdFlow UI Test Report</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Arial, sans-serif; background: #f3f4f6; color: #111; margin: 0; }
+  .header { background: #002B6B; color: #fff; padding: 24px 32px; }
+  .header h1 { margin: 0; font-size: 22px; }
+  .header p { margin: 6px 0 0; font-size: 12px; color: #c7ddff; }
+  .section { padding: 24px 32px 40px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #e5e7eb; }
+  thead th { background: #002B6B; color: #fff; text-align: left; padding: 10px 12px; font-size: 12px; letter-spacing: 0.4px; }
+  tbody td { padding: 10px 12px; border-top: 1px solid #e5e7eb; font-size: 12px; color: #374151; }
+  tbody tr:nth-child(even) { background: #f9fafb; }
+  .pass { color: #16a34a; font-weight: 700; }
+  .fail { color: #dc2626; font-weight: 700; }
+  .na { color: #6b7280; font-weight: 700; }
+  .footer { text-align: center; padding: 16px; font-size: 11px; color: #9ca3af; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1>AdFlow Network - UI Test Documentation</h1>
+    <p>Environment: Vercel | Generated: 02 May 2026 at 04:46</p>
+  </div>
+  <div class="section">
+    <table>
+      <thead>
+        <tr>
+          <th>Test ID</th>
+          <th>Test Case Name</th>
+          <th>Expected Outcome</th>
+          <th>Actual Outcome</th>
+          <th>Result</th>
+          <th>Comment</th>
+          <th>Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+    <tr>
+      <td>UI-01</td>
+      <td>admin-flows.spec.js admin flows UI-03 | Create ad</td>
+      <td>Home page loads without errors</td>
+      <td>Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Log in' }) resolved to 2 elements:
+    1) button type="submit" class="inline-flex items-center justify-center gap-2.5 w</td>
+      <td class="fail">FAILED</td>
+      <td>Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Log in' }) resolved to 2 elements:
+    1) button type="submit" class="inline-flex items-center justify-center gap-2.5 w</td>
+      <td><a href="..\..\..\playwright-report\index.html">Playwright report</a></td>
+    </tr>
+    <tr>
+      <td>UI-02</td>
+      <td>admin-flows.spec.js admin flows UI-04 | Create playlist</td>
+      <td>Redirect to /admin and Overview visible</td>
+      <td>Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Log in' }) resolved to 2 elements:
+    1) button type="submit" class="inline-flex items-center justify-center gap-2.5 w</td>
+      <td class="fail">FAILED</td>
+      <td>Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Log in' }) resolved to 2 elements:
+    1) button type="submit" class="inline-flex items-center justify-center gap-2.5 w</td>
+      <td><a href="..\..\..\playwright-report\index.html">Playwright report</a></td>
+    </tr>
+    <tr>
+      <td>UI-03</td>
+      <td>admin-flows.spec.js admin flows UI-06 | Ads list page loads</td>
+      <td>Ad saved and redirected to /admin/ads</td>
+      <td>Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Log in' }) resolved to 2 elements:
+    1) button type="submit" class="inline-flex items-center justify-center gap-2.5 w</td>
+      <td class="fail">FAILED</td>
+      <td>Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Log in' }) resolved to 2 elements:
+    1) button type="submit" class="inline-flex items-center justify-center gap-2.5 w</td>
+      <td><a href="..\..\..\playwright-report\index.html">Playwright report</a></td>
+    </tr>
+    <tr>
+      <td>UI-04</td>
+      <td>admin-flows.spec.js admin flows UI-07 | Playlists list page loads</td>
+      <td>Playlist saved and redirected to /admin/playlists</td>
+      <td>Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Log in' }) resolved to 2 elements:
+    1) button type="submit" class="inline-flex items-center justify-center gap-2.5 w</td>
+      <td class="fail">FAILED</td>
+      <td>Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Log in' }) resolved to 2 elements:
+    1) button type="submit" class="inline-flex items-center justify-center gap-2.5 w</td>
+      <td><a href="..\..\..\playwright-report\index.html">Playwright report</a></td>
+    </tr>
+    <tr>
+      <td>UI-05</td>
+      <td>admin-flows.spec.js admin flows UI-08 | Users list page loads</td>
+      <td>Payment initiation triggers gateway navigation</td>
+      <td>Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Log in' }) resolved to 2 elements:
+    1) button type="submit" class="inline-flex items-center justify-center gap-2.5 w</td>
+      <td class="fail">FAILED</td>
+      <td>Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Log in' }) resolved to 2 elements:
+    1) button type="submit" class="inline-flex items-center justify-center gap-2.5 w</td>
+      <td><a href="..\..\..\playwright-report\index.html">Playwright report</a></td>
+    </tr>
+    <tr>
+      <td>UI-06</td>
+      <td>admin-flows.spec.js admin flows UI-09 | Screen list page loads</td>
+      <td>Ads list header visible</td>
+      <td>Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Log in' }) resolved to 2 elements:
+    1) button type="submit" class="inline-flex items-center justify-center gap-2.5 w</td>
+      <td class="fail">FAILED</td>
+      <td>Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Log in' }) resolved to 2 elements:
+    1) button type="submit" class="inline-flex items-center justify-center gap-2.5 w</td>
+      <td><a href="..\..\..\playwright-report\index.html">Playwright report</a></td>
+    </tr>
+    <tr>
+      <td>UI-07</td>
+      <td>admin-flows.spec.js admin flows UI-10 | Location index loads</td>
+      <td>Playlists list header visible</td>
+      <td>Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Log in' }) resolved to 2 elements:
+    1) button type="submit" class="inline-flex items-center justify-center gap-2.5 w</td>
+      <td class="fail">FAILED</td>
+      <td>Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Log in' }) resolved to 2 elements:
+    1) button type="submit" class="inline-flex items-center justify-center gap-2.5 w</td>
+      <td><a href="..\..\..\playwright-report\index.html">Playwright report</a></td>
+    </tr>
+    <tr>
+      <td>UI-08</td>
+      <td>admin-flows.spec.js UI-05 | Payment start</td>
+      <td>Users list header visible</td>
+      <td>Passed</td>
+      <td class="pass">PASSED</td>
+      <td></td>
+      <td><a href="..\..\..\playwright-report\index.html">Playwright report</a></td>
+    </tr>
+    <tr>
+      <td>UI-09</td>
+      <td>admin-login.spec.js UI-02 | Admin login redirects to dashboard</td>
+      <td>Screen list header visible</td>
+      <td>Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Log in' }) resolved to 2 elements:
+    1) button type="submit" class="inline-flex items-center justify-center gap-2.5 w</td>
+      <td class="fail">FAILED</td>
+      <td>Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Log in' }) resolved to 2 elements:
+    1) button type="submit" class="inline-flex items-center justify-center gap-2.5 w</td>
+      <td><a href="..\..\..\playwright-report\index.html">Playwright report</a></td>
+    </tr>
+    <tr>
+      <td>UI-10</td>
+      <td>smoke.spec.js UI-01 | Home page loads</td>
+      <td>Location index header visible</td>
+      <td>Passed</td>
+      <td class="pass">PASSED</td>
+      <td></td>
+      <td><a href="..\..\..\playwright-report\index.html">Playwright report</a></td>
+    </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="footer">
+    AdFlow Network - UI Flow Test Documentation
+  </div>
+</body>
+</html>

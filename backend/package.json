@@ -5,7 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --config jest.config.js",
+    "test:watch": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --config jest.config.js --watch",
+    "test:coverage": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --config jest.config.js --coverage",
+    "test:report": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --config jest.config.js --json 2>/dev/null > jest_results.json && python3 tests/generate_report.py",
+    "test:report:win": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --config jest.config.js --json > jest_results.json && python tests\\generate_report.py",
+    "report:serve": "npx serve tests/report"
   },
   "keywords": [],
   "author": "",
@@ -18,12 +25,13 @@
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.3.1",
     "multer": "^2.1.1",
-    "socket.io": "^4.8.3",
-    "sslcommerz-lts": "^1.2.0"
+    "socket.io": "^4.8.3"
   },
   "devDependencies": {
-    "jest": "^30.3.0"
+    "jest": "^30.3.0",
+    "mongoose": "^9.6.1",
+    "sslcommerz-lts": "^1.2.0",
+    "uuid": "^14.0.0"
   }
 }
