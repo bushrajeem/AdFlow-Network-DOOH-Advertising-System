@@ -10,7 +10,12 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:report": "playwright show-report",
+    "test:e2e:doc": "node tests/e2e/report/generate_ui_report.js",
+    "test:e2e:doc:run": "playwright test --reporter=json > tests/e2e/report/playwright.json && node tests/e2e/report/generate_ui_report.js"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
@@ -38,6 +43,7 @@
     "eslint-plugin-react-refresh": "^0.4.14",
     "globals": "^15.12.0",
     "postcss": "^8.5.8",
+    "@playwright/test": "^1.52.0",
     "vite": "^6.0.0"
   }
 }

@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "uuid": "^14.0.0"
+  },
+  "devDependencies": {
+    "jest-html-reporter": "^4.4.0"
   }
 }
